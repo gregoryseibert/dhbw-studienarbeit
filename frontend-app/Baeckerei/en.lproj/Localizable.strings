@@ -1,0 +1,53 @@
+/* 
+  Localizable.strings
+  Baeckerei
+
+  Created by Gregory Seibert on 10.02.19.
+  Copyright © 2019 Gregory Seibert. All rights reserved.
+*/
+
+"loaf" = "Loaf";
+"loafs" = "Loafs";
+"bun" = "Bun";
+"buns" = "Buns";
+"news" = "News";
+"newsitem" = "News item";
+
+"searchbar_loafs" = "Search for Loafs";
+"searchbar_buns" = "Search for Buns";
+"searchbar_offers" = "Search for Offers";
+
+"datasource_choice_title" = "Datasource";
+"datasource_choice_message" = "Do you want to load the existing data from the local storage or do you want to synchronize the data from the backend?";
+"datasource_choice_option_disk" = "Load from local storage";
+"datasource_choice_option_api" = "Synchronize from backend";
+
+"bakedgood_weight" = "Weight";
+"bakedgood_nutrients" = "Nutrients";
+"bakedgood_characteristic" = "Charakteristic";
+"bakedgood_cerealmix" = "Cerealmix";
+"bakedgood_ingredients" = "Ingredients";
+"bakedgood_daysofproduction" = "Days of production";
+
+"bakedgood_nutrients_kcal" = "kcal";
+"bakedgood_nutrients_protein" = "protein";
+"bakedgood_nutrients_carbohydrates" = "carbohydrates";
+"bakedgood_nutrients_fat" = "fat";
+
+"monday" = "Monday";
+"tuesday" = "Tuesday";
+"wednesday" = "Wednesday";
+"thursday" = "Thursday";
+"friday" = "Friday";
+"saturday" = "Saturday";
+"sunday" = "Sunday";
+
+"noallergens" = "No allergies";
+"egg" = "Egg";
+"nut" = "Nut";
+"milk" = "Milk";
+"gluten" = "Gluten";
+
+"weekday_sequence_pre" = "Daily from";
+"weekday_sequence_mid" = "till";
+"weekday_junction" = "and";

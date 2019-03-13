@@ -1,0 +1,108 @@
+%!TEX root = /Users/gregoryseibert/Documents/dhbw-studienarbeit-baeckerei/hauptdatei.tex
+\chapter{Theoretische Grundlagen}
+In diesem Kapitel werden die notwendigen Grundlagen der Technologien, die für das Backend und die iOS App notwendige sind, vermittelt.
+
+\section{REST API}
+\gls{rest} \glspl{api} spielen mittlerweile eine große Rolle in der Entwicklung und finden bereits in zahlreichen Projekten namhafter Unternehmen Anwendung. Diese \glspl{api} sind sogenannte Programmierschnittstellen über das \gls{http}. Mit deren Hilfe lassen sich Daten per \gls{get}, \gls{put}, \gls{post} und \gls{delete} abrufen und verwalten.
+
+Der Sinn dahinter ist, dass man das \gls{frontend}, also das, was der Benutzer sieht, und das \gls{backend}, die Verarbeitung und Verwaltung der Daten, trennt. Dieses Vorgehen ist nicht nur sicherer, sondern auch im späteren Verlauf einfacher anzupassen, da man nun in modularen Gebieten des Projektes arbeiten kann. Deshalb bedienen sich große und bekannte Internetanbieter, wie Google und Amazon, diesem nützlichen Prinzip.
+
+Um \gls{rest} Schnittstellen komfortabel und zeitsparend testen zu können, bietet sich das Programm Postman \cite{postman} hervorragend an.
+Die Request-Methode und die URL müssen angegeben werden. Der Request-Body ist nur für Requests zum Anlegen oder Bearbeiten von Daten notwendig. Wie das Ganze in Postman aussieht, lässt sich der Abbildung \ref{postman} entnehmen.
+
+\abbildung{content/postman-2.png}{Das Programm Postman wird genutzt, um REST Schnittstellen zu testen}{postman}
+
+\clearpage
+
+\section{JSON}
+\gls{json} ist ein leichtgewichtiges Format zum Austauschen von Daten, typischerweise zwischen Webserver und Client.
+Dieses Format wurde von der JavaScript Object Syntax abgewandelt, weswegen eine bidirektionale Umwandlung im JavaScript Code unkompliziert funktioniert.
+Doch auch in Programmiersprachen, wie zum Beispiel Java und Swift, gibt es standardmäßig eingebaute Funktionen, um \gls{json} zu parsen.
+Die Syntax von \gls{json} besteht aus folgenden Regeln:
+
+\begin{itemize}
+	\item Arrays bestehen aus eckigen Klammern
+	\item Objekte bestehen aus geschweiften Klammern
+	\item Datenfelder von Objekten werden durch Key-Value Paaren dargestellt
+	\item Datenfelder und Objekte werden durch Kommata getrennt
+\end{itemize}
+ 
+\section{Dependency Injection} \label{dependencyinjection}
+Dependency Injection ist ein Entwurfsmuster aus der objektorientierten Programmierung, welches dabei hilft, die Abhängigkeiten von Klassen zu organisieren \cite[S.~27]{dependency-book}. Die Abhängigkeiten werden an einem zentralen Ort einmalig instanziiert, identisch zum Singleton Pattern. Dabei werden die jeweiligen Klassen von ihren Abhängigkeiten entkoppelt und es wird verhindert, dass von ressourcen-intensiven Klassen mehrere Instanzen erzeugt wird. Des weiteren wird die Verwendung und Erstellung von Unit-Tests erleichtert.
+
+Für die Umsetzung der Dependency Injection finden die drei Verfahren
+\begin{itemize}
+	\item Constructor Injection
+	\item Setter Injection
+	\item Interface Injection
+\end{itemize}
+die meiste Verwendung.
+
+Bei der Constructor Injection werden die Abhängigkeiten einer Klasse durch den Konstruktor übergeben und gesetzt \cite[S.~119]{dependency-book}.\\
+Durch jeweilige Methoden können die Abhängigkeiten bei der Setter Injection gesetzt werden \cite[S.~120]{dependency-book}.\\
+Die Interface Injection zeichnet sich dadurch aus, dass die abhängige Klasse eine Schnittstelle implementiert, durch die eine Methode vorgegeben wird, über die die Abhängigkeit zur Verfügung gestellt wird \cite[S.~120]{dependency-book}.
+
+\clearpage
+
+\section{Spring Framework}
+Das Spring Framework \cite{spring} ist ein Open-Source Framework für Java basierte Enterprise Projekte. Es wurde entworfen, um die Java EE Entwicklung zu vereinfachen und zu beschleunigen \cite{spring-book-1}. Spring implementiert Funktionalitäten wie 
+\begin{itemize}
+	\item Dependency Injection (siehe \ref{dependencyinjection})
+	\item Internationalisierung 
+	\item Datenbindung
+	\item Validierung
+	\item Typenkonvertierung
+\end{itemize}
+Insbesondere durch das Bereitstellen der Dependency Injection wird ein Einsatz von guten Softwarekonventionen gefördert, was für ein leicht wartbares und erweiterbares Projekt sorgt \cite[S.~20]{spring-book-2}.
+
+\subsection{Spring Boot}
+Spring Boot ist eine Erweiterung zum Spring Framework mit dem Fokus auf Konventionen statt Konfiguration. Dadurch ist es deutlich schneller möglich, eine produktionsfähige Applikation zu erstellen, da bereits durch das Framework die meisten Entscheidungen getroffen wurden. Dennoch lassen sich jederzeit besagte Entscheidungen durch eine eigene Konfiguration überschreiben.
+
+\subsection{Spring Security}
+Spring Security erweitert das Spring Framework um einige Sicherheitsmechanismen, wie das Authentifizieren von Benutzern oder die Autorisierung in Form eines Rollenschemas mit verschiedenen Berechtigungen.
+
+\clearpage
+
+\section{PostgreSQL}
+PostgreSQL, oft auch nur Postgres genannt, ist ein objektrelationales Datenbankmanagementsystem, welches als Open-Source Projekt angeboten wird.
+Es ist ein ehemaliges Projekt der \enquote{University of California, Berkeley}, das 1986 gestartet ist \cite{postgres-history}.
+Als ein SQL-Interpreter im Jahre 1994 für Postgres geschrieben, woraufhin das gesamte Projekt als Open-Source unter dem Namen Postgres95 freigegeben wurde.
+Im Jahre 1996 wurde der aktuelle Name PostgreSQL gewählt, um die hinzugefügten SQL Fähigkeiten zu verdeutlichen \cite{postgres-history}.
+
+\subsection{Eigenschaften}
+Postgres ist \gls{acid}-konform und fast vollständig mit dem SQL-Standard SQL:2011 konform, da mindestens 160 von 179 notwendige Funktionen erfüllt sind \cite{postgres-about}.
+Es ist mit den Programmiersprachen C++, Delphi, Perl, Java, Lua, .NET, Node.js, Python, PHP, Lisp, Go, R, D und Erlang kompatibel \cite{postgres-mysql-comparison}.
+Postgres unterstützt \gls{mvcc}, ein Verfahren, um für eine gleichzeitige und Konsistenz wahrende Ausführung von konkurrierenden Zugriffen auf die Datenbank zu sorgen \cite{postgres-about}. Die maximale Größe der Datenbanken wird entweder durch 32TB oder durch den tatsächlich verfügbaren Speicher begrenzt \cite{postgres-about}. Postgres kann zudem durch selbst entworfene Funktionen, Operatoren und Datentypen erweitert werden und es unterstützt einige NoSQL Funktionen \cite{postgres-about}.
+
+\subsection{Vergleich zu MySQL}
+MySQL ist ebenfalls ein Open-Source Projekt. Es ist allerdings unter den relationalen Datenbankmanagementsystemen zu zählen. Genau wie PostgreSQL ist das oberste Element eine Tabelle. Die Funktionalitäten von MySQL und PostgreSQL sind beinahe identisch \cite{postgres-mysql-comparison}.
+
+Zu den bekanntesten Unternehmen, die PostgreSQL als Datenbankserver verwenden, gehören unter anderen GitHub, US Navy, NASA, Tesla, YouTube, und Facebook verwenden MySQL als Datenbankserver \cite{mysql-companies}.
+Apple, Cisco, Skype, Uber, Groupon, Spotify, Netflix und Instagram verwenden PostgreSQL als Datenbankserver \cite{postgres-companies}.
+Auf beiden Seiten sind demnach größere und bekannte Unternehmen vertreten.
+
+Da ein Vergleich der Performance stark abhängig von der jeweiligen Infrastruktur, des Einsatzzweckes und der Art der Abfragen ist, wird dies nicht weiter aufgeführt.
+
+\clearpage
+
+\section{MVC Pattern}
+Das \gls{mvc} Pattern ist ein Architekturmuster beziehungsweise Entwurfsmuster im Bereich der Software-Entwicklung. 
+Hierbei wird das Programm in drei Schichten
+\begin{itemize}
+	\item Model
+	\item View
+	\item Controller
+\end{itemize}
+aufgeteilt. Die Model Schicht enthält alle Klassen, die reale oder irreale Objekte modellieren, also jene, die nach der objektorientierten Programmierung entworfen wurden. Die View Schicht enthält die Oberfläche mit den Elementen zur Interaktion mit der Software. Da die Model Schicht und die View Schicht miteinander kommunizieren müssen und da die Eingaben des Benutzers verarbeitet werden müssen, ist die Controller Schicht gleichermaßen essenziell. Dieser Aufbau ist, wie beschrieben, in der Abbildung \ref{mvc} ersichtlich.
+
+\abbildung{content/mvc.jpg}{Der Aufbau des MVC Patterns \cite{mvc}}{mvc}
+
+Der Sinn dieses Architekturmusters ist eine lockere Kopplung der einzelnen Software-Module, um die Abhängigkeiten zu verringern und den Wartungsprozess, Erweiterungsprozess sowie Aktualisierungsprozess zu verbessern.
+
+\clearpage
+
+\section{Swift}
+Swift ist eine Open Source Programmiersprache, die im Jahre 2014 von Apple veröffentlicht wurde. zum Entwickeln von iOS, MacOS und Linux Applikationen.
+
+
+\clearpage

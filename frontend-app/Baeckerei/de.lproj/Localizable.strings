@@ -1,0 +1,53 @@
+/* 
+  Localizable.strings
+  Baeckerei
+
+  Created by Gregory Seibert on 10.02.19.
+  Copyright © 2019 Gregory Seibert. All rights reserved.
+*/
+
+"loaf" = "Brot";
+"loafs" = "Brote";
+"bun" = "Brötchen";
+"buns" = "Brötchen";
+"news" = "Neuigkeiten";
+"newsitem" = "Neuigkeit";
+
+"searchbar_loafs" = "Suche nach Broten";
+"searchbar_buns" = "Suche nach Brötchen";
+"searchbar_offers" = "Suche nach Angeboten";
+
+"datasource_choice_title" = "Datenquelle";
+"datasource_choice_message" = "Sollen die Daten vom lokalen Speicher geladen oder synchronisiert werden?";
+"datasource_choice_option_disk" = "Lokal laden";
+"datasource_choice_option_api" = "Synchronisieren";
+
+"bakedgood_weight" = "Gewicht";
+"bakedgood_nutrients" = "Nährwertangaben";
+"bakedgood_characteristic" = "Charakteristik";
+"bakedgood_cerealmix" = "Getreidemischungsverhältnis";
+"bakedgood_ingredients" = "Zutaten";
+"bakedgood_daysofproduction" = "Herstellungstage";
+
+"bakedgood_nutrients_kcal" = "kcal";
+"bakedgood_nutrients_protein" = "Eiweiß";
+"bakedgood_nutrients_carbohydrates" = "Kohlenhydrate";
+"bakedgood_nutrients_fat" = "Fett";
+
+"monday" = "Montag";
+"tuesday" = "Dienstag";
+"wednesday" = "Mittwoch";
+"thursday" = "Donnerstag";
+"friday" = "Freitag";
+"saturday" = "Samstag";
+"sunday" = "Sonntag";
+
+"noallergy" = "Keine Allergien";
+"egg" = "Ei";
+"nut" = "Nüsse";
+"milk" = "Milch";
+"gluten" = "Gluten";
+
+"weekday_sequence_pre" = "Täglich von";
+"weekday_sequence_mid" = "bis";
+"weekday_junction" = "und";

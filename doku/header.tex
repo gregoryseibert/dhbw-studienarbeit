@@ -1,0 +1,140 @@
+\documentclass[%
+	a4paper,
+	oneside,			% Einseitiger Druck.
+	12pt,				% Schriftgroesse
+	parskip=half,		% Halbe Zeile Abstand zwischen Absätzen.
+	headheight = 18pt,	% Höhe der Kopfzeile
+	headsepline,		% Linie nach Kopfzeile.
+	footsepline,		% Linie vor Fusszeile.
+	footheight = 18pt,	% Höhe der Fusszeile
+	DIV=calc,		% Satzspiegel berechnen
+	BCOR=8mm,		% Bindekorrektur links: 8mm
+	listof=totoc,		% Abbildungs-/ Tabellenverzeichnis im Inhaltsverzeichnis darstellen
+	toc=bibliography,	% Literaturverzeichnis im Inhaltsverzeichnis darstellen
+]{scrreprt}
+
+\RedeclareSectionCommand[beforeskip=-.5\baselineskip,afterskip=.1\baselineskip]{subsubsection}
+
+\usepackage[left = 2.5cm, right = 2.5cm, top = 2.5cm, bottom = 2.5cm]{geometry}
+\usepackage[onehalfspacing]{setspace}
+\usepackage[utf8]{inputenc}
+\usepackage{pgffor}
+\usepackage[final]{microtype}
+\usepackage[ngerman]{babel}
+\usepackage{scrhack}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath}
+\usepackage{listings}
+\usepackage{color}
+\usepackage{graphicx}
+\usepackage{wrapfig}
+\usepackage{hyperref}
+\usepackage[acronym, nonumberlist, toc, automake]{glossaries}
+
+\usepackage{lmodern}
+\usepackage{tabularx}
+\usepackage[babel,german=quotes]{csquotes}
+\usepackage[automark]{scrlayer-scrpage} 
+
+\usepackage[backend=biber, style=alphabetic]{biblatex}
+\addbibresource{quellen.bib}
+
+\usepackage{etoolbox}
+\apptocmd{\sloppy}{\hbadness 10000\relax}{}{}
+
+\usepackage[official]{eurosym}
+
+\usepackage{makecell}
+
+\renewcommand\theadalign{bc}
+\renewcommand\theadfont{\bfseries}
+\renewcommand\theadgape{\Gape[4pt]}
+\renewcommand\cellgape{\Gape[4pt]}
+
+\pagestyle{scrheadings}
+\cfoot{\pagemark}
+\setkomafont{pagehead}{\normalfont\bfseries}
+
+\definecolor{dkgreen}{rgb}{0, 0.6, 0}
+\definecolor{gray}{rgb}{0.5, 0.5, 0.5}
+\definecolor{mauve}{rgb}{0.58, 0, 0.82}
+\definecolor{LinkColor}{rgb}{0.075, 0.251, 0.455}
+
+\hypersetup{
+	colorlinks=true, 	
+	linkcolor=LinkColor, 
+	citecolor=LinkColor,
+	filecolor=LinkColor,
+	menucolor=LinkColor,
+	urlcolor=LinkColor,
+	bookmarksnumbered=true
+}
+
+\makeglossaries
+
+\newcommand{\cclass}[1]{\texttt{\textit{#1}}}
+
+\newcommand{\cmethod}[1]{\texttt{\textit{#1}}}
+
+\newcommand{\cvar}[1]{\texttt{\textit{#1}}}
+
+\newcommand\fnurl[2]{%
+	\href{#2}{#1}\footnote{\url{#2}}%
+}
+
+\newcommand{\zitat}[2]{
+	\mbox{\emph{#1} \cite{#2}}
+}
+
+\newcommand{\abbildung}[3]{
+	\begin{figure}[!htb]
+		\centering		\includegraphics[width=\textwidth]{images/#1}
+		\caption{#2}\label{#3}
+
+	\end{figure}
+}
+
+\newcommand{\abbildungs}[4]{
+	\begin{figure}[!htb]
+		\centering
+		\includegraphics[height=#1]{images/#2}
+		\caption{#3}\label{#4}
+	\end{figure}
+}
+
+\newcommand{\abbildungt}[3]{
+	\begin{wrapfigure}{r}{7cm}
+		\centering
+		\includegraphics[width=6.5cm]{images/#1}
+		\caption{#2}\label{#3}
+	\end{wrapfigure}
+}
+
+\clubpenalty=10000
+\widowpenalty=10000
+\displaywidowpenalty=10000
+
+\lstset{
+	frame=single,
+	frameround=ffff,
+	numbers=left,	
+	stepnumber=1,	
+	numbersep=0.25cm,	
+	numberstyle=\tiny,
+	aboveskip=3mm,
+	belowskip=3mm,
+	showstringspaces=false,
+	columns=flexible,
+	basicstyle=\ttfamily\footnotesize,
+	numberstyle=\tiny\color{gray},
+	keywordstyle=\color{blue},
+	commentstyle=\color{dkgreen},
+	stringstyle=\color{mauve},
+	ndkeywordstyle=\color{darkgray}\bfseries,
+	identifierstyle=\color{black},
+	breaklines=true,
+	breakatwhitespace=true,
+	tabsize=3,
+	xleftmargin=0.5cm,		
+	xrightmargin=0cm		
+}

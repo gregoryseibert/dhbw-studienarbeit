@@ -1,0 +1,47 @@
+\include{header}
+
+\include{additions/abkuerzungen}
+\include{additions/glossar}
+\glsaddall
+\makeglossaries
+
+\begin{document}
+
+\pagenumbering{Roman}
+
+\include{additions/deckblatt}
+
+\input{additions/erklaerung}
+
+\input{additions/abstract}
+
+\begin{spacing}{1.0}
+\setcounter{tocdepth}{1}
+{\hypersetup{linkcolor=black}
+	\tableofcontents
+}
+\end{spacing}
+
+\setglossarystyle{long}
+\renewcommand{\glsnamefont}[1]{\textbf{#1}}
+\printglossaries
+
+\listoffigures
+\clearpage
+
+\pagenumbering{arabic}
+
+\foreach \i in {00, 01, 02, 03, 04, 05, 06, 07, 08, 09, 10, ...,19} {%
+    \edef\FileName{content/content_\i}%     
+    \IfFileExists{\FileName}{%  			
+		\input{\FileName}%       			
+		\clearpage
+    }
+}
+
+\pagenumbering{Roman}
+\setcounter{page}{7}
+
+\printbibliography
+
+\end{document}
