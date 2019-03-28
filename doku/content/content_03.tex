@@ -1,6 +1,65 @@
 %!TEX root = ../hauptdatei.tex
 \chapter{Anforderungsanalyse}
 
+\section{Begriffsdefinitionen}
+Im Folgenden werden die Begriffe, die für die funktionalen und nichtfunktionalen Anforderungen notwendig sind, definiert.
+
+\subsection{Daten} 
+Bei dem Begriff \enquote{Daten} handelt es sich um Informationen zu Backprodukten oder Neuigkeiten.
+
+\subsection{System}
+Mit dem Begriff \enquote{System} ist die Verwaltung für die hinterlegten Daten gemeint.
+
+\subsection{Administrator}
+Mit dem Begriff \enquote{Administrator} ist die Person, die für das Pflegen der Daten zulässig ist, gemeint.
+
+\subsection{Benutzer}
+Mit dem Begriff  \enquote{Benutzer} ist eine Technologie zur Anzeige der angelegten Daten gemeint.
+
 \section{Funktionale Anforderungen}
 
+\subsection{[FA10] Zentraler Speicherort} \label{fa10}
+Das System muss die Daten zentral in einer Datenbank speichern.
+
+\subsection{[FA20] Zentrale Administration} \label{fa20}
+Das System muss dem Administrator über eine zentrale Schnittstelle die Möglichkeit bieten, die Daten pflegen zu können.
+
+\subsection{[FA30] Alle Backprodukte anzeigen} \label{fa30}
+Das System muss dem Benutzer die Möglichkeit bieten, die Daten zu allen Backprodukten, sofern bereits welche angelegt wurden, anzeigen lassen zu können.
+
+\subsection{[FA40] Backprodukt anzeigen} \label{fa40}
+Das System muss dem Benutzer die Möglichkeit bieten, die Daten zu einem ausgewählten Backprodukt, sofern dieses bereits angelegt wurde, anzeigen lassen zu können.
+
+\subsection{[FA50] Backprodukt erstellen} \label{fa50}
+Das System muss dem Administrator die Möglichkeit bieten, ein neues Backprodukt anlegen zu können.
+
+\subsection{[FA60] Backprodukt bearbeiten} \label{fa60}
+Das System muss dem Administrator die Möglichkeit bieten, ein bestehendes Backprodukt bearbeiten zu können.
+
+\subsection{[FA70] Backprodukt löschen} \label{fa70}
+Das System muss dem Administrator die Möglichkeit bieten, ein bestehendes Backprodukt löschen zu können.
+
+\subsection{[FA80] Alle Neuigkeiten anzeigen} \label{fa80}
+Das System muss dem Benutzer die Möglichkeit bieten, die Daten zu allen Neuigkeiten, sofern bereits welche angelegt wurden, anzeigen lassen zu können.
+
+\subsection{[FA90] Neuigkeit anzeigen} \label{fa90}
+Das System muss dem Benutzer die Möglichkeit bieten, die Daten zu einer ausgewählten Neuigkeit, sofern diese bereits angelegt wurde, anzeigen lassen zu können.
+
+\subsection{[FA100] Neuigkeit erstellen} \label{fa100}
+Das System muss dem Administrator die Möglichkeit bieten, eine neue Neuigkeit anlegen zu können.
+
+\subsection{[FA110] Neuigkeit bearbeiten} \label{fa110}
+Das System muss dem Administrator die Möglichkeit bieten, eine bestehende Neuigkeit bearbeiten zu können.
+
+\subsection{[FA120] Neuigkeit löschen} \label{fa120}
+Das System muss dem Administrator die Möglichkeit bieten, eine bestehende Neuigkeit löschen zu können.
+
+\newpage
+
 \section{Nichtfunktionale Anforderungen}
+
+\subsection{[NFA10] Authentifizierung zur Administration} \label{nfa10}
+Das System muss die Administration von Daten bei einem nicht autorisierten Zugriff verweigern, sofern es sich nicht um den Administrator handelt.
+
+\subsection{[NFA20] Authentifizierung zur Anzeige von Daten} \label{nfa20}
+Das System muss die Anzeige von Daten bei einem nicht autorisierten Zugriff verweigern, sofern es sich nicht um den Benutzer handelt.
