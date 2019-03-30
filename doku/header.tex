@@ -29,6 +29,7 @@
 \usepackage{graphicx}
 \usepackage{wrapfig}
 \usepackage{hyperref}
+\usepackage{nameref}
 \usepackage[acronym, nonumberlist, toc, automake]{glossaries}
 
 \usepackage{lmodern}
@@ -88,7 +89,7 @@
 
 \newcommand{\abbildung}[3]{
 	\begin{figure}[!htb]
-		\centering		\includegraphics[width=\textwidth]{images/#1}
+		\centering		\includegraphics[width=\textwidth]{#1}
 		\caption{#2}\label{#3}
 
 	\end{figure}
@@ -97,7 +98,7 @@
 \newcommand{\abbildungs}[4]{
 	\begin{figure}[!htb]
 		\centering
-		\includegraphics[height=#1]{images/#2}
+		\includegraphics[height=#1]{#2}
 		\caption{#3}\label{#4}
 	\end{figure}
 }
@@ -105,7 +106,7 @@
 \newcommand{\abbildungt}[3]{
 	\begin{wrapfigure}{r}{7cm}
 		\centering
-		\includegraphics[width=6.5cm]{images/#1}
+		\includegraphics[width=6.5cm]{#1}
 		\caption{#2}\label{#3}
 	\end{wrapfigure}
 }
