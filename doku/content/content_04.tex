@@ -5,9 +5,15 @@
 Die funktionalen Anforderungen \nameref{fa10} sowie \nameref{fa20} fordern eine zentrale Datenverwaltung.
 Um dies gewährleisten zu können, wird das System in zwei Komponentengruppen, dem Backend und das Frontend, aufgeteilt.
 Das Backend soll eine Anbindung zu einer Datenbank besitzen, um neue sowie bereits vorhandene Daten speichern zu können.
-Damit der Administrator die Daten möglichst komfortabel pflegen kann und es zusätzlich dem Administrator und dem Benutzer möglich sein soll, die Daten einzusehen, ist ein Frontend notwendig. Die Verwaltung der Daten durch den Administrator soll hierbei über ein Web Admin-Dashboard geschehen. Die Visualisierung der Daten als Information soll über eine iOS Applikation ermöglicht werden. -> TODO: Warum?
+Damit der Administrator die Daten möglichst komfortabel pflegen kann und es zusätzlich dem Administrator und dem Benutzer möglich sein soll, die Daten einzusehen, ist ein Frontend notwendig. Die Verwaltung der Daten durch den Administrator soll hierbei über ein Web Admin-Dashboard geschehen. Die Visualisierung der Daten als Information soll über eine iOS Applikation, gemäß der nichtfunktionalen Anforderung \nameref{nfa30}, ermöglicht werden.
+\\
+Diese Softwarearchitektur ist in der folgenden Abbildung \ref{componentdiagramsystem} als UML Komponentendiagramm dargestellt.
 
-\section{Rollenmodell}
+\abbildung{../diagramme/SystemComponents.pdf}{Das UML Komponentendiagramm für das System, bestehend aus Backend, iOS App und Web Admin-Dashboard}{componentdiagramsystem}
+
+\newpage
+
+\section{Rollenmodell} \label{rollenmodell}
 Die funktionale Anforderung \nameref{fa20} setzt voraus, dass der Administrator die Daten über eine zentrale Schnittstelle pflegen kann. Dabei muss dem Administrator die Möglichkeit gegeben werden, nach den funktionalen Anforderungen \nameref{fa50}, \nameref{fa60}, \nameref{fa70}, \nameref{fa100}, \nameref{fa110}, und \nameref{fa120}, Backprodukte und Neuigkeiten erstellen, bearbeiten und löschen zu können.
 Des Weiteren muss es sowohl dem Administrator als auch dem Benutzer des Systems, gemäß den funktionalen Anforderungen \nameref{fa30}, \nameref{fa40}, \nameref{fa80} und \nameref{fa90}, möglich sein, sich die Daten zu den Backprodukten und Neuigkeiten anzeigen zu lassen. Hierbei ist nach den nichtfunktionalen Anforderungen \nameref{nfa10} und \nameref{nfa20} zu beachten, dass die Administration der Daten lediglich bei Existenz einer autorisierten Sitzung des Administrators und das Abfragen der Daten lediglich bei Existenz einer autorisierten Sitzung des Benutzers erlaubt sein darf.
 \\
@@ -19,6 +25,8 @@ Dies ist in der folgenden Abbildung \ref{usecasediagramsystem} als UML Usecase D
 \newpage
 
 \section{Datenmodell}
+Im Kapitel \ref{rollenmodell} wurde beschrieben, wie das Rollenmodell des Systems als Entwurf aussehen soll.
+Im Rahmen des Datenmodells ist hierbei eine Entität, der \enquote{ApplicationUser} notwendig, siehe Abbildung \ref{classdiagramapplicationuser}. Diese Entität besitzt die Attribute \enquote{username} für den Benutzernamen sowie \enquote{password} für das Passwort zur Anmeldung, \enquote{name} für den Namen der jeweiligen Person, \enquote{isActive} für die Möglichkeit zur Deaktivierung und \enquote{isArchived} für die Archivierung des dahinterstehenden Accounts. Des Weiteren besitzt die Entität \enquote{ApplicationUser} eine Liste an \enquote{ApplicationUserRole}, wodurch das Rollenmodell vollständig implementiert ist.
 
 \abbildungs{5cm}{../diagramme/ApplicationUser.pdf}{Das UML Klassendiagramm zur ApplicationUser Entität}{classdiagramapplicationuser}
 
