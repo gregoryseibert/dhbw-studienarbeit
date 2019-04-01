@@ -11,7 +11,7 @@ Diese Softwarearchitektur ist in der folgenden Abbildung \ref{componentdiagramsy
 
 \abbildung{../diagramme/SystemComponents.pdf}{Das UML Komponentendiagramm für das System, bestehend aus Backend, iOS App und Web Admin-Dashboard}{componentdiagramsystem}
 
-\newpage
+\clearpage
 
 \section{Rollenmodell} \label{rollenmodell}
 Die funktionale Anforderung \nameref{fa20} setzt voraus, dass der Administrator die Daten über eine zentrale Schnittstelle pflegen kann. Dabei muss dem Administrator die Möglichkeit gegeben werden, nach den funktionalen Anforderungen \nameref{fa50}, \nameref{fa60}, \nameref{fa70}, \nameref{fa100}, \nameref{fa110}, und \nameref{fa120}, Backprodukte und Neuigkeiten erstellen, bearbeiten und löschen zu können.
@@ -22,7 +22,7 @@ Dies ist in der folgenden Abbildung \ref{usecasediagramsystem} als UML Usecase D
 
 \abbildungs{15cm}{../diagramme/SystemUsecase.pdf}{Das UML Usecase Diagramm für das System und als Aktor der Administrator sowie Benutzer zur Verdeutlichung des Rollenmodells}{usecasediagramsystem}
 
-\newpage
+\clearpage
 
 \section{Datenmodell}
 Im Kapitel \ref{rollenmodell} wurde beschrieben, wie das Rollenmodell des Systems als Entwurf aussehen soll.
@@ -30,10 +30,17 @@ Im Rahmen des Datenmodells ist hierbei eine Entität, der \enquote{ApplicationUs
 
 \abbildungs{5cm}{../diagramme/ApplicationUser.pdf}{Das UML Klassendiagramm zur ApplicationUser Entität}{classdiagramapplicationuser}
 
+Damit das System den funktionalen Anforderungen \nameref{fa30}, \nameref{fa40}, \nameref{fa50}, \nameref{fa60}, \nameref{fa70} und \nameref{fa80} entspricht, ist ein passendes Datenmodell für die abstrakte Klasse \enquote{BakedGood} im Rahmen der objektorientierten Programmierung notwendig. Die Klasse \enquote{BakedGood} wurde als eine abstrakte Klasse  entworfen, um diese mit geringem Aufwand um die Kindklassen \enquote{Loaf} und \enquote{Bun} und im Nachhinein um weitere Kindklassen erweitern zu können. Des Weiteren wurden Attribute des Modells \enquote{BakedGood} in die Klassen \enquote{Ingredient} sowie \enquote{CerealMixPercentage} und in die Enumerationen \enquote{AllergyType} sowie \enquote{WeekDay} aufgeteilt. Das  Gesamtmodell zur Klasse \enquote{BakedGood} ist in der Abbildung \ref{classdiagrambakedgood} als UML Klassendiagramm visualisiert.
+
+
 \abbildung{../diagramme/BakedGood.pdf}{Das UML Klassendiagramm zur BakedGood Entität}{classdiagrambakedgood}
+
+\newpage
+
+Gemäß den funktionalen Anforderungen \nameref{fa90}, \nameref{fa100}, \nameref{fa110}, und \nameref{fa120} wurde die Klasse \enquote{NewsItem} entworfen. Diese ist in der folgenden Abbildung \ref{classdiagramnewsitem} als UML Klassendiagramm dargestellt.
 
 \abbildungs{5cm}{../diagramme/NewsItem.pdf}{Das UML Klassendiagramm zur NewsItem Entität}{classdiagramnewsitem}
 
-\newpage
+\clearpage
 
 \section{Sicherheit}
