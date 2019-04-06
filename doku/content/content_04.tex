@@ -1,7 +1,7 @@
 %!TEX root = ../hauptdatei.tex
 \chapter{Konzept}
 
-\section{Softwarearchitektur} \label{softwarearchitektur}
+\section{Systemarchitektur} \label{systemarchitektur}
 Die funktionalen Anforderungen \nameref{fa10} sowie \nameref{fa20} fordern eine zentrale Datenverwaltung.
 Um dies gewährleisten zu können, wird das System in zwei Komponentengruppen, dem Backend und das Frontend, aufgeteilt.
 Das Backend soll eine Anbindung zu einer Datenbank besitzen, um neue sowie bereits vorhandene Daten speichern zu können.
@@ -28,7 +28,7 @@ Dies ist in der folgenden Abbildung \ref{usecasediagramsystem} als UML Usecase D
 Im Kapitel \ref{rollenmodell} wurde beschrieben, wie das Rollenmodell des Systems als Entwurf aussehen soll.
 Im Rahmen des Datenmodells ist hierbei eine Entität, der \enquote{ApplicationUser} notwendig, siehe Abbildung \ref{classdiagramapplicationuser}. Diese Entität besitzt die Attribute \enquote{username} für den Benutzernamen sowie \enquote{password} für das Passwort zur Anmeldung, \enquote{name} für den Namen der jeweiligen Person, \enquote{isActive} für die Möglichkeit zur Deaktivierung und \enquote{isArchived} für die Archivierung des dahinterstehenden Accounts. Des Weiteren besitzt die Entität \enquote{ApplicationUser} eine Liste an \enquote{ApplicationUserRole}, wodurch das Rollenmodell vollständig implementiert ist.
 
-\abbildungs{5cm}{../diagramme/ApplicationUser.pdf}{Das UML Klassendiagramm zur ApplicationUser Entität}{classdiagramapplicationuser}
+\abbildungs{6cm}{../diagramme/ApplicationUser.pdf}{Das UML Klassendiagramm zur ApplicationUser Entität}{classdiagramapplicationuser}
 
 Damit das System den funktionalen Anforderungen \nameref{fa30}, \nameref{fa40}, \nameref{fa50}, \nameref{fa60}, \nameref{fa70} und \nameref{fa80} entspricht, ist ein passendes Datenmodell für die abstrakte Klasse \enquote{BakedGood} im Rahmen der objektorientierten Programmierung notwendig. Die Klasse \enquote{BakedGood} wurde als eine abstrakte Klasse  entworfen, um diese mit geringem Aufwand um die Kindklassen \enquote{Loaf} und \enquote{Bun} und im Nachhinein um weitere Kindklassen erweitern zu können. Des Weiteren wurden Attribute des Modells \enquote{BakedGood} in die Klassen \enquote{Ingredient} sowie \enquote{CerealMixPercentage} und in die Enumerationen \enquote{AllergyType} sowie \enquote{WeekDay} aufgeteilt. Das  Gesamtmodell zur Klasse \enquote{BakedGood} ist in der Abbildung \ref{classdiagrambakedgood} als UML Klassendiagramm visualisiert.
 
@@ -39,7 +39,7 @@ Damit das System den funktionalen Anforderungen \nameref{fa30}, \nameref{fa40}, 
 
 Gemäß den funktionalen Anforderungen \nameref{fa90}, \nameref{fa100}, \nameref{fa110}, und \nameref{fa120} wurde die Klasse \enquote{NewsItem} entworfen. Diese ist in der folgenden Abbildung \ref{classdiagramnewsitem} als UML Klassendiagramm dargestellt.
 
-\abbildungs{5cm}{../diagramme/NewsItem.pdf}{Das UML Klassendiagramm zur NewsItem Entität}{classdiagramnewsitem}
+\abbildungs{4cm}{../diagramme/NewsItem.pdf}{Das UML Klassendiagramm zur NewsItem Entität}{classdiagramnewsitem}
 
 \clearpage
 
@@ -48,17 +48,20 @@ Gemäß den funktionalen Anforderungen \nameref{fa90}, \nameref{fa100}, \nameref
 \subsection{Verschlüsselung der Kommunikation}
 Die Kommunikation über \gls{http} erfolgt lediglich unverschlüsselt.
 Daher ist es jederzeit möglich, Inhalte von versendeten Paketen mittels \gls{mitm} mitzulesen oder gar zu manipulieren.
-Um dies zu verhindern, wurde \gls{http} um einen SSL/TLS-Layer erweitert, was als HTTPS bezeichnet wird.
+Um dies zu verhindern, wurde \gls{http} um einen SSL/TLS-Layer erweitert, was als \gls{https} bezeichnet wird.
 Hierbei werden alle übertragenen Daten verschlüsselt und es erfolgt eine gegenseitige Authentifizierung durch SSL-Zertifikate.
 Mittlerweile wurde jedoch die Versionen SSL1.0 bis SSL3.0 sowie TLS1.0 als unsicher deklariert.
 Dennoch unterstützen viele Webserver diese unsicheren SSL und TLS Versionen, wie man der Abbildung \ref{ssl-tls} entnehmen kann.
+Da zur Nutzung des Bäckerei Systems eine Authentifizierung über das Internet vorausgesetzt wird, sollte der Webserver, auf dem das Backend ausgeführt wird, ausschließlich eine Verbindung per \gls{https} akzeptieren, da sonst Angreifer die Anmeldedaten abgreifen können. 
 
-\abbildungs{8cm}{images/content/ssl-tls.png}{SSL und TLS Unterstützung von Webservern \cite{ssl-tls}}{ssl-tls}
+\abbildungs{9cm}{images/content/ssl-tls.png}{SSL und TLS Unterstützung von Webservern \cite{ssl-tls}}{ssl-tls}
+
+\clearpage
 
 \subsection{Eingabevalidierung und Ausgabevalidierung}
 Webanwendungen, wie beispielsweise Foren, müssen alle Daten validieren, die durch Nutzereingaben übermittelt werden, da es sonst zur Speicherung von unzulässigen Daten oder Werten kommen kann. Eine direkte Folge hiervon äußert sich in \gls{xss}, aber auch in einem Einbruch in das System oder generellen Datenverlust.
 Daher sollten alle Daten, die eingegeben oder ausgegeben werden, stets validiert und gegebenenfalls gesäubert werden.
-
+Da über die Administrationsschnittstelle benutzerdefinierte Texte zur Erstellung und Bearbeitung von Datensätzen übertragen werden können, wäre es besser, wenn diese vorher validiert werden. Das System würde jedoch durch eine Validierung der EIngabedaten und Ausgabedaten deutlich an Komplexität gewinnen. Dieser Faktor ist also zu vernachlässigen, da die Erstellung und Bearbeitung von Datensätzen lediglich dem Administrator möglich ist und eine iOS App keine Anfälligkeit gegenüber \enquote{xss} Angriffe besitzt, da diese nicht auf \gls{html} oder JavaScript basiert.
 
 \subsection{Sichtbarkeit von privilegierten Schnittstellen}
 Webanwendungen verfügen meist über Schnittstellen zur Administration, um Daten zu pflegen und zu verwalten.
@@ -66,12 +69,11 @@ In den meisten Fällen sind diese jedoch ausschließlich intern notwendig und m�
 Dennoch sind viele Administrationsschnittstellen von außen erreichbar, was beispielsweise der Fund des Systems der Schließanlage einer JVA durch das c’t Magazin zeigt.
 Die unmittelbar Folge hiervon ist ein erhöhtes Risiko, insbesondere durch mehr Transparenz für den Angreifer.
 Daher sollte man solche Schnittstellen zur Administration \enquote{verstecken} oder extern verlagern.
-
+Generell sollte man demnach privilegierte Schnittstellen nicht öffentlich zugänglich machen. Da hierdurch jedoch ein Mehraufwand entsteht und das System nicht über überdurchschnittliche Sicherheitsanforderungen verfügt, ist dieser Faktor optional.
 
 \subsection{Sicherheitskopplung durch verbundene Systeme}
 Mittlerweile bestehen viele Webanwendungen aus einem Backend inklusive einer Datenbank und mindestens einem Frontend, was zu einer Kopplung dieser verbundenen Systeme führt. Kann ein Angreifer die Sicherheitsmechanismen eins dieser Systeme überwinden, so erfolgt eine stark verringerte Sicherheit der anderen Systeme. Dies wird auch als \enquote{Pivot-Angriff} bezeichnet.
 Daher sollte man als Gegenmaßnahme die Systeme einzeln absichern und kein \enquote{blindes Vertrauen} zwischen den Systemen implementieren.
-
 
 \subsection{Frameworks oder Bibliotheken}
 Frameworks und Bibliotheken müssen regelmäßig aktualisiert werden, um vorhandene, starke Schwachstellen auszubessern.
