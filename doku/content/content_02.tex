@@ -27,7 +27,8 @@ Die Syntax von \gls{json} besteht aus folgenden Regeln:
 	\item Datenfelder und Objekte werden durch Kommata getrennt
 \end{itemize}
 
-\section{Man In The Middle}
+\section{Sicherheit von Webanwendungen}
+\subsection{Man In The Middle}
 \gls{mitm} ist eine Angriffsform gegen Rechnernetze.
 Hierbei gibt sich der Angreifer als den Ziel-Server oder einen Router aus.
 Er greift die Pakete ab, die der Sender an den Empfänger sendet, verfügt über diese nach Wunsch und sendet sie an die vorgesehene Adresse weiter. Dabei bleibt er im schlechtesten Fall sowohl vor dem Sender als auch dem Empfänger versteckt, so dass diese von dem Angriff nichts mitbekommen. Dies wird in der Abbildung \ref{mitm} verdeutlicht.
@@ -35,21 +36,19 @@ Durch \gls{mitm} erlangt der Angreifer demnach die vollständige Kontrolle über
 
 \abbildungs{6cm}{images/content/man-in-the-middle.jpg}{Man In The Middle \cite{mitm}}{mitm}
 
-\clearpage
-
-\section{Cross-Site-Request-Forgery}
+\subsection{Cross-Site-Request-Forgery}
 \gls{csrf} ist eine Angriffsform gegen Nutzer einer Webanwendung mit dem Ziel, eine bestehende Sitzung eines Anwenders zu übernehmen.
 Hierbei wird eine Anfrage in Form einer \gls{url} durch den Angreifer so gewählt, dass die gewünschte Aktion ausgeführt wird.
 Dies geschieht zum einen, sobald der Nutzer der Webanwendung auf diese \gls{url} klickt, zum anderen aber auch durch eingebettete Bilder, Formulare oder Javascript Dateien einer Webseite. Solche eingebetteten Weblinks werden standardmäßig automatisch ausgeführt, sobald die Seite geladen wird.
 
-\section{Session-Hijacking}
+\subsection{Session-Hijacking}
 Eine Möglichkeit zur Realisierung eines Sitzungsmanagement in Webanwendungen besteht in der Nutzung von Sitzungstoken.
 Sobald sich der Nutzer über die Webseite anmeldet, wird sein Browser einen Cookie abspeichern, der den Sitzungstoken beinhaltet. Doch auch in mobilen Apps ist die Anmeldung und Authentifizierung per Sitzungstoken möglich und wird durch viele Bibliotheken unterstützt.
 In den meisten Fällen ist dieser Sitzungstoken jedoch die alleinige Authentifizierung nach der Anmeldung.
 Das heißt, dass ein Zugriff auf den Token einen direkten Zugriff auf die Sitzung ermöglicht.
 Das Abgreifen dieses Tokens wird auch als Session-Hijacking bezeichnet.
 
-\section{XSS}
+\subsection{XSS}
 \gls{xss} ist eine Angriffsform auf Webanwendung, welche eine unzureichende Eingabe- oder Ausgabevalidierung der Anwendung ausnutzt.
 Der Angreifer schleust hierbei Schadcode, welcher häufig in Javascript geschrieben wurde, in die Webanwendung ein.
 Dieser Inhalt wird nun im schlimmsten Fall auf Browsern anderer Nutzer der Anwendung ausgeführt, was unter anderem zum Datendiebstahl führen kann.
