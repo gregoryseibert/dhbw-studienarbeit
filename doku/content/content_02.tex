@@ -2,7 +2,7 @@
 \chapter{Theoretische Grundlagen}
 In diesem Kapitel werden die notwendigen Grundlagen der Technologien, die für das Backend und die iOS App notwendige sind, vermittelt.
 
-\section{REST API}
+\section{REST API} \label{rest}
 \gls{rest} \glspl{api} spielen mittlerweile eine große Rolle in der Entwicklung und finden bereits in zahlreichen Projekten namhafter Unternehmen Anwendung. Diese \glspl{api} sind sogenannte Programmierschnittstellen über das \gls{http}. Mit deren Hilfe lassen sich Daten per \gls{get}, \gls{put}, \gls{post} und \gls{delete} abrufen und verwalten.
 
 Der Sinn dahinter ist, dass man das \gls{frontend}, also das, was der Benutzer sieht, und das \gls{backend}, die Verarbeitung und Verwaltung der Daten, trennt. Dieses Vorgehen ist nicht nur sicherer, sondern auch im späteren Verlauf einfacher anzupassen, da man nun in modularen Gebieten des Projektes arbeiten kann. Deshalb bedienen sich große und bekannte Internetanbieter, wie Google und Amazon, diesem nützlichen Prinzip.
@@ -72,7 +72,7 @@ Die Interface Injection zeichnet sich dadurch aus, dass die abhängige Klasse ei
 
 \clearpage
 
-\section{Spring Framework}
+\section{Spring Framework} \label{spring-framework}
 Das Spring Framework \cite{spring} ist ein Open-Source Framework für Java basierte Enterprise Projekte. Es wurde entworfen, um die Java EE Entwicklung zu vereinfachen und zu beschleunigen \cite{spring-book-1}. Spring implementiert Funktionalitäten wie 
 \begin{itemize}
 	\item Dependency Injection (siehe \ref{dependencyinjection})
@@ -83,7 +83,7 @@ Das Spring Framework \cite{spring} ist ein Open-Source Framework für Java basie
 \end{itemize}
 Insbesondere durch das Bereitstellen der Dependency Injection wird ein Einsatz von guten Softwarekonventionen gefördert, was für ein leicht wartbares und erweiterbares Projekt sorgt \cite[S.~20]{spring-book-2}.
 
-\subsection{Spring Boot}
+\subsection{Spring Boot} \label{spring-boot}
 Spring Boot ist eine Erweiterung zum Spring Framework mit dem Fokus auf Konventionen statt Konfiguration. Dadurch ist es deutlich schneller möglich, eine produktionsfähige Applikation zu erstellen, da bereits durch das Framework die meisten Entscheidungen getroffen wurden. Dennoch lassen sich jederzeit besagte Entscheidungen durch eine eigene Konfiguration überschreiben.
 
 \subsection{Spring Security}
@@ -91,7 +91,7 @@ Spring Security erweitert das Spring Framework um einige Sicherheitsmechanismen,
 
 \clearpage
 
-\section{PostgreSQL}
+\section{PostgreSQL} \label{postgres}
 PostgreSQL, oft auch nur Postgres genannt, ist ein objektrelationales Datenbankmanagementsystem, welches als Open-Source Projekt angeboten wird.
 Es ist ein ehemaliges Projekt der \enquote{University of California, Berkeley}, das 1986 gestartet ist \cite{postgres-history}.
 Als ein SQL-Interpreter im Jahre 1994 für Postgres geschrieben, woraufhin das gesamte Projekt als Open-Source unter dem Namen Postgres95 freigegeben wurde.

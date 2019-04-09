@@ -1,15 +1,57 @@
 %!TEX root = ../hauptdatei.tex
 \chapter{Implementierung}
+In diesem Kapitel wird beschrieben, wie die Backend Komponente sowie die zwei Frontend Komponenten, eine iOS App sowie ein Web Admin-Dashboard als Referenz Implementierung entwickelt wurden. 
 
 \section{Backend}
+Das Backend des Bäckerei Systems ist die zentrale Datenverwaltung, durch die neue Datensätze angelegt oder bestehende Datensätze abgerufen, bearbeitet oder gelöscht werden können. Um neue Datensätze nachhaltig speichern zu können, besitzt das Backend eine Datenbank.
 
 \subsection{Technologie}
+Wie bereits beschrieben, soll das Backend als eine zentrale Anlaufstelle für \gls{crud} Operationen zu den Backprodukten dienen.
+\\
+Da es sich hierbei um eine Client-Server Struktur mit zwei Clients, der iOS App und dem Web Admin-Dashboard, handelt, bietet sich eine \gls{rest}-\gls{api} an, um unabhängig des Clients und der jeweilig gewählten Programmiersprache ein Datenverwaltungssystem zu schaffen. Weitere Vorteile und Besonderheiten des Konzepts \gls{rest} wurden im Kapitel \ref{rest} beschrieben. 
+\\
+Zur Implementierung des Backends mit der \gls{rest} Schnittstelle eignet sich das Spring Framework in Verbund mit Spring Boot (siehe Kapitel \ref{spring-framework}, da es, insbesondere durch voreingestellte Konfigurationen und Werkzeuge, die Arbeit erleichtert. 
+\\
+Die Datenbank wird durch das objektrelationale Datenbankmanagementsystem Postgres (siehe Kapitel \ref{postgres}) bereitgestellt.
 
 \clearpage
 
 \subsection{Architektur}
+Im Folgenden wird beschrieben, aus welchen Hauptbestandteilen sich das Spring Backend zusammensetzt.
+Diese Hauptbestandteile sind die Repository Klassen, die Service Klassen und die Controller Klassen.
+Die Controller Klassen nutzen die Service Klassen und die Service Klassen nutzen die Repository Klassen als Abstraktionsschicht über der Datenbank.
 
 \subsubsection{Repository Ebene}
+Wie bereits beschrieben, stellt die Repository Ebene eine direkte Abstraktionsschicht der Datenbank dar.
+Um eine Repository Klasse erstellen zu können, muss einem Java Interface die Annotation \enquote{Transactional} zugewiesen werden. Das Interface muss außerdem das Interface \enquote {CrudRepository} erweitern und den zu behandelnden Objekttyp sowie den Datentyp des Attributs zur Identifikation angeben. Dies ist im folgenden Listing als Beispiel aufgeführt.
+\begin{lstlisting}[language=Java]
+@Transactional
+public interface ExampleRepository extends CrudRepository<Example, Long> {
+	//optional repository methods
+}
+\end{lstlisting}
+
+Hierbei sind Methoden zum Speichern, Aktualisieren und Löschen. von Objekten bereits standardmäßig definiert.
+Da nach Kapitel \ref{datenmodell} die Objekte der Klassen \enquote{Loaf}, \enquote{Bun}, \enquote{Ingredient}, \enquote{CerealMixPercentage}, \enquote{NewsItem} und \enquote{ApplicationUser} verwaltet werden müssen, werden entsprechende Repository Klassen entwickelt.
+Um später im Objektbestand der Klassen \enquote{Loaf}, \enquote{Bun} und \enquote{Ingredient} nach dem Namen suchen zu können, ist eine Methode \enquote{findByName} (siehe folgendes Listing) notwendig.
+\begin{lstlisting}[language=Java]
+Object findByName(String name);
+\end{lstlisting}
+
+Des Weiteren soll es möglich sein. einzelne Objekte oder alle Objekte der Klassen \enquote{Loaf}, \enquote{Bun}, \enquote{Ingredient}, \enquote{CerealMixPercentage}, \enquote{NewsItem} und \enquote{ApplicationUser} abzurufen.
+Hierfür sind die Methoden \enquote{findById} und \enquote{findAll} (siehe folgendes Listing) notwendig.
+\begin{lstlisting}[language=Java]
+Object findById(long id);
+List<Object> findAll();
+\end{lstlisting}
+
+\clearpage
+
+Für die Klasse \enquote{ApplicationUser} soll es zudem möglich sein, ein Objekt über den Benutzernamen mit der Methode \enquote{findByUsername} zu finden sowie mit der Methode \enquote{existsByUsername} zu überprüfen, ob bereits ein Benutzer mit einem spezifischen Benutzernamen existiert (siehe folgendes Listing).
+\begin{lstlisting}[language=Java]
+Object findByUsername(String username);
+boolean existsByUsername(String username);
+\end{lstlisting}
 
 \clearpage
 
