@@ -52,7 +52,7 @@ Für die Klasse \enquote{ApplicationUser} soll es zudem möglich sein, ein Objek
 User findByUsername(String username);
 boolean existsByUsername(String username);
 \end{lstlisting}
-Die nach diesem Muster implementierten Repository Klassen mit den jeweiligen Methoden für \enquote{Loaf}, \enquote{Bun}, \enquote{Ingredient}, \enquote{CerealMixPercentage}, \enquote{NewsItem} und \enquote{ApplicationUser} sind in der Abbildug \ref{backend-repositories} als UML Klassendiagramm ersichtlich.
+Die nach diesem Muster implementierten Repository Klassen mit den jeweiligen Methoden für \enquote{Loaf}, \enquote{Bun}, \enquote{Ingredient}, \enquote{CerealMixPercentage}, \enquote{NewsItem} und \enquote{ApplicationUser} sind in der Abbildung \ref{backend-repositories} als UML Klassendiagramm ersichtlich.
 
 \abbildung{../diagramme/Backend-Repositories.pdf}{Die Repository Ebene des Backends}{backend-repositories}
 
@@ -88,7 +88,7 @@ public Example updateExample(long id, ExampleDTO exampleDTO) {
     }
 \end{lstlisting}
 
-Nach diesem Schema werden die Service Klassen für \enquote{Loaf}, \enquote{Bun}, \enquote{Ingredient}, \enquote{CerealMixPercentage}, \enquote{NewsItem} und \enquote{ApplicationUser} implementiert.
+Nach diesem Schema werden die Service Klassen für \enquote{Loaf}, \enquote{Bun}, \enquote{Ingredient}, \enquote{CerealMixPercentage}, \enquote{NewsItem} und \enquote{ApplicationUser} implementiert. Des Weiteren ist eine Service Klasse mit dem Namen \enquote{FileSystemStorageService} notwendig, welche die Speicherung von Daten auf dem Dateisystem ermöglicht (siehe Abbildung \ref{backend-services}). 
 
 \clearpage
 
@@ -97,6 +97,34 @@ Nach diesem Schema werden die Service Klassen für \enquote{Loaf}, \enquote{Bun}
 \clearpage
 
 \subsubsection{Controller Ebene}
+Mit der Repository Ebene ist bereits eine Abstraktionsschicht über der Datenbank und mit der Service Ebene ist eine Abstraktionsschicht für bereitgestellte Funktionalitäten vorhanden. Um nun mit deren Hilfe eine \gls{rest} Schnittstelle anbieten zu können, ist die Controller Ebene notwendig.
+Eine Controller Klasse kann mittels der Annotation \enquote{RestController} erstellt werden, wobei der Methoden übergreifende Basis-Endpunkt durch die Annotation \enquote{RequestMapping} deklariert werden kann.
+\begin{lstlisting}[language=Java]
+@RestController
+@RequestMapping("/example")
+public class ExampleController {
+	//controller methods
+}
+\end{lstlisting}
+
+Eine Methode kann nun mit Minimalaufwand nach dem folgenden Beispiel implementiert werden.
+\begin{lstlisting}[language=Java]
+@GetMapping
+public List<Example> getAllExamples() {
+        return exampleService.getAllExamples();
+}
+\end{lstlisting}
+
+Damit eine Methode lediglich durch Administratoren aufgerufen werden können, ist die Annotation \enquote{PreAuthorize} notwendig.
+\begin{lstlisting}[language=Java]
+@PostMapping
+@PreAuthorize("hasRole('ROLE_ADMIN')")
+public Example createExample(@RequestBody ExampleDTO exampleDTO) {
+	return exampleService.createExample(exampleDTO);
+}
+\end{lstlisting}
+
+Nach diesem Schema werden die Controller Klassen für \enquote{Loaf}, \enquote{Bun}, \enquote{Ingredient}, \enquote{CerealMixPercentage}, \enquote{NewsItem} und \enquote{ApplicationUser} implementiert (siehe Abbildung \ref{backend-controllers}). 
 
 \clearpage
 
