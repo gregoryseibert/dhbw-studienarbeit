@@ -35,31 +35,60 @@ Hierbei sind Methoden zum Speichern, Aktualisieren und Löschen. von Objekten be
 Da nach Kapitel \ref{datenmodell} die Objekte der Klassen \enquote{Loaf}, \enquote{Bun}, \enquote{Ingredient}, \enquote{CerealMixPercentage}, \enquote{NewsItem} und \enquote{ApplicationUser} verwaltet werden müssen, werden entsprechende Repository Klassen entwickelt.
 Um später im Objektbestand der Klassen \enquote{Loaf}, \enquote{Bun} und \enquote{Ingredient} nach dem Namen suchen zu können, ist eine Methode \enquote{findByName} (siehe folgendes Listing) notwendig.
 \begin{lstlisting}[language=Java]
-Object findByName(String name);
+Example findByName(String name);
 \end{lstlisting}
 
 Des Weiteren soll es möglich sein. einzelne Objekte oder alle Objekte der Klassen \enquote{Loaf}, \enquote{Bun}, \enquote{Ingredient}, \enquote{CerealMixPercentage}, \enquote{NewsItem} und \enquote{ApplicationUser} abzurufen.
 Hierfür sind die Methoden \enquote{findById} und \enquote{findAll} (siehe folgendes Listing) notwendig.
 \begin{lstlisting}[language=Java]
-Object findById(long id);
-List<Object> findAll();
+Example findById(long id);
+List<Example> findAll();
 \end{lstlisting}
 
 \clearpage
 
 Für die Klasse \enquote{ApplicationUser} soll es zudem möglich sein, ein Objekt über den Benutzernamen mit der Methode \enquote{findByUsername} zu finden sowie mit der Methode \enquote{existsByUsername} zu überprüfen, ob bereits ein Benutzer mit einem spezifischen Benutzernamen existiert (siehe folgendes Listing).
 \begin{lstlisting}[language=Java]
-Object findByUsername(String username);
+User findByUsername(String username);
 boolean existsByUsername(String username);
 \end{lstlisting}
-
-\clearpage
+Die nach diesem Muster implementierten Repository Klassen mit den jeweiligen Methoden für \enquote{Loaf}, \enquote{Bun}, \enquote{Ingredient}, \enquote{CerealMixPercentage}, \enquote{NewsItem} und \enquote{ApplicationUser} sind in der Abbildug \ref{backend-repositories} als UML Klassendiagramm ersichtlich.
 
 \abbildung{../diagramme/Backend-Repositories.pdf}{Die Repository Ebene des Backends}{backend-repositories}
 
 \clearpage
 
 \subsubsection{Service Ebene}
+Die Service Ebene verwendet die Repository Ebene als Abstraktionsschicht über der Datenbank, um vordefinierte Methoden zum Erstellen, Anzeigen, Bearbeiten, und Löschen von Datensätzen zu ermöglichen. Diese Service Klassen werden anschließend von Controller Klassen verwendet und stellen somit selbst eine Abstraktionsschicht dar.
+Um eine Klasse als einen Spring Service deklarieren zu können, ist die Verwendung der Annotation \enquote{Service} nowendigt.
+\begin{lstlisting}[language=Java]
+@Service
+public class ExampleService {
+	//service methods
+}
+\end{lstlisting}
+
+Da eine Referenz zur jeweiligen Instanz einer Repository Klasse notwendig ist, wird diese durch die Annotation \enquote{Autowired} per Dependency Injection bereitgestellt. Analog gilt des auch für die ModelMapper Klasse, um das Architekturmuster \gls{dto} zu unterstützen.
+\begin{lstlisting}[language=Java]
+@Autowired
+private ModelMapper modelMapper;
+
+@Autowired
+private ExampleRepository exampleRepository;
+\end{lstlisting}
+
+Hiermit ist die Implementierung neuer Funktionen in den Service Klassen mit Minimalaufwand möglich, wie in dem folgenden Listing zu sehen ist.
+\begin{lstlisting}[language=Java]
+public Example updateExample(long id, ExampleDTO exampleDTO) {
+        Example existingExample = getExampleById(id);
+
+        modelMapper.map(exampleDTO, existingExample);
+
+        return exampleRepository.save(existingExample);
+    }
+\end{lstlisting}
+
+Nach diesem Schema werden die Service Klassen für \enquote{Loaf}, \enquote{Bun}, \enquote{Ingredient}, \enquote{CerealMixPercentage}, \enquote{NewsItem} und \enquote{ApplicationUser} implementiert.
 
 \clearpage
 
