@@ -8,7 +8,7 @@
 
 import Foundation
 
-class BakedGood: Codable {
+class BakedGood: Codable, Equatable {
     let id: Int
     var name, characteristic: String
     var weight, kcal, fat, carbohydrates, protein: Double
@@ -56,5 +56,9 @@ class BakedGood: Codable {
         return ingredients.map{(ingredient) -> String in
             return ingredient.toString()
         }.joined(separator: ", ")
+    }
+    
+    static func == (lhs: BakedGood, rhs: BakedGood) -> Bool {
+        return lhs.id == rhs.id
     }
 }

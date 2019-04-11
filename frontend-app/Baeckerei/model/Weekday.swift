@@ -18,6 +18,6 @@ enum Weekday: String, Codable {
     static func index(of weekday: Weekday) -> Int {
         let elements = [MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY, SATURDAY, SUNDAY]
         
-        return elements.index(of: weekday)!
+        return elements.firstIndex(of: weekday)!
     }
 }

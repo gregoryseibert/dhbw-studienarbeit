@@ -38,7 +38,7 @@ class BakeryDatasource {
     }()
 
     private lazy var restApiHandler: RestApiHandler = {
-        return RestApiHandler(urlScheme: "https", urlHost: "immense-earth-39143.herokuapp.com")
+        return RestApiHandler(urlScheme: "https", urlHost: "bakerybackend.grse.me")
     }()
     
     func login(successCallback: @escaping () -> ()) {

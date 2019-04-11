@@ -18,7 +18,7 @@ enum AllergyType: String, Codable {
     static func index(of allergenType: AllergyType) -> Int {
         let elements = [EGG, NUT, MILK, GLUTEN]
         
-        return elements.index(of: allergenType)!
+        return elements.firstIndex(of: allergenType)!
     }
     
     static func fromString(string: String) -> AllergyType? {
