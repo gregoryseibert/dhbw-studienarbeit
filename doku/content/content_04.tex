@@ -9,8 +9,8 @@ Damit der Administrator die Daten möglichst komfortabel pflegen kann und es zus
 Das Frontend muss insgesamt zwei Hauptfunktionen erfüllen.
 
 \begin{enumerate}
-	\item Einsehen der Backprodukte für Endkunden (Funktionale Anforderungen FA30 sowie FA40 und FA80 sowie FA90)
-	\item Pflegen der Daten durch den Administrator (Funktionale Anforderungen FA40 bis FA70 und FA100 bis FA120)
+	\item Einsehen der Backprodukte für Endkunden (Funktionale Anforderungen \nameref{fa30}, \nameref{fa40}, \nameref{fa80} und \nameref{fa90})
+	\item Pflegen der Daten durch den Administrator (Funktionale Anforderungen \nameref{fa40} bis \nameref{fa70} und \nameref{fa100} bis \nameref{fa120})
 \end{enumerate}
 
 Die erste Option zur Entwicklung des Frontends besteht darin, dass eine zusammenfassende Anwendung entwickelt wird, welche die beiden Hauptfunktionen vereint. Hierbei können sich die Endkunden die Backprodukte anzeigen lassen und der Administrator kann, nachdem er sich gemäß der nichtfunktionalen Anforderung \nameref{nfa10} authentifiziert hat, die Daten pflegen. Dies ließe sich mittels einer nativen iOS App realisieren.
@@ -22,7 +22,7 @@ Eine einzelne App für das Einsehen und Pflegen der Daten zu entwickeln, würde 
 \\
 Die getrennte Entwicklung zweier Frontend Anwendungen bedeutet einen Mehraufwand zur Entwicklung. Jedoch wird das Prinzip \gls{soc} eingehalten und der Administrator des Systems hat die Entscheidungsfreiheit zur Wahl der Hardware, über die er die Webseite zur Administration aufruft.
 \\
-Trotz des erhöhten Aufwands zur Entwicklung fällt die Entscheidung auf die zweite Option, die Entwicklung einer iOS App für die Endkunden und einer Webseite zur Administration der Daten. Die Verwaltung der Daten durch den Administrator soll hierbei über ein Web Admin-Dashboard geschehen. 
+Trotz des erhöhten Aufwands zur Entwicklung fällt die Entscheidung auf die zweite Option, die Entwicklung einer iOS App für die Endkunden und einer Webseite zur Administration der Daten. Der bessere Komfort beim Pflegen der Daten sowie die erhöhte Sicherheit sind für das System von größerer Bedeutung als dieser Nachteil. Die Verwaltung der Daten durch den Administrator soll hierbei über ein Web Admin-Dashboard geschehen. 
 Diese Softwarearchitektur ist in der folgenden Abbildung \ref{componentdiagramsystem} als UML Komponentendiagramm dargestellt.
 
 \abbildung{../diagramme/SystemComponents.pdf}{Das UML Komponentendiagramm für das System, bestehend aus Backend, iOS App und Web Admin-Dashboard}{componentdiagramsystem}
@@ -30,7 +30,7 @@ Diese Softwarearchitektur ist in der folgenden Abbildung \ref{componentdiagramsy
 \clearpage
 
 \section{Rollenmodell} \label{rollenmodell}
-Die funktionale Anforderung \nameref{fa20} setzt voraus, dass der Administrator die Daten über eine zentrale Schnittstelle pflegen kann. Dabei muss dem Administrator die Möglichkeit gegeben werden, nach den funktionalen Anforderungen \nameref{fa50}, \nameref{fa60}, \nameref{fa70}, \nameref{fa100}, \nameref{fa110}, und \nameref{fa120}, Backprodukte und Neuigkeiten erstellen, bearbeiten und löschen zu können.
+Die funktionale Anforderung \nameref{fa20} setzt voraus, dass der Administrator die Daten über eine zentrale Schnittstelle pflegen kann. Dabei muss dem Administrator die Möglichkeit gegeben werden, nach den funktionalen Anforderungen \nameref{fa50}, \nameref{fa60}, \nameref{fa70}, \nameref{fa100}, \nameref{fa110} und \nameref{fa120}, Backprodukte und Neuigkeiten erstellen, bearbeiten und löschen zu können.
 Des Weiteren muss es sowohl dem Administrator als auch dem Benutzer des Systems, gemäß den funktionalen Anforderungen \nameref{fa30}, \nameref{fa40}, \nameref{fa80} und \nameref{fa90}, möglich sein, sich die Daten zu den Backprodukten und Neuigkeiten anzeigen zu lassen. Hierbei ist nach den nichtfunktionalen Anforderungen \nameref{nfa10} und \nameref{nfa20} zu beachten, dass die Administration der Daten lediglich bei Existenz einer autorisierten Sitzung des Administrators und das Abfragen der Daten lediglich bei Existenz einer autorisierten Sitzung des Benutzers erlaubt sein darf.
 \\
 Hieraus folgt, dass es analog zwei Rollen geben soll. Zum einen der Benutzer und zum anderen der Administrator, welcher die für den Benutzer verfügbaren Funktionen erbt. Beiden soll es möglich sein, sich am System anzumelden.
@@ -60,15 +60,14 @@ Gemäß den funktionalen Anforderungen \nameref{fa90}, \nameref{fa100}, \nameref
 \clearpage
 
 \section{Technologie des Backends}
-
 Wie bereits beschrieben, soll das Backend als eine zentrale Anlaufstelle für \gls{crud} Operationen zu den Backprodukten dienen.
 Da es sich hierbei um eine Client-Server Struktur handelt, eignet sich eine \gls{rest}-\gls{api} an, um unabhängig des Clients und der jeweilig gewählten Programmiersprache ein Datenverwaltungssystem zu schaffen. Weitere Vorteile und Besonderheiten des Konzepts \gls{rest} wurden im Kapitel \ref{rest} beschrieben. 
 Drei beliebte Optionen zum Entwickeln eines Backends sind PHP, Django sowie Spring Boot.
 An Hand der Kriterien Quellcode, Community, verfügbare Bibliotheken, Aufwand zur Programmierung einer \gls{rest}-\gls{api} sowie der verwendeten Programmiersprache soll eine Auswahl zur zu verwendenden Technologie getroffen werden. Da Spring Boot bereits im Kapitel \ref{spring-boot} erläutert wurde, wird im Folgenden lediglich PHP und Django erklärt.
-
+\\
 PHP ist eine weit verbreitete Open-Source Skriptsprache, welche in der Webprogrammierung bereits seit Jahren ihre Verwendung findet. Im Gegensatz zu Javascript wird PHP durch den Server ausgeführt, so dass HTML für den Benutzer des Webdienstes generiert wird. Hierbei kann der Benutzer den Code des Webdienstes in der Regel, das heißt bei einem korrekt konfigurierten Webserver, nicht einsehen.
 PHP wird regelmäßig verbessert, es gibt mittlerweile einige robuste Bibliotheken und die Programmiersprache ist für Anfänger leicht zu lernen.
-
+\\
 Django ist ein Web Framework, welches ebenfalls als Open-Source Software verfügbar ist und auf der Programmiersprache Python basiert. Es verfügt über eine vorkonfigurierte Anbindung an Datenbanksysteme, wie es auch bei Spring Boot der Fall ist, und über einige Module, welche beispielsweise ein Authentifizierungssystem bereitstellen.
 
 \begin{table}[htbp]
