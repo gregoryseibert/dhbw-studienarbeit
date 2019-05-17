@@ -3,10 +3,26 @@
 
 \section{Systemarchitektur} \label{systemarchitektur}
 Die funktionalen Anforderungen \nameref{fa10} sowie \nameref{fa20} fordern eine zentrale Datenverwaltung.
-Um dies gewährleisten zu können, wird das System in zwei Komponentengruppen, dem Backend und das Frontend, aufgeteilt.
+Um dies gewährleisten zu können, wird das System in zwei Komponentengruppen, dem Backend und Frontend, aufgeteilt.
 Das Backend soll eine Anbindung zu einer Datenbank besitzen, um neue sowie bereits vorhandene Daten speichern zu können.
-Damit der Administrator die Daten möglichst komfortabel pflegen kann und es zusätzlich dem Administrator und dem Benutzer möglich sein soll, die Daten einzusehen, ist ein Frontend notwendig. Die Verwaltung der Daten durch den Administrator soll hierbei über ein Web Admin-Dashboard geschehen. Die Visualisierung der Daten als Information soll über eine iOS Applikation, gemäß der nichtfunktionalen Anforderung \nameref{nfa30}, ermöglicht werden.
+Damit der Administrator die Daten möglichst komfortabel pflegen kann und es zusätzlich dem Administrator und dem Benutzer möglich sein soll, die Daten einzusehen, ist ein Frontend notwendig.
+Das Frontend muss insgesamt zwei Hauptfunktionen erfüllen.
+
+\begin{enumerate}
+	\item Einsehen der Backprodukte für Endkunden (Funktionale Anforderungen FA30 sowie FA40 und FA80 sowie FA90)
+	\item Pflegen der Daten durch den Administrator (Funktionale Anforderungen FA40 bis FA70 und FA100 bis FA120)
+\end{enumerate}
+
+Die erste Option zur Entwicklung des Frontends besteht darin, dass eine zusammenfassende Anwendung entwickelt wird, welche die beiden Hauptfunktionen vereint. Hierbei können sich die Endkunden die Backprodukte anzeigen lassen und der Administrator kann, nachdem er sich gemäß der nichtfunktionalen Anforderung \nameref{nfa10} authentifiziert hat, die Daten pflegen. Dies ließe sich mittels einer nativen iOS App realisieren.
 \\
+Die zweite Option ist die getrennte Entwicklung zweier Frontend Anwendungen, welche je eine der Hauptfunktionen anbieten.
+Hierfür eignet sich eine native iOS App zum Einsehen der Backprodukte sowie eine Webseite zur Administration.
+\\
+Eine einzelne App für das Einsehen und Pflegen der Daten zu entwickeln, würde den kleineren Entwicklungsaufwand bedeuten, da grundlegende, abstrahierte Klassen zur Kommunikation mit dem Backend für beide abgetrennte Bereiche benutzt werden können. Jedoch kommt mit diesem Vorteil auch ein direkter Nachteil einher. Die Fusion des Administrationsbereichs mit dem Bereich, welcher für Endkunden vorgesehen ist, würde eine Verletzung des Prinzips \gls{soc} bedeuten, was zu einer verringerten Sicherheit des Gesamtsystems führt. Des Weiteren ist das Pflegen von größeren Datensätzen auf einem Tablet im Vergleich zu einem PC unkomfortabel.
+\\
+Die getrennte Entwicklung zweier Frontend Anwendungen bedeutet einen Mehraufwand zur Entwicklung. Jedoch wird das Prinzip \gls{soc} eingehalten und der Administrator des Systems hat die Entscheidungsfreiheit zur Wahl der Hardware, über die er die Webseite zur Administration aufruft.
+\\
+Trotz des erhöhten Aufwands zur Entwicklung fällt die Entscheidung auf die zweite Option, die Entwicklung einer iOS App für die Endkunden und einer Webseite zur Administration der Daten. Die Verwaltung der Daten durch den Administrator soll hierbei über ein Web Admin-Dashboard geschehen. 
 Diese Softwarearchitektur ist in der folgenden Abbildung \ref{componentdiagramsystem} als UML Komponentendiagramm dargestellt.
 
 \abbildung{../diagramme/SystemComponents.pdf}{Das UML Komponentendiagramm für das System, bestehend aus Backend, iOS App und Web Admin-Dashboard}{componentdiagramsystem}
@@ -43,49 +59,7 @@ Gemäß den funktionalen Anforderungen \nameref{fa90}, \nameref{fa100}, \nameref
 
 \clearpage
 
-\section{Sicherheit}
-
-\subsection{Verschlüsselung der Kommunikation}
-Die Kommunikation über \gls{http} erfolgt lediglich unverschlüsselt.
-Daher ist es jederzeit möglich, Inhalte von versendeten Paketen mittels \gls{mitm} mitzulesen oder gar zu manipulieren.
-Um dies zu verhindern, wurde \gls{http} um einen SSL/TLS-Layer erweitert, was als \gls{https} bezeichnet wird.
-Hierbei werden alle übertragenen Daten verschlüsselt und es erfolgt eine gegenseitige Authentifizierung durch SSL-Zertifikate.
-Mittlerweile wurde jedoch die Versionen SSL1.0 bis SSL3.0 sowie TLS1.0 als unsicher deklariert.
-Dennoch unterstützen viele Webserver diese unsicheren SSL und TLS Versionen, wie man der Abbildung \ref{ssl-tls} entnehmen kann.
-Da zur Nutzung des Bäckerei Systems eine Authentifizierung über das Internet vorausgesetzt wird, sollte der Webserver, auf dem das Backend ausgeführt wird, ausschließlich eine Verbindung per \gls{https} akzeptieren, da sonst Angreifer die Anmeldedaten abgreifen können. 
-
-\abbildungs{9cm}{images/content/ssl-tls.png}{SSL und TLS Unterstützung von Webservern \cite{ssl-tls}}{ssl-tls}
-
-\clearpage
-
-\subsection{Eingabevalidierung und Ausgabevalidierung}
-Webanwendungen, wie beispielsweise Foren, müssen alle Daten validieren, die durch Nutzereingaben übermittelt werden, da es sonst zur Speicherung von unzulässigen Daten oder Werten kommen kann. Eine direkte Folge hiervon äußert sich in \gls{xss}, aber auch in einem Einbruch in das System oder generellen Datenverlust.
-Daher sollten alle Daten, die eingegeben oder ausgegeben werden, stets validiert und gegebenenfalls gesäubert werden.
-Da über die Administrationsschnittstelle benutzerdefinierte Texte zur Erstellung und Bearbeitung von Datensätzen übertragen werden können, wäre es besser, wenn diese vorher validiert werden. Das System würde jedoch durch eine Validierung der EIngabedaten und Ausgabedaten deutlich an Komplexität gewinnen. Dieser Faktor ist also zu vernachlässigen, da die Erstellung und Bearbeitung von Datensätzen lediglich dem Administrator möglich ist und eine iOS App keine Anfälligkeit gegenüber \enquote{xss} Angriffe besitzt, da diese nicht auf \gls{html} oder JavaScript basiert.
-
-\subsection{Sichtbarkeit von privilegierten Schnittstellen}
-Webanwendungen verfügen meist über Schnittstellen zur Administration, um Daten zu pflegen und zu verwalten.
-In den meisten Fällen sind diese jedoch ausschließlich intern notwendig und müssen nicht öffentlich erreichbar sein.
-Dennoch sind viele Administrationsschnittstellen von außen erreichbar, was beispielsweise der Fund des Systems der Schließanlage einer JVA durch das c’t Magazin zeigt.
-Die unmittelbar Folge hiervon ist ein erhöhtes Risiko, insbesondere durch mehr Transparenz für den Angreifer.
-Daher sollte man solche Schnittstellen zur Administration \enquote{verstecken} oder extern verlagern.
-Generell sollte man demnach privilegierte Schnittstellen nicht öffentlich zugänglich machen. Da hierdurch jedoch ein Mehraufwand entsteht und das System nicht über überdurchschnittliche Sicherheitsanforderungen verfügt, ist dieser Faktor optional.
-
-\subsection{Sicherheitskopplung durch verbundene Systeme}
-Mittlerweile bestehen viele Webanwendungen aus einem Backend inklusive einer Datenbank und mindestens einem Frontend, was zu einer Kopplung dieser verbundenen Systeme führt. Kann ein Angreifer die Sicherheitsmechanismen eins dieser Systeme überwinden, so erfolgt eine stark verringerte Sicherheit der anderen Systeme. Dies wird auch als \enquote{Pivot-Angriff} bezeichnet.
-Daher sollte man als Gegenmaßnahme die Systeme einzeln absichern und kein \enquote{blindes Vertrauen} zwischen den Systemen implementieren.
-
-\subsection{Frameworks oder Bibliotheken}
-Frameworks und Bibliotheken müssen regelmäßig aktualisiert werden, um vorhandene, starke Schwachstellen auszubessern.
-Webanwendungen, die Frameworks und Bibliotheken verwenden, müssen daher regelmäßig ihre Abhängigkeiten auf den aktuellen Stand bringen. Ebenfalls sollten nur vertrauenswürdige Bibliotheken und Frameworks verwendet werden. Doch auch die standardmäßigen Sicherheitseinstellungen \enquote{Security by Default} solcher Programme sind meist unzureichend und verlangen einer Maßnahmenüberprüfung.
-Ansonsten drohen Folgen wie beispielsweise eine Systemkompromittierung, bei der ein Angreifer vollen Zugriff auf das System erlangt. 
-Ein Beispiel hierzu ist die Schwachstelle \enquote{Heartbleed} in OpenSSL.
-
-\clearpage
-
-\section{Technologie}
-
-\subsection{Backend}
+\section{Technologie des Backends}
 
 Wie bereits beschrieben, soll das Backend als eine zentrale Anlaufstelle für \gls{crud} Operationen zu den Backprodukten dienen.
 Da es sich hierbei um eine Client-Server Struktur handelt, eignet sich eine \gls{rest}-\gls{api} an, um unabhängig des Clients und der jeweilig gewählten Programmiersprache ein Datenverwaltungssystem zu schaffen. Weitere Vorteile und Besonderheiten des Konzepts \gls{rest} wurden im Kapitel \ref{rest} beschrieben. 
@@ -115,20 +89,42 @@ Zur Implementierung des Backends mit der \gls{rest} Schnittstelle eignet sich de
 \\
 Die Datenbank wird durch das objektrelationale Datenbankmanagementsystem Postgres (siehe Kapitel \ref{postgres}) bereitgestellt.
 
+\clearpage
 
-\subsection{Frontend}
-Das Frontend muss insgesamt zwei Hauptfunktionen erfüllen.
+\section{Sicherheit}
 
-\begin{enumerate}
-	\item Einsehen der Backprodukte für Endkunden (Funktionale Anforderungen FA30 sowie FA40 und FA80 sowie FA90)
-	\item Pflegen der Daten durch den Administrator (Funktionale Anforderungen FA40 bis FA70 und FA100 bis FA120)
-\end{enumerate}
+\subsection{Verschlüsselung der Kommunikation}
+Die Kommunikation über \gls{http} erfolgt lediglich unverschlüsselt.
+Daher ist es jederzeit möglich, Inhalte von versendeten Paketen mittels \gls{mitm} mitzulesen oder gar zu manipulieren.
+Um dies zu verhindern, wurde \gls{http} um einen SSL/TLS-Layer erweitert, was als \gls{https} bezeichnet wird.
+Hierbei werden alle übertragenen Daten verschlüsselt und es erfolgt eine gegenseitige Authentifizierung durch SSL-Zertifikate.
+Mittlerweile wurde jedoch die Versionen SSL1.0 bis SSL3.0 sowie TLS1.0 als unsicher deklariert.
+Dennoch unterstützen viele Webserver diese unsicheren SSL und TLS Versionen, wie man der Abbildung \ref{ssl-tls} entnehmen kann.
+Da zur Nutzung des Bäckerei Systems eine Authentifizierung über das Internet vorausgesetzt wird, sollte der Webserver, auf dem das Backend ausgeführt wird, ausschließlich eine Verbindung per \gls{https} akzeptieren, da sonst Angreifer die Anmeldedaten abgreifen können. 
 
-Die erste Option zur Entwicklung des Frontends besteht darin, dass eine zusammenfassende Anwendung entwickelt wird, welches die beiden Hauptfunktionen vereint. Hierbei können sich die Endkunden die Backprodukte anzeigen lassen und der Administrator, nachdem er sich nach der nichtfunktionalen Anforderung \ref{nfa10} authentifiziert hat, die Daten pflegen. Dies ließe sich mittels einer nativen iOS App realisieren.
-Die zweite Option ist die getrennte Entwicklung zweier Frontend Anwendungen, welche je eine der Hauptfunktionen anbieten.
-Hierfür eignet sich eine native iOS App zum Einsehen der Backprodukte sowie eine Webseite zur Administration.
+\abbildungs{9cm}{images/content/ssl-tls.png}{SSL und TLS Unterstützung von Webservern \cite{ssl-tls}}{ssl-tls}
 
-Eine einzelne App für das Einsehen und Pflegen der Daten zu entwickeln, würde den kleineren Entwicklungsaufwand bedeuten, da grundlegende, abstrahierte Klassen zur Kommunikation mit dem Backend für beide abgetrennte Bereiche benutzt werden können. Jedoch kommt mit diesem Vorteil auch ein direkter Nachteil einher. Die Fusion des Administrationsbereichs mit dem Bereich, welcher für Endkunden vorgesehen ist, würde eine Verletzung des Prinzips \gls{soc} bedeuten, was zu einer verringerten Sicherheit des Gesamtsystems führt. Des Weiteren ist das Pflegen von größeren Datensätzen auf einem Tablet im Vergleich zu einem PC unkomfortabel.
-Die getrennte Entwicklung zweier Frontend Anwendungen bedeutet einen Mehraufwand zur Entwicklung. Jedoch wird das Prinzip \gls{soc} eingehalten und der Administrator des Systems hat die Entscheidungsfreiheit zur Wahl der Hardware, über die er die Webseite zur Administration aufruft.
+\clearpage
 
-Trotz des erhöhten Aufwands zur Entwicklung fällt die Entscheidung auf die zweite Option, die Entwicklung einer iOS App für die Endkunden und einer Webseite zur Administration der Daten.
+\subsection{Eingabevalidierung und Ausgabevalidierung}
+Webanwendungen, wie beispielsweise Foren, müssen alle Daten validieren, die durch Nutzereingaben übermittelt werden, da es sonst zur Speicherung von unzulässigen Daten oder Werten kommen kann. Eine direkte Folge hiervon äußert sich in \gls{xss}, aber auch in einem Einbruch in das System oder generellen Datenverlust.
+Daher sollten alle Daten, die eingegeben oder ausgegeben werden, stets validiert und gegebenenfalls gesäubert werden.
+Da über die Administrationsschnittstelle benutzerdefinierte Texte zur Erstellung und Bearbeitung von Datensätzen übertragen werden können, ist es von Vorteil, wenn diese vorher validiert werden. Das System würde jedoch durch eine Validierung der Eingabedaten und Ausgabedaten deutlich an Komplexität gewinnen. Dieser Faktor ist also zu vernachlässigen, da die Erstellung und Bearbeitung von Datensätzen lediglich dem Administrator möglich ist und eine iOS App keine Anfälligkeit gegenüber \enquote{xss} Angriffe besitzt, da diese nicht auf \gls{html} und JavaScript basiert.
+
+\subsection{Sichtbarkeit von privilegierten Schnittstellen}
+Webanwendungen verfügen meist über Schnittstellen zur Administration, um Daten zu pflegen und zu verwalten.
+In den meisten Fällen sind diese jedoch ausschließlich intern notwendig und müssen nicht öffentlich erreichbar sein.
+Dennoch sind viele Administrationsschnittstellen von außen erreichbar, was beispielsweise der Fund des Systems der Schließanlage einer JVA durch das c’t Magazin zeigt.
+Die unmittelbar Folge hiervon ist ein erhöhtes Risiko, insbesondere durch mehr Transparenz für den Angreifer.
+Daher sollte man solche Schnittstellen zur Administration \enquote{verstecken} oder extern verlagern.
+Generell sollte man demnach privilegierte Schnittstellen nicht öffentlich zugänglich machen. Da hierdurch jedoch ein Mehraufwand entsteht und das System nicht über überdurchschnittliche Sicherheitsanforderungen verfügt, ist dieser Faktor optional.
+
+\subsection{Sicherheitskopplung durch verbundene Systeme}
+Mittlerweile bestehen viele Webanwendungen aus einem Backend inklusive einer Datenbank und mindestens einem Frontend, was zu einer Kopplung dieser verbundenen Systeme führt. Kann ein Angreifer die Sicherheitsmechanismen eins dieser Systeme überwinden, so erfolgt eine stark verringerte Sicherheit der anderen Systeme. Dies wird auch als \enquote{Pivot-Angriff} bezeichnet.
+Daher sollte man als Gegenmaßnahme die Systeme einzeln absichern und kein \enquote{blindes Vertrauen} zwischen den Systemen implementieren.
+
+\subsection{Frameworks oder Bibliotheken}
+Frameworks und Bibliotheken müssen regelmäßig aktualisiert werden, um vorhandene, starke Schwachstellen auszubessern.
+Webanwendungen, die Frameworks und Bibliotheken verwenden, müssen daher regelmäßig ihre Abhängigkeiten auf den aktuellen Stand bringen. Ebenfalls sollten nur vertrauenswürdige Bibliotheken und Frameworks verwendet werden. Doch auch die standardmäßigen Sicherheitseinstellungen \enquote{Security by Default} solcher Programme sind meist unzureichend und verlangen einer Maßnahmenüberprüfung.
+Ansonsten drohen Folgen wie beispielsweise eine Systemkompromittierung, bei der ein Angreifer vollen Zugriff auf das System erlangt. 
+Ein Beispiel hierzu ist die Schwachstelle \enquote{Heartbleed} in OpenSSL.
