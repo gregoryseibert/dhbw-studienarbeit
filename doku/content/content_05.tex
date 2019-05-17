@@ -5,15 +5,6 @@ In diesem Kapitel wird beschrieben, wie die Backend Komponente sowie die zwei Fr
 \section{Backend}
 Das Backend des Bäckerei Systems ist die zentrale Datenverwaltung, durch die neue Datensätze angelegt oder bestehende Datensätze abgerufen, bearbeitet oder gelöscht werden können. Um neue Datensätze nachhaltig speichern zu können, besitzt das Backend eine Datenbank.
 
-\subsection{Technologie}
-Wie bereits beschrieben, soll das Backend als eine zentrale Anlaufstelle für \gls{crud} Operationen zu den Backprodukten dienen.
-\\
-Da es sich hierbei um eine Client-Server Struktur mit zwei Clients, der iOS App und dem Web Admin-Dashboard, handelt, bietet sich eine \gls{rest}-\gls{api} an, um unabhängig des Clients und der jeweilig gewählten Programmiersprache ein Datenverwaltungssystem zu schaffen. Weitere Vorteile und Besonderheiten des Konzepts \gls{rest} wurden im Kapitel \ref{rest} beschrieben. 
-\\
-Zur Implementierung des Backends mit der \gls{rest} Schnittstelle eignet sich das Spring Framework in Verbund mit Spring Boot (siehe Kapitel \ref{spring-framework}, da es, insbesondere durch voreingestellte Konfigurationen und Werkzeuge, die Arbeit erleichtert. 
-\\
-Die Datenbank wird durch das objektrelationale Datenbankmanagementsystem Postgres (siehe Kapitel \ref{postgres}) bereitgestellt.
-
 \clearpage
 
 \subsection{Architektur}
@@ -157,10 +148,6 @@ Nach diesem Schema werden die Controller Klassen für \enquote{Loaf}, \enquote{B
 \clearpage
 
 \section{Web Admin-Dashboard}
-
-\subsection{Technologie}
-
-\clearpage
 
 \subsection{Architektur}
 

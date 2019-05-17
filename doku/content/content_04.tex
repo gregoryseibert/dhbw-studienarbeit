@@ -81,3 +81,56 @@ Webanwendungen, die Frameworks und Bibliotheken verwenden, müssen daher regelm�
 Ansonsten drohen Folgen wie beispielsweise eine Systemkompromittierung, bei der ein Angreifer vollen Zugriff auf das System erlangt. 
 Ein Beispiel hierzu ist die Schwachstelle \enquote{Heartbleed} in OpenSSL.
 
+\clearpage
+
+\section{Technologie}
+
+\subsection{Backend}
+
+Wie bereits beschrieben, soll das Backend als eine zentrale Anlaufstelle für \gls{crud} Operationen zu den Backprodukten dienen.
+\\
+Da es sich hierbei um eine Client-Server Struktur mit zwei Clients, der iOS App und dem Web Admin-Dashboard, handelt, bietet sich eine \gls{rest}-\gls{api} an, um unabhängig des Clients und der jeweilig gewählten Programmiersprache ein Datenverwaltungssystem zu schaffen. Weitere Vorteile und Besonderheiten des Konzepts \gls{rest} wurden im Kapitel \ref{rest} beschrieben. 
+
+Drei beliebte Optionen zum Entwickeln sind PHP, Django sowie Spring Boot.
+An Hand der Kriterien Quellcode, Community, verfügbare Bibliotheken, Aufwand zur Programmierung einer \gls{rest}-\gls{api} sowie der verwendeten Programmiersprache soll eine Auswahl zur zu verwendenden Technologie getroffen werden. Da Spring Boot bereits im Kapitel \ref{spring-boot} erläutert wurde, wird im Folgenden lediglich PHP und Django erklärt.
+
+PHP ist eine weit verbreitete Open-Source Skriptsprache, welche in der Webprogrammierung bereits seit Jahren ihre Verwendung findet. Im Gegensatz zu Javascript wird PHP durch den Server ausgeführt, so dass HTML für den Benutzer des Webdienstes generiert wird. Hierbei kann der Benutzer den Code des Webdienstes in der Regel, das heißt bei einem korrekt konfigurierten Webserver, nicht einsehen.
+PHP wird regelmäßig verbessert, es gibt mittlerweile einige robuste Bibliotheken und die Programmiersprache ist für Anfänger leicht zu lernen.
+
+Django ist ein Web Framework, welches ebenfalls als Open-Source Software verfügbar ist und auf der Programmiersprache Python basiert. Es verfügt über eine vorkonfigurierte Anbindung an Datenbanksysteme, wie es auch bei Spring Boot der Fall ist, und über einige Module, welche beispielsweise ein Authentifizierungssystem bereitstellen.
+
+\begin{table}[htbp]
+	\centering
+	\begin{tabular}{|l|l|l|l|l|l|}
+		\hline
+		Technologie & Quellcode & Community & Bibliotheken & Aufwand & Programmiersprache\\
+		\hline
+		PHP & 5/5 & 5/5 & 4/5 & 1/5 & 3/5\\
+		Django & 5/5 & 4/5 & 5/5 & 5/5 & 4/5\\
+		Spring Boot & 5/5 & 4/5 & 5/5 & 5/5 & 5/5\\
+		\hline
+	\end{tabular}
+	\caption[Tabelle]{Vergleich der Backend Technologien PHP, Django und Spring Boot} \label{tab:technologievergleich}
+\end{table}
+
+Zur Implementierung des Backends mit der \gls{rest} Schnittstelle eignet sich demnach das Spring Framework in Verbund mit Spring Boot (siehe Kapitel \ref{spring-framework}), da es, insbesondere durch voreingestellte Konfigurationen und verfügbare Bibliotheken, die Entwicklung für diesen Anwendungszweck erleichtert. 
+\\
+Die Datenbank wird durch das objektrelationale Datenbankmanagementsystem Postgres (siehe Kapitel \ref{postgres}) bereitgestellt.
+
+
+\subsection{Frontend}
+Das Frontend muss insgesamt zwei Hauptfunktionen erfüllen.
+
+\begin{enumerate}
+	\item Einsehen der Backprodukte für Endkunden
+	\item Pflegen der Daten durch den Administrator
+\end{enumerate}
+
+Die erste Option zur Entwicklung des Frontends besteht darin, dass eine zusammenfassende Anwendung entwickelt wird, welches die beiden Hauptfunktionen vereint. Hierbei können sich die Endkunden die Backprodukte anzeigen lassen und der Administrator, nachdem er sich nach der nichtfunktionalen Anforderung \ref{nfa10} authentifiziert hat, die Daten pflegen. Dies ließe sich mittels einer nativen iOS App realisieren.
+Die zweite Option ist die getrennte Entwicklung zweier Frontend Anwendungen, welche je eine der Hauptfunktionen anbieten.
+Hierfür eignet sich eine native iOS App zum Einsehen der Backprodukte sowie eine Webseite zur Administration.
+
+Eine einzelne App für das Einsehen und Pflegen der Daten zu entwickeln, würde den kleineren Entwicklungsaufwand bedeuten, da grundlegende, abstrahierte Klassen zur Kommunikation mit dem Backend für beide abgetrennte Bereiche benutzt werden können. Jedoch kommt mit diesem Vorteil auch ein direkter Nachteil einher. Die Fusion des Administrationsbereichs mit dem Bereich, welcher für Endkunden vorgesehen ist, würde eine Verletzung des Prinzips \gls{soc} bedeuten, was zu einer verringerten Sicherheit des Gesamtsystems führt. Des Weiteren ist das Pflegen von größeren Datensätzen auf einem Tablet im Vergleich zu einem PC unkomfortabel.
+Die getrennte Entwicklung zweier Frontend Anwendungen bedeutet einen Mehraufwand zur Entwicklung. Jedoch wird das Prinzip \gls{soc} eingehalten und der Administrator des Systems hat die Entscheidungsfreiheit zur Wahl der Hardware, über die er die Webseite zur Administration aufruft.
+
+Trotz des erhöhten Aufwands zur Entwicklung fällt die Entscheidung auf die zweite Option, die Entwicklung einer iOS App für die Endkunden und einer Webseite zur Administration der Daten.
