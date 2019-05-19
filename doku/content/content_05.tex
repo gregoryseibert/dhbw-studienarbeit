@@ -1,16 +1,15 @@
 %!TEX root = ../hauptdatei.tex
 \chapter{Implementierung}
-In diesem Kapitel wird beschrieben, wie die Backend Komponente sowie die zwei Frontend Komponenten, eine iOS App sowie ein Web Admin-Dashboard als Referenz Implementierung entwickelt werden. 
+In diesem Kapitel wird beschrieben, wie die Backend Komponente und die zwei Frontend Komponenten, eine iOS App sowie ein Web Admin-Dashboard, als Referenz Implementierung entwickelt wird. 
 
 \section{Backend}
 Das Backend des Bäckerei Systems ist die zentrale Datenverwaltung, durch die neue Datensätze angelegt oder bestehende Datensätze abgerufen, bearbeitet oder gelöscht werden können. Um neue Datensätze nachhaltig speichern zu können, besitzt das Backend eine Datenbank.
-
-\clearpage
-
-\subsection{Architektur}
+\\
 Im Folgenden wird beschrieben, aus welchen Hauptbestandteilen sich das Spring Backend zusammensetzt.
 Diese Hauptbestandteile sind die Repository Klassen, die Service Klassen und die Controller Klassen.
 Die Controller Klassen nutzen die Service Klassen und die Service Klassen nutzen die Repository Klassen als Abstraktionsschicht über der Datenbank.
+
+\clearpage
 
 \subsubsection{Repository Ebene}
 Wie bereits beschrieben, stellt die Repository Ebene eine direkte Abstraktionsschicht der Datenbank dar.
@@ -35,8 +34,6 @@ Hierfür sind die Methoden \enquote{findById} und \enquote{findAll} (siehe folge
 Example findById(long id);
 List<Example> findAll();
 \end{lstlisting}
-
-\clearpage
 
 Für die Klasse \enquote{ApplicationUser} soll es zudem möglich sein, ein Objekt über den Benutzernamen mit der Methode \enquote{findByUsername} zu finden sowie mit der Methode \enquote{existsByUsername} zu überprüfen, ob bereits ein Benutzer mit einem spezifischen Benutzernamen existiert (siehe folgendes Listing).
 \begin{lstlisting}[language=Java]
