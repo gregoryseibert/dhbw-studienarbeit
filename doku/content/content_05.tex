@@ -13,7 +13,7 @@ Die Controller Klassen nutzen die Service Klassen und die Service Klassen nutzen
 
 \subsubsection{Repository Ebene}
 Wie bereits beschrieben, stellt die Repository Ebene eine direkte Abstraktionsschicht der Datenbank dar.
-Um eine Repository Klasse erstellen zu können, muss einem Java Interface die Annotation \enquote{Transactional} zugewiesen werden. Das Interface muss außerdem das Interface \enquote {CrudRepository} erweitern und den zu behandelnden Objekttyp sowie den Datentyp des Attributs zur Identifikation angeben. Dies ist im folgenden Listing als Beispiel aufgeführt.
+Um eine Repository Klasse erstellen zu können, muss einem Java Interface die Annotation \enquote{Transactional} zugewiesen werden. Das Interface muss außerdem das Interface \enquote {CrudRepository} erweitern und den zu behandelnden Objekttyp sowie den Datentyp des Attributs zur Identifikation angeben. Dies ist im folgenden Codeblock als Beispiel aufgeführt.
 \begin{lstlisting}[language=Java]
 @Transactional
 public interface ExampleRepository extends CrudRepository<Example, Long> {
@@ -23,19 +23,19 @@ public interface ExampleRepository extends CrudRepository<Example, Long> {
 
 Hierbei sind Methoden zum Speichern, Aktualisieren und Löschen. von Objekten bereits standardmäßig definiert.
 Da nach Kapitel \ref{datenmodell} die Objekte der Klassen \enquote{Loaf}, \enquote{Bun}, \enquote{Ingredient}, \enquote{CerealMixPercentage}, \enquote{NewsItem} und \enquote{ApplicationUser} verwaltet werden müssen, werden entsprechende Repository Klassen entwickelt.
-Um später im Objektbestand der Klassen \enquote{Loaf}, \enquote{Bun} und \enquote{Ingredient} nach dem Namen suchen zu können, ist eine Methode \enquote{findByName} (siehe folgendes Listing) notwendig.
+Um später im Objektbestand der Klassen \enquote{Loaf}, \enquote{Bun} und \enquote{Ingredient} nach dem Namen suchen zu können, ist eine Methode \enquote{findByName} (siehe folgenden Codeblock) notwendig.
 \begin{lstlisting}[language=Java]
 Example findByName(String name);
 \end{lstlisting}
 
 Des Weiteren soll es möglich sein. einzelne Objekte oder alle Objekte der Klassen \enquote{Loaf}, \enquote{Bun}, \enquote{Ingredient}, \enquote{CerealMixPercentage}, \enquote{NewsItem} und \enquote{ApplicationUser} abzurufen.
-Hierfür sind die Methoden \enquote{findById} und \enquote{findAll} (siehe folgendes Listing) notwendig.
+Hierfür sind die Methoden \enquote{findById} und \enquote{findAll} (siehe folgenden Codeblock) notwendig.
 \begin{lstlisting}[language=Java]
 Example findById(long id);
 List<Example> findAll();
 \end{lstlisting}
 
-Für die Klasse \enquote{ApplicationUser} soll es zudem möglich sein, ein Objekt über den Benutzernamen mit der Methode \enquote{findByUsername} zu finden sowie mit der Methode \enquote{existsByUsername} zu überprüfen, ob bereits ein Benutzer mit einem spezifischen Benutzernamen existiert (siehe folgendes Listing).
+Für die Klasse \enquote{ApplicationUser} soll es zudem möglich sein, ein Objekt über den Benutzernamen mit der Methode \enquote{findByUsername} zu finden sowie mit der Methode \enquote{existsByUsername} zu überprüfen, ob bereits ein Benutzer mit einem spezifischen Benutzernamen existiert (siehe folgenden Codeblock).
 \begin{lstlisting}[language=Java]
 User findByUsername(String username);
 boolean existsByUsername(String username);
@@ -48,7 +48,7 @@ Die nach diesem Muster implementierten Repository Klassen mit den jeweiligen Met
 
 \subsubsection{Service Ebene}
 Die Service Ebene verwendet die Repository Ebene als Abstraktionsschicht über der Datenbank, um vordefinierte Methoden zum Erstellen, Anzeigen, Bearbeiten, und Löschen von Datensätzen zu ermöglichen. Diese Service Klassen werden anschließend von Controller Klassen verwendet und stellen somit selbst eine Abstraktionsschicht dar.
-Um eine Klasse als einen Spring Service deklarieren zu können, ist die Verwendung der Annotation \enquote{Service} nowendigt.
+Um eine Klasse als einen Spring Service deklarieren zu können, ist die Verwendung der Annotation \enquote{Service} nowendig.
 \begin{lstlisting}[language=Java]
 @Service
 public class ExampleService {
@@ -121,14 +121,35 @@ Nach diesem Schema werden die Controller Klassen für \enquote{Loaf}, \enquote{B
 \clearpage
 
 \section{iOS Applikation}
+Damit die Kunden der Bäckerei die im System gespeicherten Daten zu den Produkten anschaulich durchsuchen können, wird eine iOS Applikation entwickelt.
 
 \subsection{Architektur}
+Die Architektur der Applikation ist nach dem \gls{mvc} Muster aufgebaut.
+
+\subsubsection{Modell Ebene}
+Die Modellklassen werden analog zum Datenmodell im Kapitel \ref{datenmodell} implementiert.
+Im folgenden Codeblock ist eine beispielhafte, gekürzte Umsetzung in der Programmiersprache Swift für ein Backprodukt ersichtlich.
+\begin{lstlisting}[language=Swift]
+import Foundation
+
+class BakedGood: Codable, Equatable {
+    let id: Int
+    var name, characteristic, pictureFilename: String
+    var weight, kcal, fat, carbohydrates, protein: Double
+    var cerealMix: [CerealMixPercentage]
+    var ingredients: [Ingredient]
+    
+    [...]
+    
+}
+\end{lstlisting}
+
 
 \subsubsection{View Ebene}
 
 \clearpage
 
-\subsubsection{ViewController Ebene}
+\subsubsection{Controller Ebene}
 
 \clearpage
 

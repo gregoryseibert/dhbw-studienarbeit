@@ -13,25 +13,28 @@ Das Frontend muss insgesamt zwei Hauptfunktionen erfüllen.
 	\item Pflegen der Daten durch den Administrator (Funktionale Anforderungen \nameref{fa40} bis \nameref{fa70} und \nameref{fa100} bis \nameref{fa120})
 \end{enumerate}
 
-Die erste Option zur Entwicklung des Frontends besteht darin, dass eine zusammenfassende Anwendung entwickelt wird, welche die beiden Hauptfunktionen vereint. Hierbei können sich die Endkunden die Backprodukte anzeigen lassen und der Administrator kann, nachdem er sich gemäß der nichtfunktionalen Anforderung \nameref{nfa10} authentifiziert hat, die Daten pflegen. Dies ließe sich mittels einer nativen iOS App realisieren.
+Die erste Option zur Entwicklung des Frontends besteht darin, dass eine zusammenfassende Anwendung entwickelt wird, welche die beiden Hauptfunktionen vereint. Hierbei können sich die Endkunden die Backprodukte anzeigen lassen und der Administrator kann, nachdem er sich gemäß der nichtfunktionalen Anforderung \nameref{nfa10} authentifiziert hat, die Daten pflegen. Dies ließe sich mittels einer nativen iOS Applikation realisieren.
 \\
 Die zweite Option ist die getrennte Entwicklung zweier Frontend Anwendungen, welche je eine der Hauptfunktionen anbieten.
-Hierfür eignet sich eine native iOS App zum Einsehen der Backprodukte sowie eine Webseite zur Administration.
+Hierfür eignet sich eine native iOS Applikation zum Einsehen der Backprodukte sowie eine Webseite zur Administration.
 \\
-Eine einzelne App für das Einsehen und Pflegen der Daten zu entwickeln, würde den kleineren Entwicklungsaufwand bedeuten, da grundlegende, abstrahierte Klassen zur Kommunikation mit dem Backend für beide abgetrennte Bereiche benutzt werden können. Jedoch kommt mit diesem Vorteil auch ein direkter Nachteil einher. Die Fusion des Administrationsbereichs mit dem Bereich, welcher für Endkunden vorgesehen ist, würde eine Verletzung des Prinzips \gls{soc} bedeuten, was zu einer verringerten Sicherheit des Gesamtsystems führt. Des Weiteren ist das Pflegen von größeren Datensätzen auf einem Tablet im Vergleich zu einem PC unkomfortabel.
+Eine einzelne Applikation für das Einsehen und Pflegen der Daten zu entwickeln, würde den kleineren Entwicklungsaufwand bedeuten, da grundlegende, abstrahierte Klassen zur Kommunikation mit dem Backend für beide abgetrennte Bereiche benutzt werden können. Jedoch kommt mit diesem Vorteil auch ein direkter Nachteil einher. Die Fusion des Administrationsbereichs mit dem Bereich, welcher für Endkunden vorgesehen ist, würde eine Verletzung des Prinzips \gls{soc} bedeuten, was zu einer verringerten Sicherheit des Gesamtsystems führt. Des Weiteren ist das Pflegen von größeren Datensätzen auf einem Tablet im Vergleich zu einem PC unkomfortabel.
 \\
 Die getrennte Entwicklung zweier Frontend Anwendungen bedeutet einen Mehraufwand zur Entwicklung. Jedoch wird das Prinzip \gls{soc} eingehalten und der Administrator des Systems hat die Entscheidungsfreiheit zur Wahl der Hardware, über die er die Webseite zur Administration aufruft.
 \\
-Trotz des erhöhten Aufwands zur Entwicklung fällt die Entscheidung auf die zweite Option, die Entwicklung einer iOS App für die Endkunden und einer Webseite zur Administration der Daten. Der bessere Komfort beim Pflegen der Daten sowie die erhöhte Sicherheit sind für das System von größerer Bedeutung als dieser Nachteil. Die Verwaltung der Daten durch den Administrator soll hierbei über ein Web Admin-Dashboard geschehen. 
+Trotz des erhöhten Aufwands zur Entwicklung fällt die Entscheidung auf die zweite Option, die Entwicklung einer iOS Applikation für die Endkunden und einer Webseite zur Administration der Daten. Der bessere Komfort beim Pflegen der Daten sowie die erhöhte Sicherheit sind für das System von größerer Bedeutung als dieser Nachteil. Die Verwaltung der Daten durch den Administrator soll hierbei über ein Web Admin-Dashboard geschehen. 
 Diese Softwarearchitektur ist in der folgenden Abbildung \ref{componentdiagramsystem} als UML Komponentendiagramm dargestellt.
 
-\abbildung{../diagramme/SystemComponents.pdf}{Das UML Komponentendiagramm für das System, bestehend aus Backend, iOS App und Web Admin-Dashboard}{componentdiagramsystem}
+\abbildung{../diagramme/SystemComponents.pdf}{Das UML Komponentendiagramm für das System, bestehend aus Backend, iOS Applikation und Web Admin-Dashboard}{componentdiagramsystem}
 
 \clearpage
 
 \section{Rollenmodell} \label{rollenmodell}
 Die funktionale Anforderung \nameref{fa20} setzt voraus, dass der Administrator die Daten über eine zentrale Schnittstelle pflegen kann. Dabei muss dem Administrator die Möglichkeit gegeben werden, nach den funktionalen Anforderungen \nameref{fa50}, \nameref{fa60}, \nameref{fa70}, \nameref{fa100}, \nameref{fa110} und \nameref{fa120}, Backprodukte und Neuigkeiten erstellen, bearbeiten und löschen zu können.
-Des Weiteren muss es sowohl dem Administrator als auch dem Benutzer des Systems, gemäß den funktionalen Anforderungen \nameref{fa30}, \nameref{fa40}, \nameref{fa80} und \nameref{fa90}, möglich sein, sich die Daten zu den Backprodukten und Neuigkeiten anzeigen zu lassen. Hierbei ist nach den nichtfunktionalen Anforderungen \nameref{nfa10} und \nameref{nfa20} zu beachten, dass die Administration der Daten lediglich bei Existenz einer autorisierten Sitzung des Administrators und das Abfragen der Daten lediglich bei Existenz einer autorisierten Sitzung des Benutzers erlaubt sein darf.
+\\
+Des Weiteren muss es sowohl dem Administrator als auch dem Benutzer des Systems, gemäß den funktionalen Anforderungen \nameref{fa30}, \nameref{fa40}, \nameref{fa80} und \nameref{fa90}, möglich sein, sich die Daten zu den Backprodukten und Neuigkeiten anzeigen zu lassen. 
+\\
+Hierbei ist nach den nichtfunktionalen Anforderungen \nameref{nfa10} und \nameref{nfa20} zu beachten, dass die Administration der Daten lediglich bei Existenz einer autorisierten Sitzung des Administrators und das Abfragen der Daten lediglich bei Existenz einer autorisierten Sitzung des Benutzers erlaubt sein darf.
 \\
 Hieraus folgt, dass es analog zwei Rollen geben soll. Zum einen der Benutzer und zum anderen der Administrator, welcher die für den Benutzer verfügbaren Funktionen erbt. Beiden soll es möglich sein, sich am System anzumelden.
 Dies ist in der folgenden Abbildung \ref{usecasediagramsystem} als UML Usecase Diagramm visualisiert.
@@ -42,7 +45,7 @@ Dies ist in der folgenden Abbildung \ref{usecasediagramsystem} als UML Usecase D
 
 \section{Datenmodell} \label{datenmodell}
 Im Kapitel \ref{rollenmodell} wurde beschrieben, wie das Rollenmodell des Systems als Entwurf aussehen soll.
-Im Rahmen des Datenmodells ist hierbei eine Entität, der \enquote{ApplicationUser} notwendig, siehe Abbildung \ref{classdiagramapplicationuser}. Diese Entität besitzt die Attribute \enquote{username} für den Benutzernamen sowie \enquote{password} für das Passwort zur Anmeldung, \enquote{name} für den Namen der jeweiligen Person, \enquote{isActive} für die Möglichkeit zur Deaktivierung und \enquote{isArchived} für die Archivierung des dahinterstehenden Accounts. Des Weiteren besitzt die Entität \enquote{ApplicationUser} eine Liste an \enquote{ApplicationUserRole}, wodurch das Rollenmodell vollständig implementiert ist.
+Im Rahmen des Datenmodells ist hierbei eine Entität, der \enquote{ApplicationUser} notwendig, siehe Abbildung \ref{classdiagramapplicationuser}. Diese Entität besitzt die Attribute \enquote{username} für den Benutzernamen sowie \enquote{password} für das Passwort zur Anmeldung, \enquote{name} für den Namen der jeweiligen Person, \enquote{isActive} für die Möglichkeit zur Deaktivierung und \enquote{isArchived} für die Archivierung des dahinterstehenden Accounts. Des Weiteren besitzt die Entität \mbox{\enquote{ApplicationUser}} eine Liste an \enquote{ApplicationUserRole}, wodurch das Rollenmodell vollständig implementiert ist.
 
 \abbildungs{6cm}{../diagramme/ApplicationUser.pdf}{Das UML Klassendiagramm zur ApplicationUser Entität}{classdiagramapplicationuser}
 
@@ -95,7 +98,7 @@ Die Datenbank wird durch das objektrelationale Datenbankmanagementsystem Postgre
 \subsection{Verschlüsselung der Kommunikation}
 Die Kommunikation über \gls{http} erfolgt lediglich unverschlüsselt.
 Daher ist es jederzeit möglich, Inhalte von versendeten Paketen mittels \gls{mitm} mitzulesen oder gar zu manipulieren.
-Um dies zu verhindern, wurde \gls{http} um einen SSL/TLS-Layer erweitert, was als \gls{https} bezeichnet wird.
+Um dies zu verhindern, wurde \gls{http} um einen \gls{ssl}/\gls{tls}-Layer erweitert, was als \gls{https} bezeichnet wird.
 Hierbei werden alle übertragenen Daten verschlüsselt und es erfolgt eine gegenseitige Authentifizierung durch SSL-Zertifikate.
 Mittlerweile wurde jedoch die Versionen SSL1.0 bis SSL3.0 sowie TLS1.0 als unsicher deklariert.
 Dennoch unterstützen viele Webserver diese unsicheren SSL und TLS Versionen, wie man der Abbildung \ref{ssl-tls} entnehmen kann.
