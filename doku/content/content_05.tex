@@ -122,13 +122,15 @@ Nach diesem Schema werden die Controller Klassen für \enquote{Loaf}, \enquote{B
 
 \section{iOS Applikation}
 Damit die Kunden der Bäckerei die im System gespeicherten Daten zu den Produkten anschaulich durchsuchen können, wird eine iOS Applikation entwickelt.
+Die Referenz-Implementierung hierzu wird in diesem Kapitel erklärt.
 
 \subsection{Architektur}
-Die Architektur der Applikation ist nach dem \gls{mvc} Muster aufgebaut.
+Die Architektur der Applikation ist nach dem \gls{mvc} Muster, mit einer Modell Ebene, einer View Ebene und einer Controller Ebene, aufgebaut. Dieses Muster wurde bereits im Kapitel \ref{mvc} ausführlich erläutert und dessen Vorteile aufgezählt.
 
 \subsubsection{Modell Ebene}
 Die Modellklassen werden analog zum Datenmodell im Kapitel \ref{datenmodell} implementiert.
 Im folgenden Codeblock ist eine beispielhafte, gekürzte Umsetzung in der Programmiersprache Swift für ein Backprodukt ersichtlich.
+Die Klasse für das Backprodukt implementiert das Protokoll \enquote{Equatable}, um einen Vergleich zwischen zwei Objekten dieser Klasse nach der Id zu ermöglichen, und das Protokoll  \enquote{Codable}, damit Swift die \gls{json} Daten in Objekte automatisch konvertieren kann.
 \begin{lstlisting}[language=Swift]
 import Foundation
 
@@ -141,9 +143,13 @@ class BakedGood: Codable, Equatable {
     
     [...]
     
+    static func == (lhs: BakedGood, rhs: BakedGood) -> Bool {
+        return lhs.id == rhs.id
+    }
 }
 \end{lstlisting}
 
+\clearpage
 
 \subsubsection{View Ebene}
 

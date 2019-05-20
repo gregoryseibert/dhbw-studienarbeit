@@ -1,24 +1,12 @@
 %!TEX root = ../hauptdatei.tex
 \chapter{Theoretische Grundlagen}
-In diesem Kapitel werden die notwendigen Grundlagen der Technologien, die für das Backend und die iOS App notwendig sind, vermittelt.
-
-\section{REST API} \label{rest}
-\gls{rest} \glspl{api} spielen mittlerweile eine große Rolle in der Entwicklung und finden bereits in zahlreichen Projekten namhafter Unternehmen Anwendung. Diese \glspl{api} sind sogenannte Programmierschnittstellen über das \gls{http}. Mit deren Hilfe lassen sich Daten per \gls{get}, \gls{put}, \gls{post} und \gls{delete} abrufen und verwalten.
-
-Der Sinn dahinter ist, dass man das \gls{frontend}, also das, was der Benutzer sieht, und das \gls{backend}, die Verarbeitung und Verwaltung der Daten, trennt. Dieses Vorgehen bietet nicht nur eine erhöhte Sicherheit, sondern ist auch im späteren Verlauf einfacher anzupassen, da nun in modularen Gebieten des Projektes gearbeitet werden kann. Deshalb bedienen sich große und bekannte Internetanbieter, wie Google und Amazon, diesem nützlichen Prinzip.
-
-Um \gls{rest} Schnittstellen komfortabel und zeitsparend testen zu können, bietet sich das Programm Postman \cite{postman} hervorragend an.
-Die Request-Methode und die \gls{url} müssen angegeben werden. Der Request-Body ist nur für Requests zum Anlegen oder Bearbeiten von Daten notwendig. Wie das Ganze in Postman aussieht, lässt sich der Abbildung \ref{postman} entnehmen.
-
-\abbildung{images/content/postman.png}{Das Programm Postman wird genutzt, um REST Schnittstellen zu testen}{postman}
-
-\clearpage
+In diesem Kapitel werden die notwendigen Grundlagen der Technologien, die für das Backend und das Frontend notwendig sind, vermittelt.
 
 \section{JSON}
-\gls{json} ist ein leichtgewichtiges Format zum Austauschen von Daten, typischerweise zwischen Webserver und Client.
+\gls{json} ist ein leichtgewichtiges Format zum Austauschen von Daten, typischerweise zwischen Webserver und Client \cite[S.~23]{client-server-book}.
 Dieses Format wurde von der JavaScript Object Syntax abgewandelt, weswegen eine bidirektionale Umwandlung im JavaScript Code unkompliziert funktioniert.
 Doch auch in Programmiersprachen, wie zum Beispiel Java und Swift, gibt es standardmäßig eingebaute Funktionen, um \gls{json} zu parsen.
-Die Syntax von \gls{json} besteht aus folgenden Regeln:
+Die Syntax von \gls{json} besteht aus folgenden Regeln \cite[S.~23]{client-server-book}:
 
 \begin{itemize}
 	\item Arrays bestehen aus eckigen Klammern
@@ -27,31 +15,68 @@ Die Syntax von \gls{json} besteht aus folgenden Regeln:
 	\item Datenfelder und Objekte werden durch Kommata getrennt
 \end{itemize}
 
+Im folgenden Codeblock ist ein beispielhaftes Objekt in Form eines \gls{json} Dokuments aufgeführt.
+\begin{lstlisting}[language=Json]
+{
+	"id": 1,
+	"name": "Beispielobjekt Eins",
+	"objektListe": [
+		{
+			"id": 2,
+			"name": "Beispielobjekt Zwei"
+		}
+	]
+}
+\end{lstlisting}
+
+\clearpage
+
+\section{REST API} \label{rest}
+\gls{rest} \glspl{api} spielen mittlerweile eine große Rolle in der Entwicklung und finden bereits in zahlreichen Projekten namhafter Unternehmen Anwendung. Diese \gls{rest} Schnittstellen sind sogenannte Programmierschnittstellen über das \gls{http} \cite[S.~259]{client-server-book}. Mit deren Hilfe lassen sich Daten abrufen und verwalten.
+Hierbei ist jede Anfrage auf ein spezifisches Objekt oder eine Liste an Objekten bezogen, welche durch eine \gls{uri} identifiziert wird \cite[S.~259]{client-server-book}.
+
+Unter anderem sind diese vier Request-Methoden durch \gls{rest} definiert \cite[S.~260f]{client-server-book}:
+\begin{itemize}
+	\item \textbf{GET}: Abfrage eines bestimmten Objekts oder mehrere bestimmte Objekte
+	\item \textbf{PUT}: Erstellen oder Bearbeiten eines bestimmten Objekts
+	\item \textbf{POST}: Erstellen eines Objekts oder mehrere Objekte
+	\item \textbf{DELETE}: Löschen eines bestimmten Objekts
+\end{itemize}
+
+Der Sinn dahinter ist, dass man das \gls{frontend}, also das, was der Benutzer sieht, und das \gls{backend}, die Verarbeitung und Verwaltung der Daten, trennt. Dieses Vorgehen bietet nicht nur eine erhöhte Sicherheit, sondern ist auch im späteren Verlauf einfacher anzupassen, da nun in modularen Gebieten des Projektes gearbeitet werden kann \cite[S.~260]{client-server-book}. Deshalb bedienen sich große und bekannte Internetanbieter, wie Google und Amazon, diesem nützlichen Prinzip.
+
+Um \gls{rest} Schnittstellen komfortabel und zeitsparend testen zu können, bietet sich das Programm \fnurl{Postman}{https://www.getpostman.com/} an.
+Die Request-Methode und die \gls{url} müssen angegeben werden. Der Request-Body ist nur für Requests zum Anlegen oder Bearbeiten von Daten notwendig. Wie das Ganze in Postman anhand eines Beispiels aussieht, lässt sich der Abbildung \ref{postman} entnehmen.
+
+\abbildung{images/content/postman.png}{Das Programm Postman wird genutzt, um REST Schnittstellen zu testen}{postman}
+
+\clearpage
+
 \section{Sicherheit von Webanwendungen}
 \subsection{Man In The Middle}
 \gls{mitm} ist eine Angriffsform gegen Rechnernetze.
 Hierbei gibt sich der Angreifer als den Ziel-Server oder einen Router aus.
 Er greift die Pakete ab, die der Sender an den Empfänger sendet, verfügt über diese nach Wunsch und sendet sie an die vorgesehene Adresse weiter. Dabei bleibt er im schlechtesten Fall sowohl vor dem Sender als auch dem Empfänger versteckt, so dass diese von dem Angriff nichts mitbekommen. Dies wird in der Abbildung \ref{mitm} verdeutlicht.
-Durch \gls{mitm} erlangt der Angreifer demnach die vollständige Kontrolle über den Datenverkehr von Dritten, was ihn zum Mitlesen und zur Manipulation des Datenverkehrs befähigt.
+Durch \gls{mitm} erlangt der Angreifer demnach die vollständige Kontrolle über den Datenverkehr von Dritten, was ihn zum Mitlesen und zur Manipulation des Datenverkehrs befähigt \cite[S.~9]{websecurity-book}.
 
-\abbildungs{6cm}{images/content/man-in-the-middle.jpg}{Man In The Middle \cite{mitm}}{mitm}
+\abbildungq{6cm}{images/content/man-in-the-middle.jpg}{https://www.incapsula.com/web-application-security/wp-content/uploads/sites/6/2018/02/man-in-the-middle-mitm.jpg}{Man In The Middle}{mitm}
 
 \subsection{Cross-Site-Request-Forgery}
-\gls{csrf} ist eine Angriffsform gegen Nutzer einer Webanwendung mit dem Ziel, eine bestehende Sitzung eines Anwenders zu übernehmen.
+\gls{csrf} ist eine Angriffsform gegen Nutzer einer Webanwendung mit dem Ziel, eine bestehende Sitzung eines Anwenders zu übernehmen oder Anfragen über einen angemeldeten Nutzer auszuführen \cite[S.~83]{websecurity-book}.
 Hierbei wird eine Anfrage in Form einer \gls{url} durch den Angreifer so gewählt, dass die gewünschte Aktion ausgeführt wird.
-Dies geschieht zum einen, sobald der Nutzer der Webanwendung auf diese \gls{url} klickt, zum anderen aber auch durch eingebettete Bilder, Formulare oder Javascript Dateien einer Webseite. Solche eingebetteten Weblinks werden standardmäßig automatisch ausgeführt, sobald die Seite geladen wird.
+Dies geschieht zum einen, sobald der Nutzer der Webanwendung auf diese \gls{url} klickt, zum anderen aber auch durch eingebettete Bilder, Formulare oder Javascript Dateien einer Webseite \cite[S.~81]{websecurity-book}. Solche eingebetteten Weblinks werden standardmäßig automatisch ausgeführt, sobald die Seite geladen wird.
 
 \subsection{Session-Hijacking}
 Eine Möglichkeit zur Realisierung eines Sitzungsmanagements in Webanwendungen besteht in der Nutzung von Sitzungstoken.
 Sobald sich der Nutzer über die Webseite anmeldet, wird sein Browser einen Cookie abspeichern, der den Sitzungstoken beinhaltet. Doch auch in mobilen Applikationen ist die Anmeldung und Authentifizierung per Sitzungstoken möglich und wird durch viele Bibliotheken unterstützt.
-In den meisten Fällen ist dieser Sitzungstoken jedoch die alleinige Authentifizierung nach der Anmeldung.
+In den meisten Fällen ist dieser Sitzungstoken die alleinige Authentifizierung nach der Anmeldung.
 Das heißt, dass ein Zugriff auf den Token einen direkten Zugriff auf die Sitzung ermöglicht.
-Das Abgreifen dieses Tokens wird auch als Session-Hijacking bezeichnet.
+Das Abgreifen oder Ermitteln dieses Tokens wird auch als Session-Hijacking bezeichnet  \cite[S.~89]{websecurity-book}.
 
 \subsection{XSS}
-\gls{xss} ist eine Angriffsform auf Webanwendungen, welche eine unzureichende Eingabe- oder Ausgabevalidierung der Anwendung ausnutzt.
+\gls{xss} ist eine Angriffsform auf Webanwendungen, welche eine unzureichende Eingabe- oder Ausgabevalidierung der Anwendung ausnutzt \cite[S.~79]{websecurity-book}.
 Der Angreifer schleust hierbei Schadcode, welcher häufig in Javascript geschrieben wurde, in die Webanwendung ein.
-Dieser Inhalt wird nun im schlimmsten Fall auf Browsern anderer Nutzer der Anwendung ausgeführt, was unter anderem zum Datendiebstahl führen kann.
+Dieser Inhalt wird nun im schlimmsten Fall auf Browsern anderer Nutzer der Anwendung ausgeführt, was unter anderem zum Datendiebstahl oder Infektion des Systems eines Benutzers führen kann \cite[S.~77]{websecurity-book}.
 
 \clearpage
  
@@ -73,9 +98,9 @@ Die Interface Injection zeichnet sich dadurch aus, dass die abhängige Klasse ei
 \clearpage
 
 \section{Spring Framework} \label{spring-framework}
-Das Spring Framework \cite{spring} ist ein Open-Source Framework für Java basierte Enterprise Projekte. Es wurde entworfen, um die Java EE Entwicklung zu vereinfachen und zu beschleunigen \cite{spring-book-1}. Spring implementiert Funktionalitäten wie 
+Das \fnurl{Spring Framework}{https://spring.io/} ist ein Open-Source Framework für Java basierte Enterprise Projekte. Es wurde entworfen, um die Java EE Entwicklung zu vereinfachen und zu beschleunigen \cite{spring-book-1}. Spring implementiert Funktionalitäten wie 
 \begin{itemize}
-	\item Dependency Injection (siehe \ref{dependencyinjection})
+	\item Dependency Injection (siehe Kapitel \ref{dependencyinjection})
 	\item Internationalisierung 
 	\item Datenbindung
 	\item Validierung
@@ -84,7 +109,7 @@ Das Spring Framework \cite{spring} ist ein Open-Source Framework für Java basie
 Insbesondere durch das Bereitstellen der Dependency Injection wird ein Einsatz von Softwarekonventionen gefördert, welche für ein leicht wartbares und erweiterbares Projekt sorgen \cite[S.~20]{spring-book-2}.
 
 \subsection{Spring Boot} \label{spring-boot}
-Spring Boot ist eine Erweiterung zum Spring Framework mit dem Fokus auf Konventionen statt Konfiguration. Dadurch ist es deutlich schneller möglich, eine produktionsfähige Applikation zu erstellen, da bereits durch das Framework die meisten Entscheidungen getroffen wurden. Dennoch lassen sich jederzeit besagte Entscheidungen durch eine eigene Konfiguration überschreiben.
+Spring Boot ist eine Erweiterung zum Spring Framework mit dem Fokus auf Konventionen statt Konfiguration \cite[S.~31]{spring-book-3}. Dadurch ist es deutlich schneller möglich, eine produktionsfähige Applikation zu erstellen, da bereits durch das Framework die meisten Entscheidungen getroffen wurden. Dennoch lassen sich jederzeit besagte Entscheidungen durch eine eigene Konfiguration überschreiben.
 
 \subsection{Spring Security}
 Spring Security erweitert das Spring Framework um einige Sicherheitsmechanismen, wie das Authentifizieren von Benutzern oder die Autorisierung in Form eines Rollenschemas mit verschiedenen Berechtigungen.
@@ -115,23 +140,20 @@ Da ein Vergleich der Performance stark abhängig von der jeweiligen Infrastruktu
 
 \section{MVC Pattern}\label{mvc}
 Das \gls{mvc} Pattern ist ein Architekturmuster beziehungsweise Entwurfsmuster im Bereich der Software-Entwicklung. 
-Hierbei wird das Programm in drei Schichten
+Hierbei wird das Programm in die drei Komponenten
 \begin{itemize}
 	\item Model
 	\item View
 	\item Controller
 \end{itemize}
-aufgeteilt. Die Model Schicht enthält alle Klassen, die reale oder irreale Objekte modellieren, also jene, die nach der objektorientierten Programmierung entworfen wurden. Die View Schicht enthält die Oberfläche mit den Elementen zur Interaktion mit der Software. Da die Model Schicht und die View Schicht miteinander kommunizieren müssen und die Eingaben des Benutzers verarbeitet werden müssen, ist die Controller Schicht gleichermaßen essenziell. Dieser Aufbau ist, wie beschrieben, in der Abbildung \ref{mvcpattern} ersichtlich.
+aufgeteilt \cite[S.~18]{spring-book-3}. Die Model Schicht enthält alle Klassen, die reale oder irreale Objekte modellieren, also jene, die nach der objektorientierten Programmierung entworfen wurden. Die View Schicht enthält die Oberfläche mit den Elementen zur Interaktion mit der Software. Da die Model Schicht und die View Schicht miteinander kommunizieren müssen und die Eingaben des Benutzers verarbeitet werden müssen, ist die Controller Schicht gleichermaßen essenziell. Dieser Aufbau ist, wie beschrieben, in der Abbildung \ref{mvcpattern} ersichtlich.
 
-\abbildung{images/content/mvc.jpg}{Der Aufbau des MVC Patterns \cite{mvc}}{mvcpattern}
+\abbildungq{10cm}{images/content/mvc.jpg}{https://csharpcorner-mindcrackerinc.netdna-ssl.com/article/difference-between-mvc-and-web-forms/Images/MVC.jpg}{Der Aufbau des MVC Patterns}{mvcpattern}
 
-Der Sinn dieses Architekturmusters ist eine lockere Kopplung der einzelnen Software-Module, um die Abhängigkeiten zu verringern und den Wartungsprozess, Erweiterungsprozess sowie Aktualisierungsprozess zu verbessern.
-
-\clearpage
+Der Sinn dieses Architekturmusters ist eine lockere Kopplung der einzelnen Software-Module, um die Abhängigkeiten zu verringern und den Wartungsprozess, Erweiterungsprozess sowie Aktualisierungsprozess zu verbessern \cite[S.~18]{spring-book-3}.
 
 \section{Swift}
 Swift ist eine Open Source Programmiersprache, die im Jahre 2014 von Apple veröffentlicht wurde. Sie wurde zum Entwickeln von iOS, MacOS und Linux Applikationen entworfen und ist eine nach Objective-C optimierte Programmiersprache.
 Hierbei wurden viele Syntax Besonderheiten anderer Sprachen, wie beispielsweise das Semikolon am Ende einer Zeile oder die runden Klammern bei Verzweigungen oder Schleifen, als optional deklariert. Zudem gibt es in Swift keine Header Datei mehr. Diese Änderungen sollen Swift zu einer einfacheren und übersichtlicheren Programmiersprache gegenüber Objective-C machen. Auch werden einige der neuen Programmierparadigmen, wie zum Beispiel Closures, Tupel, mehrere Rückgabewerte, Generics oder Optionals, unterstützt.
-
 
 \clearpage
