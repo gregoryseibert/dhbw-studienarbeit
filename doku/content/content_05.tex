@@ -126,6 +126,8 @@ Die Referenz-Implementierung hierzu wird in diesem Kapitel erklärt.
 
 \subsection{Architektur}
 Die Architektur der Applikation ist nach dem \gls{mvc} Muster, mit einer Modell Ebene, einer View Ebene und einer Controller Ebene, aufgebaut. Dieses Muster wurde bereits im Kapitel \ref{mvc} ausführlich erläutert und dessen Vorteile aufgezählt.
+Zur Entkopplung der Abhängigkeiten wird die Logik zur Kommunikation mit dem Backend und zur lokalen Speicherung der Daten als eigene Schicht, die Datasource Ebene, abstrahiert.
+Dies bietet den Vorteil, im späteren Verlauf die Datenquelle auszutauschen, ohne die Klassen der Controller Ebene im großen Maße abzuändern.
 
 \subsubsection{Modell Ebene}
 Die Modellklassen werden analog zum Datenmodell im Kapitel \ref{datenmodell} implementiert.
@@ -152,9 +154,6 @@ class BakedGood: Codable, Equatable {
 \clearpage
 
 \subsubsection{Datasource Ebene}
-Zur Entkopplung der Abhängigkeiten wird die Logik zur Kommunikation mit dem Backend und zur lokalen Speicherung der Daten als eigene Schicht abstrahiert.
-Dies bietet den Vorteil, im späteren Verlauf die Datenquelle auszutauschen, ohne alle Klassen der ViewController Ebene abzuändern.
-\\
 Zur lokalen Speicherung der Daten ist die Klasse \code{Disk} zuständig, welche im folgenden Codeblock in gekürzter Variante ohne Methodenrümpfe dargestellt ist.
 Die private Methode \code{getURL} gibt die \gls{url} zurück, welche durch iOS für das angegebene Verzeichnis, \code{documents} oder \code{caches}, zur Verfügung gestellt wird und die den spezifischen Speicherort repräsentiert.
 Die private Methode \code{storeData} speichert die übergebenen Daten unter dem angegebenen Verzeichnis, indem sie die Funktion \code{getURL} verwendet, ab.
@@ -163,9 +162,7 @@ Damit bereits gespeicherte Daten abgerufen werden können, ist die private Funkt
 Des Weiteren sind Methoden zum Löschen aller Inhalte eines Verzeichnisses mittels \code{clear}, zum Löschen einer Datei mittels \code{remove} und zum Überprüfen der Existenz einer Datei mittels \code{fileExist} implementiert.
 
 \begin{lstlisting}[language=Swift]
-import Foundation
-
-public class Disk {
+class Disk {
     fileprivate init() { }
 
     enum Directory { case documents, caches }
@@ -188,7 +185,7 @@ public class Disk {
 }
 \end{lstlisting}
 
-Die Klasse \code{RestApiHandler} ist für die direkte Kommunikation mit einem \gls{rest} Backend zuständig und nutzt hierfür die Swift internen Bibliotheken.
+Die Klasse \code{RestApiHandler}, siehe folgenden Codeblock als gekürzte Variante, ist für die direkte Kommunikation mit einem \gls{rest} Backend zuständig und nutzt hierfür die Swift internen Bibliotheken.
 Über die Methode \code{init}, welche in Swift den Konstruktor repräsentiert, wird die Basis \gls{url} gesetzt, welche für alle Anfragen verwendet wird.
 Durch die private Funktion \code{createRequest} (nicht authentifiziert) oder \code{createAuthenticatedRequest} (authentifiziert) an das Backend gesendet werden. Damit die authentifizierten Anfragen jedoch durch das Backend auch als solche erkannt werden, muss vorher der Anmeldeprozess mittels der Funktion \code{login} durchlaufen sein.
 Die beiden Methoden \code{getDecodableArrayFromEndpoint}, zum Abfragen von Objekten, und \code{getDataFromEndpoint}, zum Abfragen von Ressourcen wie zum Beispiel Bilder, können zum Erstellen und Senden von Anfragen verwendet werden.
@@ -213,12 +210,12 @@ class RestApiHandler {
 
 \clearpage
 
-Die Klasse \code{BakeryDatasource} verwendet die Klasse \code{RestApiHandler}, um spezialisierte Methoden bereitzustellen.
+Die Klasse \code{BakeryDatasource}, im folgenden Codeblock als gekürzte Variante ersichtlich, verwendet die Klasse \code{RestApiHandler}, um spezialisierte Methoden bereitzustellen.
 Hierzu gehört \code{login} zum Anmelden sowie \code{existingBakedGoodsOnDisk} zum Überprüfen, ob auf dem lokalen Speicher Objekte der Klasse \code{BakedGood} vorhanden sind.
 Des Weiteren werden die Funktionen \code{getBakedGoodsFromAPI} und \code{getBakedGoodsFromDisk}, zum Abrufen von Objekten der Klasse \code{BakedGood} vom Backend oder dem lokalen Speicher, bereitgestellt. Analog dazu werden die Funktionen \code{getNewsItemsFromAPI} und \code{getNewsItemsFromDisk} für die Klasse \code{NewsItem} bereitgestellt.
 
 \begin{lstlisting}[language=Swift]
-class BakeryDatasource {
+public class BakeryDatasource {
     public enum Endpoint: String {
         case login = "/user/login", loaf = "/loaf",  bun = "/bun",  news = "/news", picture = "/picture"
         func value() -> String {  return self.rawValue }
