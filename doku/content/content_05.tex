@@ -13,7 +13,7 @@ Die Controller Klassen nutzen die Service Klassen und die Service Klassen nutzen
 
 \subsubsection{Repository Ebene}
 Wie bereits beschrieben, stellt die Repository Ebene eine direkte Abstraktionsschicht der Datenbank dar.
-Um eine Repository Klasse erstellen zu können, muss einem Java Interface die Annotation \enquote{Transactional} zugewiesen werden. Das Interface muss außerdem das Interface \enquote {CrudRepository} erweitern und den zu behandelnden Objekttyp sowie den Datentyp des Attributs zur Identifikation angeben. Dies ist im folgenden Codeblock als Beispiel aufgeführt.
+Um eine Repository Klasse erstellen zu können, muss einem Java Interface die Annotation \code{@Transactional} zugewiesen werden. Das Interface muss außerdem das Interface \code {CrudRepository} erweitern und den zu behandelnden Objekttyp sowie den Datentyp des Attributs zur Identifikation angeben. Dies ist im folgenden Codeblock als Beispiel aufgeführt.
 \begin{lstlisting}[language=Java]
 @Transactional
 public interface ExampleRepository extends CrudRepository<Example, Long> {
@@ -22,25 +22,25 @@ public interface ExampleRepository extends CrudRepository<Example, Long> {
 \end{lstlisting}
 
 Hierbei sind Methoden zum Speichern, Aktualisieren und Löschen. von Objekten bereits standardmäßig definiert.
-Da nach Kapitel \ref{datenmodell} die Objekte der Klassen \enquote{Loaf}, \enquote{Bun}, \enquote{Ingredient}, \enquote{CerealMixPercentage}, \enquote{NewsItem} und \enquote{ApplicationUser} verwaltet werden müssen, werden entsprechende Repository Klassen entwickelt.
-Um später im Objektbestand der Klassen \enquote{Loaf}, \enquote{Bun} und \enquote{Ingredient} nach dem Namen suchen zu können, ist eine Methode \enquote{findByName} (siehe folgenden Codeblock) notwendig.
+Da nach Kapitel \ref{datenmodell} die Objekte der Klassen \code{Loaf}, \code{Bun}, \code{Ingredient}, \code{CerealMixPercentage}, \code{NewsItem} und \code{ApplicationUser} verwaltet werden müssen, werden entsprechende Repository Klassen entwickelt.
+Um später im Objektbestand der Klassen \code{Loaf}, \code{Bun} und \code{Ingredient} nach dem Namen suchen zu können, ist eine Methode \enquote{findByName} (siehe folgenden Codeblock) notwendig.
 \begin{lstlisting}[language=Java]
 Example findByName(String name);
 \end{lstlisting}
 
-Des Weiteren soll es möglich sein. einzelne Objekte oder alle Objekte der Klassen \enquote{Loaf}, \enquote{Bun}, \enquote{Ingredient}, \enquote{CerealMixPercentage}, \enquote{NewsItem} und \enquote{ApplicationUser} abzurufen.
-Hierfür sind die Methoden \enquote{findById} und \enquote{findAll} (siehe folgenden Codeblock) notwendig.
+Des Weiteren soll es möglich sein. einzelne Objekte oder alle Objekte der Klassen \code{Loaf}, \code{Bun}, \code{Ingredient}, \code{CerealMixPercentage}, \code{NewsItem} und \code{ApplicationUser} abzurufen.
+Hierfür sind die Methoden \code{findById} und \code{findAll} (siehe folgenden Codeblock) notwendig.
 \begin{lstlisting}[language=Java]
 Example findById(long id);
 List<Example> findAll();
 \end{lstlisting}
 
-Für die Klasse \enquote{ApplicationUser} soll es zudem möglich sein, ein Objekt über den Benutzernamen mit der Methode \enquote{findByUsername} zu finden sowie mit der Methode \enquote{existsByUsername} zu überprüfen, ob bereits ein Benutzer mit einem spezifischen Benutzernamen existiert (siehe folgenden Codeblock).
+Für die Klasse \enquote{ApplicationUser} soll es zudem möglich sein, ein Objekt über den Benutzernamen mit der Methode \code{findByUsername} zu finden sowie mit der Methode \enquote{existsByUsername} zu überprüfen, ob bereits ein Benutzer mit einem spezifischen Benutzernamen existiert (siehe folgenden Codeblock).
 \begin{lstlisting}[language=Java]
 User findByUsername(String username);
 boolean existsByUsername(String username);
 \end{lstlisting}
-Die nach diesem Muster implementierten Repository Klassen mit den jeweiligen Methoden für \enquote{Loaf}, \enquote{Bun}, \enquote{Ingredient}, \enquote{CerealMixPercentage}, \enquote{NewsItem} und \enquote{ApplicationUser} sind in der Abbildung \ref{backend-repositories} als UML Klassendiagramm ersichtlich.
+Die nach diesem Muster implementierten Repository Klassen mit den jeweiligen Methoden für \code{Loaf}, \code{Bun}, \code{Ingredient}, \code{CerealMixPercentage}, \code{NewsItem} und \code{ApplicationUser} sind in der Abbildung \ref{backend-repositories} als UML Klassendiagramm ersichtlich.
 
 \abbildung{../diagramme/Backend-Repositories.pdf}{Die Repository Ebene des Backends}{backend-repositories}
 
@@ -48,7 +48,7 @@ Die nach diesem Muster implementierten Repository Klassen mit den jeweiligen Met
 
 \subsubsection{Service Ebene}
 Die Service Ebene verwendet die Repository Ebene als Abstraktionsschicht über der Datenbank, um vordefinierte Methoden zum Erstellen, Anzeigen, Bearbeiten, und Löschen von Datensätzen zu ermöglichen. Diese Service Klassen werden anschließend von Controller Klassen verwendet und stellen somit selbst eine Abstraktionsschicht dar.
-Um eine Klasse als einen Spring Service deklarieren zu können, ist die Verwendung der Annotation \enquote{Service} nowendig.
+Um eine Klasse als einen Spring Service deklarieren zu können, ist die Verwendung der Annotation \code{@Service} nowendig.
 \begin{lstlisting}[language=Java]
 @Service
 public class ExampleService {
@@ -56,7 +56,7 @@ public class ExampleService {
 }
 \end{lstlisting}
 
-Da eine Referenz zur jeweiligen Instanz einer Repository Klasse notwendig ist, wird diese durch die Annotation \enquote{Autowired} per Dependency Injection bereitgestellt. Analog gilt des auch für die ModelMapper Klasse, um das Architekturmuster \gls{dto} zu unterstützen.
+Da eine Referenz zur jeweiligen Instanz einer Repository Klasse notwendig ist, wird diese durch die Annotation \code{@Autowired} per Dependency Injection bereitgestellt. Analog gilt des auch für die ModelMapper Klasse, um das Architekturmuster \gls{dto} zu unterstützen.
 \begin{lstlisting}[language=Java]
 @Autowired
 private ModelMapper modelMapper;
@@ -76,7 +76,7 @@ public Example updateExample(long id, ExampleDTO exampleDTO) {
     }
 \end{lstlisting}
 
-Nach diesem Schema werden die Service Klassen für \enquote{Loaf}, \enquote{Bun}, \enquote{Ingredient}, \enquote{CerealMixPercentage}, \enquote{NewsItem} und \enquote{ApplicationUser} implementiert. Des Weiteren ist eine Service Klasse mit dem Namen \enquote{FileSystemStorageService} notwendig, welche die Speicherung von Daten auf dem Dateisystem ermöglicht (siehe Abbildung \ref{backend-services}). 
+Nach diesem Schema werden die Service Klassen für \code{Loaf}, \code{Bun}, \code{Ingredient}, \code{CerealMixPercentage}, \code{NewsItem} und \code{ApplicationUser} implementiert. Des Weiteren ist eine Service Klasse mit dem Namen \code{FileSystemStorageService} notwendig, welche die Speicherung von Daten auf dem Dateisystem ermöglicht (siehe Abbildung \ref{backend-services}). 
 
 \clearpage
 
@@ -86,7 +86,7 @@ Nach diesem Schema werden die Service Klassen für \enquote{Loaf}, \enquote{Bun}
 
 \subsubsection{Controller Ebene}
 Mit der Repository Ebene ist bereits eine Abstraktionsschicht über der Datenbank und mit der Service Ebene ist eine Abstraktionsschicht für bereitgestellte Funktionalitäten vorhanden. Um nun mit deren Hilfe eine \gls{rest} Schnittstelle anbieten zu können, ist die Controller Ebene notwendig.
-Eine Controller Klasse kann mittels der Annotation \enquote{RestController} erstellt werden, wobei der Methoden übergreifende Basis-Endpunkt durch die Annotation \enquote{RequestMapping} deklariert werden kann.
+Eine Controller Klasse kann mittels der Annotation \code{@RestController} erstellt werden, wobei der Methoden übergreifende Basis-Endpunkt durch die Annotation \code{@RequestMapping} deklariert werden kann.
 \begin{lstlisting}[language=Java]
 @RestController
 @RequestMapping("/example")
@@ -103,7 +103,7 @@ public List<Example> getAllExamples() {
 }
 \end{lstlisting}
 
-Damit eine Methode lediglich durch Administratoren aufgerufen werden können, ist die Annotation \enquote{PreAuthorize} notwendig.
+Damit eine Methode lediglich durch Administratoren aufgerufen werden können, ist die Annotation \code{PreAuthorize} notwendig.
 \begin{lstlisting}[language=Java]
 @PostMapping
 @PreAuthorize("hasRole('ROLE_ADMIN')")
@@ -112,7 +112,7 @@ public Example createExample(@RequestBody ExampleDTO exampleDTO) {
 }
 \end{lstlisting}
 
-Nach diesem Schema werden die Controller Klassen für \enquote{Loaf}, \enquote{Bun}, \enquote{Ingredient}, \enquote{CerealMixPercentage}, \enquote{NewsItem} und \enquote{ApplicationUser} implementiert (siehe Abbildung \ref{backend-controllers}). 
+Nach diesem Schema werden die Controller Klassen für \code{Loaf}, \code{Bun}, \code{Ingredient}, \code{CerealMixPercentage}, \code{NewsItem} und \code{ApplicationUser} implementiert (siehe Abbildung \ref{backend-controllers}). 
 
 \clearpage
 
@@ -130,7 +130,7 @@ Die Architektur der Applikation ist nach dem \gls{mvc} Muster, mit einer Modell 
 \subsubsection{Modell Ebene}
 Die Modellklassen werden analog zum Datenmodell im Kapitel \ref{datenmodell} implementiert.
 Im folgenden Codeblock ist eine beispielhafte, gekürzte Umsetzung in der Programmiersprache Swift für ein Backprodukt ersichtlich.
-Die Klasse für das Backprodukt implementiert das Protokoll \enquote{Equatable}, um einen Vergleich zwischen zwei Objekten dieser Klasse nach der Id zu ermöglichen, und das Protokoll  \enquote{Codable}, damit Swift die \gls{json} Daten in Objekte automatisch konvertieren kann.
+Die Klasse für das Backprodukt implementiert das Protokoll \code{Equatable}, um einen Vergleich zwischen zwei Objekten dieser Klasse nach der Id zu ermöglichen, und das Protokoll  \enquote{Codable}, damit Swift die \gls{json} Daten in Objekte automatisch konvertieren kann.
 \begin{lstlisting}[language=Swift]
 import Foundation
 
@@ -147,6 +147,107 @@ class BakedGood: Codable, Equatable {
         return lhs.id == rhs.id
     }
 }
+\end{lstlisting}
+
+\clearpage
+
+\subsubsection{Datasource Ebene}
+Zur Entkopplung der Abhängigkeiten wird die Logik zur Kommunikation mit dem Backend und zur lokalen Speicherung der Daten als eigene Schicht abstrahiert.
+Dies bietet den Vorteil, im späteren Verlauf die Datenquelle auszutauschen, ohne alle Klassen der ViewController Ebene abzuändern.
+\\
+Zur lokalen Speicherung der Daten ist die Klasse \code{Disk} zuständig, welche im folgenden Codeblock in gekürzter Variante ohne Methodenrümpfe dargestellt ist.
+Die private Methode \code{getURL} gibt die \gls{url} zurück, welche durch iOS für das angegebene Verzeichnis, \code{documents} oder \code{caches}, zur Verfügung gestellt wird und die den spezifischen Speicherort repräsentiert.
+Die private Methode \code{storeData} speichert die übergebenen Daten unter dem angegebenen Verzeichnis, indem sie die Funktion \code{getURL} verwendet, ab.
+Die Funktion \code{storeCodable}  sorgt für die Umwandlung eines Objekts, dessen Klassen dem \code{Codable} Protokoll entspricht, in Daten und speichert diese Daten durch Verwendung der privaten Funktion \code{storeData} und unter der Angabe des Verzeichnisses ab.
+Damit bereits gespeicherte Daten abgerufen werden können, ist die private Funktion \code{fetchData} vorhanden. Diese wird von der Funktion \code{fetchCodable} verwendet, um aus den ausgelesenen Daten wiederum Objekte der angegebenen Klasse zu generieren.
+Des Weiteren sind Methoden zum Löschen aller Inhalte eines Verzeichnisses mittels \code{clear}, zum Löschen einer Datei mittels \code{remove} und zum Überprüfen der Existenz einer Datei mittels \code{fileExist} implementiert.
+
+\begin{lstlisting}[language=Swift]
+import Foundation
+
+public class Disk {
+    fileprivate init() { }
+
+    enum Directory { case documents, caches }
+    
+    static private func getURL(for directory: Directory) -> URL { ... }
+    
+    static private func storeData(data: Data, to directory: Directory, as fileName: String) { ... }
+    
+    static func storeCodable<T: Codable>(_ objects: [T], to directory: Directory, as fileName: String) { ... }
+    
+    static private func fetchData(fileName: String, from directory: Directory) -> Data { ... }
+    
+    static func fetchCodable<DataType: Codable>(_ dump: DataType.Type, fileName: String, from directory: Directory) -> [DataType]? { ...  }
+    
+    static func clear(_ directory: Directory) {  }
+    
+    static func remove(_ fileName: String, from directory: Directory) { ... }
+    
+    static func fileExists(_ fileName: String, in directory: Directory) -> Bool { ... }
+}
+\end{lstlisting}
+
+Die Klasse \code{RestApiHandler} ist für die direkte Kommunikation mit einem \gls{rest} Backend zuständig und nutzt hierfür die Swift internen Bibliotheken.
+Über die Methode \code{init}, welche in Swift den Konstruktor repräsentiert, wird die Basis \gls{url} gesetzt, welche für alle Anfragen verwendet wird.
+Durch die private Funktion \code{createRequest} (nicht authentifiziert) oder \code{createAuthenticatedRequest} (authentifiziert) an das Backend gesendet werden. Damit die authentifizierten Anfragen jedoch durch das Backend auch als solche erkannt werden, muss vorher der Anmeldeprozess mittels der Funktion \code{login} durchlaufen sein.
+Die beiden Methoden \code{getDecodableArrayFromEndpoint}, zum Abfragen von Objekten, und \code{getDataFromEndpoint}, zum Abfragen von Ressourcen wie zum Beispiel Bilder, können zum Erstellen und Senden von Anfragen verwendet werden.
+
+\begin{lstlisting}[language=Swift]
+class RestApiHandler {
+    private let apiBaseURL: URL
+    
+    init(urlScheme: String, urlHost: String) { ... }
+    
+    private func createRequest(endpoint: String, method: String) -> URLRequest { ... }
+    
+    private func createAuthenticatedRequest(endpoint: String, method: String, token: String) -> URLRequest { ... }
+    
+    func login(endpoint: String, credentials: ApiCredentials, successCallback: @escaping (_ result: String)->(), errorCallback: @escaping (_ result: String)->()) { ... }
+    
+    func getDecodableArrayFromEndpoint<DataType: Decodable>(_ dump: DataType.Type, token: String, endpoint: String, method: String, successCallback: @escaping (_ result: [DataType])->(), errorCallback: @escaping (_ result: String)->()) { ... }
+    
+    func getDataFromEndpoint(endpoint: String) -> Data { ... }
+}
+\end{lstlisting}
+
+\clearpage
+
+Die Klasse \code{BakeryDatasource} verwendet die Klasse \code{RestApiHandler}, um spezialisierte Methoden bereitzustellen.
+Hierzu gehört \code{login} zum Anmelden sowie \code{existingBakedGoodsOnDisk} zum Überprüfen, ob auf dem lokalen Speicher Objekte der Klasse \code{BakedGood} vorhanden sind.
+Des Weiteren werden die Funktionen \code{getBakedGoodsFromAPI} und \code{getBakedGoodsFromDisk}, zum Abrufen von Objekten der Klasse \code{BakedGood} vom Backend oder dem lokalen Speicher, bereitgestellt. Analog dazu werden die Funktionen \code{getNewsItemsFromAPI} und \code{getNewsItemsFromDisk} für die Klasse \code{NewsItem} bereitgestellt.
+
+\begin{lstlisting}[language=Swift]
+class BakeryDatasource {
+    public enum Endpoint: String {
+        case login = "/user/login", loaf = "/loaf",  bun = "/bun",  news = "/news", picture = "/picture"
+        func value() -> String {  return self.rawValue }
+    }
+    
+    public enum DiskFileName: String {
+        case loaf = "loafs.json", bun = "buns.json", news = "news.json"
+        func value() -> String { return self.rawValue }
+    }
+    
+    private var authToken: String?
+    
+    private lazy var credentials: ApiCredentials = { ...  }()
+
+    private lazy var restApiHandler: RestApiHandler = { ... }()
+    
+    func login(successCallback: @escaping () -> ()) { ... }
+    
+    func getBakedGoodsFromAPI<T: BakedGood>(endpoint: Endpoint, diskFileName: DiskFileName, successCallback: @escaping (_ loafArray: [T], _ imageDataArray: [Data])->()) { ... }
+    
+    func getBakedGoodsFromDisk<T: BakedGood>(diskFileName: DiskFileName, successCallback: @escaping (_ loafArray: [T], _ imageDataArray: [Data])->()) { ... }
+    
+    func existingBakedGoodsOnDisk(diskFileName: DiskFileName) -> Bool { ... }
+    
+    func getNewsItemsFromAPI(successCallback: @escaping (_ newsArray: [NewsItem], _ imageDataArray: [Data])->()) { ... }
+    
+    func getNewsItemsFromDisk(successCallback: @escaping (_ newsArray: [NewsItem], _ imageDataArray: [Data])->()) { ... }
+}
+
 \end{lstlisting}
 
 \clearpage
