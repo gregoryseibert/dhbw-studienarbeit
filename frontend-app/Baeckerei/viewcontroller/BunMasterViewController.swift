@@ -131,7 +131,7 @@ extension BunMasterViewController: UICollectionViewDataSource {
         
         let currentItem = isFiltering() ? filteredBunArray[indexPath.row] : bunArray[indexPath.row]
         
-        let imageIndex = loafArray.firstIndex(of: currentItem)!
+        let imageIndex = bunArray.firstIndex(of: currentItem)!
         
         if imageIndex < imageDataArray.count {
             let imageData = imageDataArray[imageIndex]
