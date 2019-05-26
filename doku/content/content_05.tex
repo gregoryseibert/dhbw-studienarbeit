@@ -213,7 +213,7 @@ Das Web Admin-Dashboard bietet dem Administrator die Möglichkeit, die vorhanden
 \subsection{Architektur}
 Die Bestandteile des Dashboards werden aufgeteilt, indem mehrfach verwendbare Komponenten extrahiert werden und als eigene Klassen in die Component Ebene einziehen. Diese Komponenten werden anschließend von den sogenannten \enquote{Pages} verwendet, welche die jeweilige Seite, wie zum Beispiel das Erstellen von Broten, darstellen. 
 
-\subsubsection{Component Ebene}
+\subsubsection{Component Ebene} \label{dashboard-components}
 Zum Erstellen sowie Bearbeiten von Backprodukten wird die Komponente \code{BakedGoodCreateEditCard} entwickelt. Bei deren Verwendung wird eine Liste an verfügbaren Zutaten sowie die Funktion, welche beim Absenden des Formulars aufgerufen werden soll, übergeben. Optional lässt sich angeben, ob das Formular die Produktionstage beinhalten soll und ob es sich um das Bearbeiten eines bestehenden Backprodukts handelt.
 \\
 Damit Backprodukte in der Masteransicht dargestellt werden können, wird für die einzelnen Elemente die Komponente \code{BakedGoodMasterCard} implementiert. Analog hierzu wird \code{BakedGoodDetailCard} für die Detailansicht eines einzelnen Elements verwendet.
@@ -225,13 +225,42 @@ Des Weiteren wird eine Komponente für die Navigationsleiste sowie eine zum Bena
 \clearpage
 
 \subsubsection{Page Ebene}
+Unter Verwendung der Komponenten aus dem vorigen Kapitel \ref{dashboard-components} wird für jede Seite zur Administration der Daten eine \enquote{Page} implementiert. Hierzu gehören die Seiten
+\begin{itemize}
+	\item \code{Home} Die Startseite des Dashboards
+	\item \code{Login} Die Seite zum Anmelden mittels Formular
+	\item \code{Logout} Die Seite zum Abmelden
+	\item \code{BunCreate} Stellt ein Formular zum Erstellen von Brötchen bereit
+	\item \code{BunDetail} Präsentiert die detaillierten Informationen zu einem Brötchen
+	\item \code{BunEdit} Bietet die Möglichkeit an, die Daten eines Brötchens zu bearbeiten
+	\item \code{BunMaster} Präsentiert alle vorhandenen Brötchen
+	\item \code{IngredientCreate} Über diese Seite lassen sich neue Zutaten erstellen
+	\item \code{IngredientEdit} Zuständig für das Bearbeiten von bestehenden Daten einer Zutat
+	\item \code{IngredientMaster} Hier werden alle vorhandenen Zutaten aufgelistet
+	\item \code{LoafCreate} Per Formular lässt sich auf dieser Seite ein Brot erstellen
+	\item \code{LoafDetail} Präsentiert die detaillierten Informationen zu einem Brot
+	\item \code{LoafEdit} Bietet die Möglichkeit an, die Daten eines Brotes zu bearbeiten
+	\item \code{LoafMaster} Liste alle vorhandenen Brote auf
+\end{itemize}
 
 \clearpage
 
 \subsection{Erstellen und bearbeiten von Zutaten}
 
+\abbildung{images/content/admin-dashboard/dashboard-create-edit-ingredient.png}{Die Seite, um neue Zutaten erstellen und bearbeiten zu können}{dashboard-create-edit-ingredient}
+
+\clearpage
+
 \subsection{Erstellen und bearbeiten von Broten}
 
+\abbildung{images/content/admin-dashboard/dashboard-create-edit-loaf.png}{Die Seite, um neue Brote erstellen und bearbeiten zu können}{dashboard-create-edit-loaf}
+
+\clearpage
+
 \subsection{Erstellen und bearbeiten von Brötchen}
+
+\abbildung{images/content/admin-dashboard/dashboard-create-edit-bun.png}{Die Seite, um neue Brötchen erstellen und bearbeiten zu können}{dashboard-create-edit-bun}
+
+\clearpage
 
 \subsection{Erstellen und bearbeiten von Neuigkeiten}
