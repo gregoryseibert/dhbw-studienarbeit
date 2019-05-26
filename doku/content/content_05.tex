@@ -2,7 +2,7 @@
 \chapter{Implementierung}
 In diesem Kapitel wird beschrieben, wie die Backend Komponente und die zwei Frontend Komponenten, eine iOS App sowie ein Web Admin-Dashboard, als Referenz Implementierung entwickelt wird. 
 
-\section{Backend}
+\section{Backend} \label{backend}
 Das Backend des Bäckerei Systems ist die zentrale Datenverwaltung, durch die neue Datensätze angelegt oder bestehende Datensätze abgerufen, bearbeitet oder gelöscht werden können. Um neue Datensätze nachhaltig speichern zu können, besitzt das Backend eine Datenbank.
 \\
 Im Folgenden wird beschrieben, aus welchen Hauptbestandteilen sich das Spring Backend zusammensetzt.
@@ -208,10 +208,21 @@ Wird das Element der Navigationsleiste mit der Beschriftung \enquote{News} ausge
 \clearpage
 
 \section{Web Admin-Dashboard}
+Das Web Admin-Dashboard bietet dem Administrator die Möglichkeit, die vorhandenen Daten zu den Backprodukten zu pflegen und neue Daten anzulegen. Dieses Dashboard wird als React Web Applikation entwickelt und nutzt die \gls{rest} Schnittstelle des Backends, welches im Kapitel \ref{backend} beschrieben wurde. Um mit dem Backend kommunizieren zu können, wird die Bibliothek \fnurl{Axios}{https://github.com/axios/axios} verwendet.
 
 \subsection{Architektur}
+Die Bestandteile des Dashboards werden aufgeteilt, indem mehrfach verwendbare Komponenten extrahiert werden und als eigene Klassen in die Component Ebene einziehen. Diese Komponenten werden anschließend von den sogenannten \enquote{Pages} verwendet, welche die jeweilige Seite, wie zum Beispiel das Erstellen von Broten, darstellen. 
 
 \subsubsection{Component Ebene}
+Zum Erstellen sowie Bearbeiten von Backprodukten wird die Komponente \code{BakedGoodCreateEditCard} entwickelt. Bei deren Verwendung wird eine Liste an verfügbaren Zutaten sowie die Funktion, welche beim Absenden des Formulars aufgerufen werden soll, übergeben. Optional lässt sich angeben, ob das Formular die Produktionstage beinhalten soll und ob es sich um das Bearbeiten eines bestehenden Backprodukts handelt.
+\\
+Damit Backprodukte in der Masteransicht dargestellt werden können, wird für die einzelnen Elemente die Komponente \code{BakedGoodMasterCard} implementiert. Analog hierzu wird \code{BakedGoodDetailCard} für die Detailansicht eines einzelnen Elements verwendet.
+\\
+Um Zutaten für die Backprodukte anlegen zu können, wird analog zu den Backprodukten die Komponente \code{IngredientCreateEditCard} erstellt.
+\\
+Des Weiteren wird eine Komponente für die Navigationsleiste sowie eine zum Benachrichtigen über den Erfolg oder das Fehlschlagen von Aktivitäten, wie zum Beispiel bei der Eingabe von falschen Anmeldedaten, implementiert.
+
+\clearpage
 
 \subsubsection{Page Ebene}
 
