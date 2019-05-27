@@ -1,6 +1,13 @@
 %!TEX root = ../hauptdatei.tex
-\chapter{Zusammenfassung und Ausblick}
+\chapter{Fazit und Ausblick}
 
-\section{Zusammenfassung}
+\section{Fazit}
+Im Rahmen dieser Studienarbeit wurde ein System entwickelt, welches den Endkunden einer Bäckerei die Möglichkeit bietet, sich digital per iOS Applikation über Backprodukte sowie Neuigkeiten zu informieren. Hierbei können sie nach Produkten nach Text suchen sowie nach Allergenen filtern. Die Daten können über ein Web-Dashboard verwaltet werden, nachdem die Authentifizierung als Administrator erfolgt ist. Diese Daten werden zentral in einem Backend gespeichert und können mittels der \gls{rest} Schnittstelle angelegt, abgerufen, bearbeitet oder gelöscht werden.
+\\
+Im Kapitel \ref{systemarchitektur} wurde diskutiert, ob die iOS Applikation sowohl für die Endkunden zur Anzeige der Daten als auch für den Administrator zur Verwaltung der Daten dienen soll oder ob die Verwaltung über ein dafür vorgesehenes Web-Dashboard erfolgen soll. Das Ergebnis dieser Diskussion war die Aufteilung in zwei Frontends. Diese Wahl hat sich im Verlauf der Studienarbeit als zeitintensiver gestaltet als erwartet war. Insbesondere weil das Web-Dashboard ebenfalls alle Daten wie die iOS Applikation anzeigen muss, um eine Verwaltung dieser zu ermöglichen.
+\\
+Die Entscheidung im Kapitel \ref{backend-technologie}, für das Backend das Spring Framework zu verwenden, erwies sich jedoch als hilfreich, da die Implementierung schnell und problemlos möglich war.
 
 \section{Ausblick}
+Eine denkbare Erweiterung zu dieser Arbeit wären das Einpflegen des gesamten Produktportfolios einer Bäckerei mit beispielsweise Angeboten oder eine feinere Unterteilung der Backprodukte in Kategorien.
+Um das Produktheft, welches in jeder Bäckerei vorliegen muss, als digitale Variante ersetzen zu können, müssen zudem gesetzliche Vorgaben umgesetzt werden.
