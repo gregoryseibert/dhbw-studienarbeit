@@ -100,7 +100,7 @@ Die Kommunikation über \gls{http} erfolgt lediglich unverschlüsselt.
 Daher ist es jederzeit möglich, Inhalte von versendeten Paketen mittels \gls{mitm} mitzulesen oder gar zu manipulieren.
 Um dies zu verhindern, wurde \gls{http} um einen \gls{ssl}/\gls{tls}-Layer erweitert, was als \gls{https} bezeichnet wird.
 Hierbei werden alle übertragenen Daten verschlüsselt und es erfolgt eine gegenseitige Authentifizierung durch SSL-Zertifikate.
-Mittlerweile wurde jedoch die Versionen SSL1.0 bis SSL3.0 sowie TLS1.0 als unsicher deklariert.
+Mittlerweile wurden jedoch die Versionen SSL1.0 bis SSL3.0 sowie TLS1.0 als unsicher deklariert \cite{ssl}. 
 Dennoch unterstützen viele Webserver diese unsicheren SSL und TLS Versionen, wie man der Abbildung \ref{ssl-tls} entnehmen kann.
 Da zur Nutzung des Bäckerei Systems eine Authentifizierung über das Internet vorausgesetzt wird, sollte der Webserver, auf dem das Backend ausgeführt wird, ausschließlich eine Verbindung per \gls{https} akzeptieren, da sonst Angreifer die Anmeldedaten abgreifen können. 
 
@@ -109,7 +109,7 @@ Da zur Nutzung des Bäckerei Systems eine Authentifizierung über das Internet v
 \clearpage
 
 \subsection{Eingabevalidierung und Ausgabevalidierung}
-Webanwendungen, wie beispielsweise Foren, müssen alle Daten validieren, die durch Nutzereingaben übermittelt werden, da es sonst zur Speicherung von unzulässigen Daten oder Werten kommen kann. Eine direkte Folge hiervon äußert sich in \gls{xss}, aber auch in einem Einbruch in das System oder generellen Datenverlust.
+Webanwendungen, wie beispielsweise Foren, sollten alle Daten validieren, die durch Nutzereingaben übermittelt werden, da es sonst zur Speicherung von unzulässigen Daten oder Werten kommen kann. Eine direkte Folge hiervon äußert sich in \gls{xss}, aber auch in einem Einbruch in das System oder generellen Datenverlust.
 Daher sollten alle Daten, die eingegeben oder ausgegeben werden, stets validiert und gegebenenfalls gesäubert werden.
 Da über die Administrationsschnittstelle benutzerdefinierte Texte zur Erstellung und Bearbeitung von Datensätzen übertragen werden können, ist es von Vorteil, wenn diese vorher validiert werden. Das System würde jedoch durch eine Validierung der Eingabedaten und Ausgabedaten deutlich an Komplexität gewinnen. Dieser Faktor ist also zu vernachlässigen, da die Erstellung und Bearbeitung von Datensätzen lediglich dem Administrator möglich ist und eine iOS App keine Anfälligkeit gegenüber \enquote{xss} Angriffe besitzt, da diese nicht auf \gls{html} und JavaScript basiert.
 
