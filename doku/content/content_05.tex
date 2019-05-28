@@ -1,11 +1,11 @@
 %!TEX root = ../hauptdatei.tex
 \chapter{Implementierung}
-In diesem Kapitel wird beschrieben, wie die Backend Komponente und die zwei Frontend Komponenten, eine iOS App sowie ein Web Admin-Dashboard, als Referenz Implementierung entwickelt wird. 
+In diesem Kapitel wird beschrieben, wie die \gls{backend} Komponente und die zwei \gls{frontend} Komponenten, eine iOS App sowie ein Web Admin-Dashboard, als Referenz Implementierung entwickelt wird.
 
 \section{Backend} \label{backend}
-Das Backend des Bäckerei Systems ist die zentrale Datenverwaltung, durch die neue Datensätze angelegt oder bestehende Datensätze abgerufen, bearbeitet oder gelöscht werden können. Um neue Datensätze nachhaltig speichern zu können, besitzt das Backend eine Datenbank.
+Das \gls{backend} des Bäckerei Systems ist die zentrale Datenverwaltung, durch die neue Datensätze angelegt oder bestehende Datensätze abgerufen, bearbeitet oder gelöscht werden können. Um neue Datensätze nachhaltig speichern zu können, besitzt das \gls{backend} eine Datenbank.
 \\
-Im Folgenden wird beschrieben, aus welchen Hauptbestandteilen sich das Spring Backend zusammensetzt.
+Im Folgenden wird beschrieben, aus welchen Hauptbestandteilen sich das Spring \gls{backend} zusammensetzt.
 Diese Hauptbestandteile sind die Repository Klassen, die Service Klassen und die Controller Klassen.
 Die Controller Klassen nutzen die Service Klassen und die Service Klassen nutzen die Repository Klassen als Abstraktionsschicht über der Datenbank.
 
@@ -42,7 +42,7 @@ boolean existsByUsername(String username);
 \end{lstlisting}
 Die nach diesem Muster implementierten Repository Klassen mit den jeweiligen Methoden für \code{Loaf}, \code{Bun}, \code{Ingredient}, \code{CerealMixPercentage}, \code{NewsItem} und \code{ApplicationUser} sind in der Abbildung \ref{backend-repositories} als UML Klassendiagramm ersichtlich.
 
-\abbildung{../diagramme/Backend-Repositories.pdf}{Die Repository Ebene des Backends}{backend-repositories}
+\abbildung{../diagramme/Backend-Repositories.pdf}{Die Repository Ebene des \gls{backend}s}{backend-repositories}
 
 \clearpage
 
@@ -76,11 +76,11 @@ public Example updateExample(long id, ExampleDTO exampleDTO) {
     }
 \end{lstlisting}
 
-Nach diesem Schema werden die Service Klassen für \code{Loaf}, \code{Bun}, \code{Ingredient}, \code{CerealMixPercentage}, \code{NewsItem} und \code{ApplicationUser} implementiert. Des Weiteren ist eine Service Klasse mit dem Namen \code{FileSystemStorageService} notwendig, welche die Speicherung von Daten auf dem Dateisystem ermöglicht (siehe Abbildung \ref{backend-services}). 
+Nach diesem Schema werden die Service Klassen für \code{Loaf}, \code{Bun}, \code{Ingredient}, \code{CerealMixPercentage}, \code{NewsItem} und \code{ApplicationUser} implementiert. Des Weiteren ist eine Service Klasse mit dem Namen \code{FileSystemStorageService} notwendig, welche die Speicherung von Daten auf dem Dateisystem ermöglicht (siehe Abbildung \ref{backend-services}).
 
 \clearpage
 
-\abbildung{../diagramme/Backend-Services.pdf}{Die Service Ebene des Backends}{backend-services}
+\abbildung{../diagramme/Backend-Services.pdf}{Die Service Ebene des \gls{backend}s}{backend-services}
 
 \clearpage
 
@@ -112,11 +112,11 @@ public Example createExample(@RequestBody ExampleDTO exampleDTO) {
 }
 \end{lstlisting}
 
-Nach diesem Schema werden die Controller Klassen für \code{Loaf}, \code{Bun}, \code{Ingredient}, \code{CerealMixPercentage}, \code{NewsItem} und \code{ApplicationUser} implementiert (siehe Abbildung \ref{backend-controllers}). 
+Nach diesem Schema werden die Controller Klassen für \code{Loaf}, \code{Bun}, \code{Ingredient}, \code{CerealMixPercentage}, \code{NewsItem} und \code{ApplicationUser} implementiert (siehe Abbildung \ref{backend-controllers}).
 
 \clearpage
 
-\abbildung{../diagramme/Backend-Controllers.pdf}{Die Controller Ebene des Backends}{backend-controllers}
+\abbildung{../diagramme/Backend-Controllers.pdf}{Die Controller Ebene des \gls{backend}s}{backend-controllers}
 
 \clearpage
 
@@ -126,8 +126,8 @@ Die Referenz-Implementierung hierzu wird in diesem Kapitel erklärt.
 
 \subsection{Architektur}
 Die Architektur der Applikation ist nach dem \gls{mvc} Muster, mit einer Modell Ebene, einer View Ebene und einer Controller Ebene, aufgebaut. Dieses Muster wurde bereits im Kapitel \ref{mvc} erläutert.
-Zur Entkopplung der Abhängigkeiten wird die Logik zur Kommunikation mit dem Backend und zur lokalen Speicherung der Daten als eigene Schicht, die Datasource Ebene, abstrahiert.
-Dies bietet den Vorteil, im späteren Verlauf die Datenquelle auszutauschen, ohne die Klassen der Controller Ebene im großen Maße abzuändern. 
+Zur Entkopplung der Abhängigkeiten wird die Logik zur Kommunikation mit dem \gls{backend} und zur lokalen Speicherung der Daten als eigene Schicht, die Datasource Ebene, abstrahiert.
+Dies bietet den Vorteil, im späteren Verlauf die Datenquelle auszutauschen, ohne die Klassen der Controller Ebene im großen Maße abzuändern.
 
 \subsubsection{Datasource Ebene}
 Zur lokalen Speicherung der Daten ist die Klasse \code{Disk} zuständig.
@@ -139,14 +139,14 @@ Des Weiteren sind Methoden zum Löschen aller Inhalte eines Verzeichnisses mitte
 
 \clearpage
 
-Die Klasse \code{RestApiHandler}, ist für die direkte Kommunikation mit einem \gls{rest} Backend zuständig und nutzt hierfür die Swift internen Bibliotheken.
+Die Klasse \code{RestApiHandler}, ist für die direkte Kommunikation mit einem \gls{rest} \gls{backend} zuständig und nutzt hierfür die Swift internen Bibliotheken.
 Über die Methode \code{init}, welche in Swift den Konstruktor repräsentiert, wird die Basis \gls{url} gesetzt, welche für alle Anfragen verwendet wird.
-Durch ihre private Funktion \code{createRequest} (nicht authentifiziert) oder \code{createAuthenticatedRequest} (authentifiziert) können Anfragen erstellt werden.Damit die authentifizierten Anfragen jedoch durch das Backend auch als solche erkannt werden, muss vorher der Anmeldeprozess mittels der Funktion \code{login} durchlaufen sein.
+Durch ihre private Funktion \code{createRequest} (nicht authentifiziert) oder \code{createAuthenticatedRequest} (authentifiziert) können Anfragen erstellt werden.Damit die authentifizierten Anfragen jedoch durch das \gls{backend} auch als solche erkannt werden, muss vorher der Anmeldeprozess mittels der Funktion \code{login} durchlaufen sein.
 Die beiden Methoden \code{getDecodableArrayFromEndpoint}, zum Abfragen von Objekten, und \code{getDataFromEndpoint}, zum Abfragen von Ressourcen wie zum Beispiel Bilder, können zum Ausführen von Anfragen verwendet werden.
 \\
 Die Klasse \code{BakeryDatasource} verwendet die Klasse \code{RestApiHandler}, um spezialisierte Methoden bereitzustellen.
 Hierzu gehört \code{login} zum Anmelden sowie \code{existingBakedGoodsOnDisk} zum Überprüfen, ob auf dem lokalen Speicher Objekte der Klasse \code{BakedGood} vorhanden sind.
-Des Weiteren werden die Funktionen \code{getBakedGoodsFromAPI} und \code{getBakedGoodsFromDisk}, zum Abrufen von Objekten der Klasse \code{BakedGood} vom Backend oder dem lokalen Speicher, bereitgestellt. Analog dazu werden die Funktionen \code{getNewsItemsFromAPI} und \code{getNewsItemsFromDisk} für die Klasse \code{NewsItem} bereitgestellt.
+Des Weiteren werden die Funktionen \code{getBakedGoodsFromAPI} und \code{getBakedGoodsFromDisk}, zum Abrufen von Objekten der Klasse \code{BakedGood} vom \gls{backend} oder dem lokalen Speicher, bereitgestellt. Analog dazu werden die Funktionen \code{getNewsItemsFromAPI} und \code{getNewsItemsFromDisk} für die Klasse \code{NewsItem} bereitgestellt.
 
 \subsubsection{Modell Ebene}
 Die Modellklassen werden analog zum Datenmodell im Kapitel \ref{datenmodell} implementiert.
@@ -208,10 +208,11 @@ Wird das Element der Navigationsleiste mit der Beschriftung \enquote{News} ausge
 \clearpage
 
 \section{Web Admin-Dashboard}
-Das Web Admin-Dashboard bietet dem Administrator die Möglichkeit, die vorhandenen Daten zu den Backprodukten zu pflegen und neue Daten anzulegen. Dieses Dashboard wird als React Web Applikation entwickelt und nutzt die \gls{rest} Schnittstelle des Backends, welches im Kapitel \ref{backend} beschrieben wurde. Um mit dem Backend kommunizieren zu können, wird die Bibliothek \fnurl{Axios}{https://github.com/axios/axios} verwendet.
+Das Web Admin-Dashboard bietet dem Administrator die Möglichkeit, die vorhandenen Daten zu den Backprodukten zu pflegen und neue Daten anzulegen. Dieses Dashboard wird als React Web Applikation entwickelt und nutzt die \gls{rest} Schnittstelle des \gls{backend}s, welches im Kapitel \ref{backend} beschrieben wurde. React ist eine JavaScript Bibliothek, die einfache und dennoch performante Webseiten ermöglicht, indem stets die Elemente der Webseite aktualisiert werden, welche tatsächlich neue Daten repräsentieren sollen \cite{react}.
+Um mit dem \gls{backend} zu kommunizieren, wird die Bibliothek \fnurl{Axios}{https://github.com/axios/axios} verwendet.
 
 \subsection{Architektur}
-Die Bestandteile des Dashboards werden aufgeteilt, indem mehrfach verwendbare Komponenten extrahiert werden und als eigene Klassen in die Component Ebene einziehen. Diese Komponenten werden anschließend von den sogenannten \enquote{Pages} verwendet, welche die jeweilige Seite, wie zum Beispiel das Erstellen von Broten, darstellen. 
+Die Bestandteile des Dashboards werden aufgeteilt, indem mehrfach verwendbare Komponenten extrahiert werden und als eigene Klassen in die Component Ebene einziehen. Diese Komponenten werden anschließend von den sogenannten \enquote{Pages} verwendet, welche die jeweilige Seite, wie zum Beispiel das Erstellen von Broten, darstellen.
 
 \subsubsection{Component Ebene} \label{dashboard-components}
 Zum Erstellen sowie Bearbeiten von Backprodukten wird die Komponente \code{BakedGoodCreateEditCard} entwickelt. Bei deren Verwendung wird eine Liste an verfügbaren Zutaten sowie die Funktion, welche beim Absenden des Formulars aufgerufen werden soll, übergeben. Optional lässt sich angeben, ob das Formular die Produktionstage beinhalten soll und ob es sich um das Bearbeiten eines bestehenden Backprodukts handelt.

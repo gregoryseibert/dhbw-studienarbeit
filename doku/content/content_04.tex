@@ -3,36 +3,36 @@
 
 \section{Systemarchitektur} \label{systemarchitektur}
 Die funktionalen Anforderungen \nameref{fa10} sowie \nameref{fa20} fordern eine zentrale Datenverwaltung.
-Um dies gewährleisten zu können, wird das System in zwei Komponentengruppen, dem Backend und Frontend, aufgeteilt.
-Das Backend soll eine Anbindung zu einer Postgres Datenbank (siehe Kapitel \ref{postgres}) besitzen, um neue sowie bereits vorhandene Daten speichern zu können.
-Damit der Administrator die Daten möglichst komfortabel pflegen kann und es zusätzlich dem Administrator und dem Benutzer möglich sein soll, die Daten einzusehen, ist ein Frontend notwendig.
-Das Frontend muss insgesamt zwei Hauptfunktionen erfüllen.
+Um dies gewährleisten zu können, wird das System in zwei Komponentengruppen, dem \gls{backend} und \gls{frontend}, aufgeteilt.
+Das \gls{backend} soll eine Anbindung zu einer Postgres Datenbank (siehe Kapitel \ref{postgres}) besitzen, um neue sowie bereits vorhandene Daten speichern zu können.
+Damit der Administrator die Daten möglichst komfortabel pflegen kann und es zusätzlich dem Administrator und dem Benutzer möglich sein soll, die Daten einzusehen, ist ein \gls{frontend} notwendig.
+Das \gls{frontend} muss insgesamt zwei Hauptfunktionen erfüllen.
 
 \begin{enumerate}
 	\item Einsehen der Backprodukte für Endkunden (Funktionale Anforderungen \nameref{fa30}, \nameref{fa40}, \nameref{fa80} und \nameref{fa90})
 	\item Pflegen der Daten durch den Administrator (Funktionale Anforderungen \nameref{fa40} bis \nameref{fa70} und \nameref{fa100} bis \nameref{fa120})
 \end{enumerate}
 
-Die erste Option zur Entwicklung des Frontends besteht darin, dass eine zusammenfassende Anwendung entwickelt wird, welche die beiden Hauptfunktionen vereint. Hierbei können sich die Endkunden die Backprodukte anzeigen lassen und der Administrator kann, nachdem er sich gemäß der nichtfunktionalen Anforderung \nameref{nfa10} authentifiziert hat, die Daten pflegen. Dies ließe sich mittels einer nativen iOS Applikation realisieren.
+Die erste Option zur Entwicklung des \gls{frontend}s besteht darin, dass eine zusammenfassende Anwendung entwickelt wird, welche die beiden Hauptfunktionen vereint. Hierbei können sich die Endkunden die Backprodukte anzeigen lassen und der Administrator kann, nachdem er sich gemäß der nichtfunktionalen Anforderung \nameref{nfa10} authentifiziert hat, die Daten pflegen. Dies ließe sich mittels einer nativen iOS Applikation realisieren.
 \\
-Die zweite Option ist die getrennte Entwicklung zweier Frontend Anwendungen, welche je eine der Hauptfunktionen anbieten.
+Die zweite Option ist die getrennte Entwicklung zweier \gls{frontend} Anwendungen, welche je eine der Hauptfunktionen anbieten.
 Hierfür eignet sich eine native iOS Applikation zum Einsehen der Backprodukte sowie eine Webseite zur Administration.
 \\
-Eine einzelne Applikation für das Einsehen und Pflegen der Daten zu entwickeln, würde den kleineren Entwicklungsaufwand bedeuten, da grundlegende, abstrahierte Klassen zur Kommunikation mit dem Backend für beide abgetrennte Bereiche benutzt werden können. Jedoch kommt mit diesem Vorteil auch ein direkter Nachteil einher. Die Fusion des Administrationsbereichs mit dem Bereich, welcher für Endkunden vorgesehen ist, würde eine Verletzung des Prinzips \gls{soc} bedeuten, was zu einer verringerten Sicherheit des Gesamtsystems führt. Des Weiteren ist das Pflegen von größeren Datensätzen auf einem Tablet im Vergleich zu einem PC unkomfortabel.
+Eine einzelne Applikation für das Einsehen und Pflegen der Daten zu entwickeln, würde den kleineren Entwicklungsaufwand bedeuten, da grundlegende, abstrahierte Klassen zur Kommunikation mit dem \gls{backend} für beide abgetrennte Bereiche benutzt werden können. Jedoch kommt mit diesem Vorteil auch ein direkter Nachteil einher. Die Fusion des Administrationsbereichs mit dem Bereich, welcher für Endkunden vorgesehen ist, würde eine Verletzung des Prinzips \gls{soc} bedeuten, was zu einer verringerten Sicherheit des Gesamtsystems führt. Des Weiteren ist das Pflegen von größeren Datensätzen auf einem Tablet im Vergleich zu einem PC unkomfortabel.
 \\
-Die getrennte Entwicklung zweier Frontend Anwendungen bedeutet einen Mehraufwand zur Entwicklung. Jedoch wird das Prinzip \gls{soc} eingehalten und der Administrator des Systems hat die Entscheidungsfreiheit zur Wahl der Hardware, über die er die Webseite zur Administration aufruft.
+Die getrennte Entwicklung zweier \gls{frontend} Anwendungen bedeutet einen Mehraufwand zur Entwicklung. Jedoch wird das Prinzip \gls{soc} eingehalten und der Administrator des Systems hat die Entscheidungsfreiheit zur Wahl der Hardware, über die er die Webseite zur Administration aufruft.
 \\
-Trotz des erhöhten Aufwands zur Entwicklung fällt die Entscheidung auf die zweite Option, die Entwicklung einer iOS Applikation für die Endkunden und einer Webseite zur Administration der Daten. Der bessere Komfort beim Pflegen der Daten sowie die erhöhte Sicherheit sind für das System von größerer Bedeutung als dieser Nachteil. Die Verwaltung der Daten durch den Administrator soll hierbei über ein Web Admin-Dashboard geschehen. 
+Trotz des erhöhten Aufwands zur Entwicklung fällt die Entscheidung auf die zweite Option, die Entwicklung einer iOS Applikation für die Endkunden und einer Webseite zur Administration der Daten. Der bessere Komfort beim Pflegen der Daten sowie die erhöhte Sicherheit sind für das System von größerer Bedeutung als dieser Nachteil. Die Verwaltung der Daten durch den Administrator soll hierbei über ein Web Admin-Dashboard geschehen.
 Diese Softwarearchitektur ist in der folgenden Abbildung \ref{componentdiagramsystem} als UML Komponentendiagramm dargestellt.
 
-\abbildung{../diagramme/SystemComponents.pdf}{Das UML Komponentendiagramm für das System, bestehend aus Backend, iOS Applikation und Web Admin-Dashboard}{componentdiagramsystem}
+\abbildung{../diagramme/SystemComponents.pdf}{Das UML Komponentendiagramm für das System, bestehend aus \gls{backend}, iOS Applikation und Web Admin-Dashboard}{componentdiagramsystem}
 
 \clearpage
 
 \section{Rollenmodell} \label{rollenmodell}
 Die funktionale Anforderung \nameref{fa20} setzt voraus, dass der Administrator die Daten über eine zentrale Schnittstelle pflegen kann. Dabei muss dem Administrator die Möglichkeit gegeben werden, nach den funktionalen Anforderungen \nameref{fa50}, \nameref{fa60}, \nameref{fa70}, \nameref{fa100}, \nameref{fa110} und \nameref{fa120}, Backprodukte und Neuigkeiten erstellen, bearbeiten und löschen zu können.
 \\
-Des Weiteren muss es sowohl dem Administrator als auch dem Benutzer des Systems, gemäß den funktionalen Anforderungen \nameref{fa30}, \nameref{fa40}, \nameref{fa80} und \nameref{fa90}, möglich sein, sich die Daten zu den Backprodukten und Neuigkeiten anzeigen zu lassen. 
+Des Weiteren muss es sowohl dem Administrator als auch dem Benutzer des Systems, gemäß den funktionalen Anforderungen \nameref{fa30}, \nameref{fa40}, \nameref{fa80} und \nameref{fa90}, möglich sein, sich die Daten zu den Backprodukten und Neuigkeiten anzeigen zu lassen.
 \\
 Hierbei ist nach den nichtfunktionalen Anforderungen \nameref{nfa10} und \nameref{nfa20} zu beachten, dass die Administration der Daten lediglich bei Existenz einer autorisierten Sitzung des Administrators und das Abfragen der Daten lediglich bei Existenz einer autorisierten Sitzung des Benutzers erlaubt sein darf.
 \\
@@ -62,10 +62,10 @@ Gemäß den funktionalen Anforderungen \nameref{fa90}, \nameref{fa100}, \nameref
 
 \clearpage
 
-\section{Technologie des Backends} \label{backend-technologie}
-Wie bereits beschrieben, soll das Backend als eine zentrale Anlaufstelle für \gls{crud} Operationen zu den Backprodukten dienen.
-Da es sich hierbei um eine Client-Server Struktur handelt, eignet sich eine \gls{rest}-\gls{api} an, um unabhängig des Clients und der jeweilig gewählten Programmiersprache ein Datenverwaltungssystem zu schaffen. Weitere Vorteile und Besonderheiten des Konzepts \gls{rest} wurden im Kapitel \ref{rest} beschrieben. 
-Drei beliebte Optionen zum Entwickeln eines Backends sind PHP, Django sowie Spring Boot.
+\section{Technologie des \gls{backend}s} \label{backend-technologie}
+Wie bereits beschrieben, soll das \gls{backend} als eine zentrale Anlaufstelle für \gls{crud} Operationen zu den Backprodukten dienen.
+Da es sich hierbei um eine Client-Server Struktur handelt, eignet sich eine \gls{rest}-\gls{api} an, um unabhängig des Clients und der jeweilig gewählten Programmiersprache ein Datenverwaltungssystem zu schaffen. Weitere Vorteile und Besonderheiten des Konzepts \gls{rest} wurden im Kapitel \ref{rest} beschrieben.
+Drei beliebte Optionen zum Entwickeln eines \gls{backend}s sind PHP, Django sowie Spring Boot.
 An Hand der Kriterien Quellcode, Community, verfügbare Bibliotheken, Aufwand zur Programmierung einer \gls{rest}-\gls{api} sowie der verwendeten Programmiersprache soll eine Auswahl zur zu verwendenden Technologie getroffen werden. Da Spring Boot bereits im Kapitel \ref{spring-boot} erläutert wurde, wird im Folgenden lediglich PHP und Django erklärt.
 \\
 PHP ist eine weit verbreitete Open-Source Skriptsprache, welche in der Webprogrammierung bereits seit Jahren ihre Verwendung findet. Im Gegensatz zu Javascript wird PHP durch den Server ausgeführt, so dass HTML für den Benutzer des Webdienstes generiert wird. Hierbei kann der Benutzer den Code des Webdienstes in der Regel, das heißt bei einem korrekt konfigurierten Webserver, nicht einsehen.
@@ -84,10 +84,10 @@ Django ist ein Web Framework, welches ebenfalls als Open-Source Software verfüg
 		Spring Boot & 5/5 & 4/5 & 5/5 & 5/5 & 5/5\\
 		\hline
 	\end{tabular}
-	\caption[Tabelle]{Vergleich der Backend Technologien PHP, Django und Spring Boot} \label{tab:technologievergleich}
+	\caption[Tabelle]{Vergleich der \gls{backend} Technologien PHP, Django und Spring Boot} \label{tab:technologievergleich}
 \end{table}
 
-Zur Implementierung des Backends mit der \gls{rest} Schnittstelle eignet sich demnach das Spring Framework in Verbund mit Spring Boot (siehe Kapitel \ref{spring-framework}), da es, insbesondere durch voreingestellte Konfigurationen und verfügbare Bibliotheken, die Entwicklung für diesen Anwendungszweck erleichtert. 
+Zur Implementierung des \gls{backend}s mit der \gls{rest} Schnittstelle eignet sich demnach das Spring Framework in Verbund mit Spring Boot (siehe Kapitel \ref{spring-framework}), da es, insbesondere durch voreingestellte Konfigurationen und verfügbare Bibliotheken, die Entwicklung für diesen Anwendungszweck erleichtert.
 \\
 Die Datenbank wird durch das objektrelationale Datenbankmanagementsystem Postgres (siehe Kapitel \ref{postgres}) bereitgestellt.
 
@@ -100,9 +100,9 @@ Die Kommunikation über \gls{http} erfolgt lediglich unverschlüsselt.
 Daher ist es jederzeit möglich, Inhalte von versendeten Paketen mittels \gls{mitm} mitzulesen oder gar zu manipulieren.
 Um dies zu verhindern, wurde \gls{http} um einen \gls{ssl}/\gls{tls}-Layer erweitert, was als \gls{https} bezeichnet wird.
 Hierbei werden alle übertragenen Daten verschlüsselt und es erfolgt eine gegenseitige Authentifizierung durch SSL-Zertifikate.
-Mittlerweile wurden jedoch die Versionen SSL1.0 bis SSL3.0 sowie TLS1.0 als unsicher deklariert \cite{ssl}. 
+Mittlerweile wurden jedoch die Versionen SSL1.0 bis SSL3.0 sowie TLS1.0 als unsicher deklariert \cite{ssl}.
 Dennoch unterstützen viele Webserver diese unsicheren SSL und TLS Versionen, wie man der Abbildung \ref{ssl-tls} entnehmen kann.
-Da zur Nutzung des Bäckerei Systems eine Authentifizierung über das Internet vorausgesetzt wird, sollte der Webserver, auf dem das Backend ausgeführt wird, ausschließlich eine Verbindung per \gls{https} akzeptieren, da sonst Angreifer die Anmeldedaten abgreifen können. 
+Da zur Nutzung des Bäckerei Systems eine Authentifizierung über das Internet vorausgesetzt wird, sollte der Webserver, auf dem das \gls{backend} ausgeführt wird, ausschließlich eine Verbindung per \gls{https} akzeptieren, da sonst Angreifer die Anmeldedaten abgreifen können.
 
 \abbildungq{9cm}{images/content/ssl-tls.png}{https://www.ssllabs.com/ssl-pulse/}{SSL und TLS Unterstützung von Webservern}{ssl-tls}
 
@@ -122,11 +122,11 @@ Daher sollte man solche Schnittstellen zur Administration \enquote{verstecken} o
 Generell sollte man demnach privilegierte Schnittstellen nicht öffentlich zugänglich machen. Da hierdurch jedoch ein Mehraufwand entsteht und das System nicht über überdurchschnittliche Sicherheitsanforderungen verfügt, ist dieser Faktor optional.
 
 \subsection{Sicherheitskopplung durch verbundene Systeme}
-Mittlerweile bestehen viele Webanwendungen aus einem Backend inklusive einer Datenbank und mindestens einem Frontend, was zu einer Kopplung dieser verbundenen Systeme führt. Kann ein Angreifer die Sicherheitsmechanismen eins dieser Systeme überwinden, so erfolgt eine stark verringerte Sicherheit der anderen Systeme. Dies wird auch als \enquote{Pivot-Angriff} bezeichnet.
+Mittlerweile bestehen viele Webanwendungen aus einem \gls{backend} inklusive einer Datenbank und mindestens einem \gls{frontend}, was zu einer Kopplung dieser verbundenen Systeme führt. Kann ein Angreifer die Sicherheitsmechanismen eins dieser Systeme überwinden, so erfolgt eine stark verringerte Sicherheit der anderen Systeme. Dies wird auch als \enquote{Pivot-Angriff} bezeichnet.
 Daher sollte man als Gegenmaßnahme die Systeme einzeln absichern und kein \enquote{blindes Vertrauen} zwischen den Systemen implementieren.
 
 \subsection{Frameworks oder Bibliotheken}
 Frameworks und Bibliotheken müssen regelmäßig aktualisiert werden, um vorhandene, starke Schwachstellen auszubessern.
 Webanwendungen, die Frameworks und Bibliotheken verwenden, müssen daher regelmäßig ihre Abhängigkeiten auf den aktuellen Stand bringen. Ebenfalls sollten nur vertrauenswürdige Bibliotheken und Frameworks verwendet werden. Doch auch die standardmäßigen Sicherheitseinstellungen \enquote{Security by Default} solcher Programme sind meist unzureichend und verlangen einer Maßnahmenüberprüfung.
-Ansonsten drohen Folgen wie beispielsweise eine Systemkompromittierung, bei der ein Angreifer vollen Zugriff auf das System erlangt. 
+Ansonsten drohen Folgen wie beispielsweise eine Systemkompromittierung, bei der ein Angreifer vollen Zugriff auf das System erlangt.
 Ein Beispiel hierzu ist die Schwachstelle \enquote{Heartbleed} in OpenSSL.
