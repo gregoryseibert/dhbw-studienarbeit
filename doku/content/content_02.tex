@@ -1,6 +1,7 @@
 %!TEX root = ../hauptdatei.tex
 \chapter{Theoretische Grundlagen}
-In diesem Kapitel werden die notwendigen Grundlagen der Technologien, die für das Backend und das Frontend notwendig sind, vermittelt.
+In diesem Kapitel werden die für das System notwendigen, theoretischen Grundlagen vermittelt.
+Es handelt sich um eine Webanwendung, die Schnittstellen zum Datenaustausch bereitstellt und die durch eine zusätzliche Anwendung zur Präsentation der Daten abgefragt werden.
 
 \section{JSON} \label{json}
 \gls{json} ist ein leichtgewichtiges Format zum Austauschen von Daten, typischerweise zwischen Webserver und Client \cite[S.~23]{client-server-book}.
@@ -18,11 +19,9 @@ Die Syntax von \gls{json} besteht aus folgenden Regeln \cite[S.~23]{client-serve
 Im folgenden Codeblock ist ein beispielhaftes Objekt in Form eines \gls{json} Dokuments aufgeführt.
 \begin{lstlisting}[language=Json]
 {
-	"id": 1,
 	"name": "Beispielobjekt Eins",
 	"objektListe": [
 		{
-			"id": 2,
 			"name": "Beispielobjekt Zwei"
 		}
 	]
@@ -53,6 +52,8 @@ Die Request-Methode und die \gls{url} müssen angegeben werden. Der Request-Body
 \clearpage
 
 \section{Sicherheit von Webanwendungen}
+Webanwendungen sind, aufgrund der Offenheit der Schnittstellen beziehungsweise des Protokolls, vielen Internetkriminellen ausgesetzt \cite[S.~VI]{websecurity-book}. Daher ist ein Sicherheitskonzept mit den notwendigen Maßnahmen durchaus empfehlenswert. In diesem Kapitel werden die vier häufigsten Schwachstellen von Webanwendungen erläutert.
+
 \subsection{Man In The Middle}
 \gls{mitm} ist eine Angriffsform gegen Rechnernetze.
 Hierbei gibt sich der Angreifer als den Ziel-Server oder einen Router aus.
@@ -60,6 +61,8 @@ Er greift die Pakete ab, die der Sender an den Empfänger sendet, verfügt über
 Durch \gls{mitm} erlangt der Angreifer demnach die vollständige Kontrolle über den Datenverkehr von Dritten, was ihn zum Mitlesen und zur Manipulation des Datenverkehrs befähigt \cite[S.~9]{websecurity-book}.
 
 \abbildungq{6cm}{images/content/man-in-the-middle.jpg}{https://www.incapsula.com/web-application-security/wp-content/uploads/sites/6/2018/02/man-in-the-middle-mitm.jpg}{Man In The Middle}{mitm}
+
+\clearpage
 
 \subsection{Cross-Site-Request-Forgery}
 \gls{csrf} ist eine Angriffsform gegen Nutzer einer Webanwendung mit dem Ziel, eine bestehende Sitzung eines Anwenders zu übernehmen oder Anfragen über einen angemeldeten Nutzer auszuführen \cite[S.~83]{websecurity-book}.

@@ -62,7 +62,7 @@ Gemäß den funktionalen Anforderungen \nameref{fa90}, \nameref{fa100}, \nameref
 
 \clearpage
 
-\section{Technologie des \gls{backend}s} \label{backend-technologie}
+\section{Technologie des Backends} \label{backend-technologie}
 Wie bereits beschrieben, soll das \gls{backend} als eine zentrale Anlaufstelle für \gls{crud} Operationen zu den Backprodukten dienen.
 Da es sich hierbei um eine Client-Server Struktur handelt, eignet sich eine \gls{rest}-\gls{api} an, um unabhängig des Clients und der jeweilig gewählten Programmiersprache ein Datenverwaltungssystem zu schaffen. Weitere Vorteile und Besonderheiten des Konzepts \gls{rest} wurden im Kapitel \ref{rest} beschrieben.
 Drei beliebte Optionen zum Entwickeln eines \gls{backend}s sind PHP, Django sowie Spring Boot.
@@ -96,8 +96,7 @@ Die Datenbank wird durch das objektrelationale Datenbankmanagementsystem Postgre
 \section{Sicherheit}
 
 \subsection{Verschlüsselung der Kommunikation}
-Die Kommunikation über \gls{http} erfolgt lediglich unverschlüsselt.
-Daher ist es jederzeit möglich, Inhalte von versendeten Paketen mittels \gls{mitm} mitzulesen oder gar zu manipulieren.
+Die Kommunikation über \gls{http} erfolgt lediglich unverschlüsselt, daher ist es jederzeit möglich, Inhalte von versendeten Paketen mittels \gls{mitm} mitzulesen oder gar zu manipulieren  \cite[S.~9]{websecurity-book}.
 Um dies zu verhindern, wurde \gls{http} um einen \gls{ssl}/\gls{tls}-Layer erweitert, was als \gls{https} bezeichnet wird.
 Hierbei werden alle übertragenen Daten verschlüsselt und es erfolgt eine gegenseitige Authentifizierung durch SSL-Zertifikate.
 Mittlerweile wurden jedoch die Versionen SSL1.0 bis SSL3.0 sowie TLS1.0 als unsicher deklariert \cite{ssl}.
@@ -109,7 +108,7 @@ Da zur Nutzung des Bäckerei Systems eine Authentifizierung über das Internet v
 \clearpage
 
 \subsection{Eingabevalidierung und Ausgabevalidierung}
-Webanwendungen, wie beispielsweise Foren, sollten alle Daten validieren, die durch Nutzereingaben übermittelt werden, da es sonst zur Speicherung von unzulässigen Daten oder Werten kommen kann. Eine direkte Folge hiervon äußert sich in \gls{xss}, aber auch in einem Einbruch in das System oder generellen Datenverlust.
+Webanwendungen, wie beispielsweise Foren, sollten alle Daten validieren, die durch Nutzereingaben übermittelt werden, da es sonst zur Speicherung von unzulässigen Daten oder Werten kommen kann  \cite[S.~58]{websecurity-book}. Eine direkte Folge hiervon äußert sich in \gls{xss}, aber auch in einem Einbruch in das System oder generellen Datenverlust.
 Daher sollten alle Daten, die eingegeben oder ausgegeben werden, stets validiert und gegebenenfalls gesäubert werden.
 Da über die Administrationsschnittstelle benutzerdefinierte Texte zur Erstellung und Bearbeitung von Datensätzen übertragen werden können, ist es von Vorteil, wenn diese vorher validiert werden. Das System würde jedoch durch eine Validierung der Eingabedaten und Ausgabedaten deutlich an Komplexität gewinnen. Dieser Faktor ist also zu vernachlässigen, da die Erstellung und Bearbeitung von Datensätzen lediglich dem Administrator möglich ist und eine iOS App keine Anfälligkeit gegenüber \enquote{xss} Angriffe besitzt, da diese nicht auf \gls{html} und JavaScript basiert.
 
@@ -122,11 +121,11 @@ Daher sollte man solche Schnittstellen zur Administration \enquote{verstecken} o
 Generell sollte man demnach privilegierte Schnittstellen nicht öffentlich zugänglich machen. Da hierdurch jedoch ein Mehraufwand entsteht und das System nicht über überdurchschnittliche Sicherheitsanforderungen verfügt, ist dieser Faktor optional.
 
 \subsection{Sicherheitskopplung durch verbundene Systeme}
-Mittlerweile bestehen viele Webanwendungen aus einem \gls{backend} inklusive einer Datenbank und mindestens einem \gls{frontend}, was zu einer Kopplung dieser verbundenen Systeme führt. Kann ein Angreifer die Sicherheitsmechanismen eins dieser Systeme überwinden, so erfolgt eine stark verringerte Sicherheit der anderen Systeme. Dies wird auch als \enquote{Pivot-Angriff} bezeichnet.
+Mittlerweile bestehen viele Webanwendungen aus einem \gls{backend} inklusive einer Datenbank und mindestens einem \gls{frontend}, was zu einer Kopplung dieser verbundenen Systeme führt. Kann ein Angreifer die Sicherheitsmechanismen eins dieser Systeme überwinden, so erfolgt eine stark verringerte Sicherheit der anderen Systeme  \cite[S.~20]{websecurity-book}. Dies wird auch als \enquote{Pivot-Angriff} bezeichnet.
 Daher sollte man als Gegenmaßnahme die Systeme einzeln absichern und kein \enquote{blindes Vertrauen} zwischen den Systemen implementieren.
 
 \subsection{Frameworks oder Bibliotheken}
-Frameworks und Bibliotheken müssen regelmäßig aktualisiert werden, um vorhandene, starke Schwachstellen auszubessern.
-Webanwendungen, die Frameworks und Bibliotheken verwenden, müssen daher regelmäßig ihre Abhängigkeiten auf den aktuellen Stand bringen. Ebenfalls sollten nur vertrauenswürdige Bibliotheken und Frameworks verwendet werden. Doch auch die standardmäßigen Sicherheitseinstellungen \enquote{Security by Default} solcher Programme sind meist unzureichend und verlangen einer Maßnahmenüberprüfung.
+Frameworks und Bibliotheken müssen regelmäßig aktualisiert werden, um vorhandene, starke Schwachstellen auszubessern  \cite[S.~21]{websecurity-book}.
+Webanwendungen, die Frameworks und Bibliotheken verwenden, müssen daher regelmäßig ihre Abhängigkeiten auf den aktuellen Stand bringen. Ebenfalls sollten nur Bibliotheken und Frameworks von vertrauenswürdigen Herausgebern verwendet werden. Doch auch die standardmäßigen Sicherheitseinstellungen \enquote{Security by Default} solcher Programme sind meist unzureichend und verlangen einer Maßnahmenüberprüfung.
 Ansonsten drohen Folgen wie beispielsweise eine Systemkompromittierung, bei der ein Angreifer vollen Zugriff auf das System erlangt.
 Ein Beispiel hierzu ist die Schwachstelle \enquote{Heartbleed} in OpenSSL.
