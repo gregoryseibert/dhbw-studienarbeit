@@ -276,10 +276,6 @@ class BakedGoodCreateEditCard extends Component {
   render() {
     const { classes } = this.props;
 
-    const numberInputProps = {
-      step: 0.1,
-    };
-
     return (
       <Card className={classes.card}>
         <CardContent>
@@ -303,6 +299,7 @@ class BakedGoodCreateEditCard extends Component {
                 value={this.state.weight}
                 onChange={this.handleWeightChange}
                 InputProps={{
+                  step: 0.1,
                   endAdornment: <InputAdornment position="end">g</InputAdornment>,
                 }}/>
             </FormControl>
@@ -313,10 +310,10 @@ class BakedGoodCreateEditCard extends Component {
                 name="kcal"
                 label="Kcal"
                 type="number"
-                inputProps={numberInputProps}
                 value={this.state.kcal}
                 onChange={this.handleKcalChange}
                 InputProps={{
+                  step: 0.1,
                   endAdornment: <InputAdornment position="end">kcal</InputAdornment>,
                 }}/>
             </FormControl>
@@ -327,10 +324,10 @@ class BakedGoodCreateEditCard extends Component {
                 name="fat"
                 label="Fat"
                 type="number"
-                inputProps={numberInputProps}
                 value={this.state.fat}
                 onChange={this.handleFatChange}
                 InputProps={{
+                  step: 0.1,
                   endAdornment: <InputAdornment position="end">g</InputAdornment>,
                 }}/>
             </FormControl>
@@ -341,10 +338,10 @@ class BakedGoodCreateEditCard extends Component {
                 name="carbohydrates"
                 label="Carbohydrates"
                 type="number"
-                inputProps={numberInputProps}
                 value={this.state.carbohydrates}
                 onChange={this.handleCarbohydratesChange}
                 InputProps={{
+                  step: 0.1,
                   endAdornment: <InputAdornment position="end">g</InputAdornment>,
                 }}/>
             </FormControl>
@@ -355,10 +352,10 @@ class BakedGoodCreateEditCard extends Component {
                 name="protein"
                 label="Protein"
                 type="number"
-                inputProps={numberInputProps}
                 value={this.state.protein}
                 onChange={this.handleProteinChange}
                 InputProps={{
+                  step: 0.1,
                   endAdornment: <InputAdornment position="end">g</InputAdornment>,
                 }}/>
             </FormControl>

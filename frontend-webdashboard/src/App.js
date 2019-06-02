@@ -18,6 +18,9 @@ import LoafEdit from './pages/LoafEdit';
 import IngredientMaster from './pages/IngredientMaster';
 import IngredientCreate from './pages/IngredientCreate';
 import IngredientEdit from './pages/IngredientEdit';
+import NewsMaster from './pages/NewsMaster';
+import NewsCreate from './pages/NewsCreate';
+import NewsEdit from './pages/NewsEdit';
 
 const styles = theme => ({
   root: {
@@ -43,6 +46,9 @@ const menuAuthenticated = [
   }, {
     name: "Ingredients",
     path: "/ingredient"
+  }, {
+    name: "News",
+    path: "/news"
   }, {
     name: "Logout",
     path: "/logout"
@@ -131,6 +137,19 @@ class App extends Component {
               <Route exact path="/ingredient/edit/:id" render={(props) => (
                  this.state.isLoggedIn === true ?
                     <IngredientEdit {...props} /> : <Redirect to={{ pathname: '/login', state: { from: props.location }}} />
+              )} />
+
+              <Route exact path="/news" render={(props) => (
+                 this.state.isLoggedIn === true ?
+                    <NewsMaster {...props} /> : <Redirect to={{ pathname: '/login', state: { from: props.location }}} />
+              )} />
+              <Route exact path="/news/create" render={(props) => (
+                 this.state.isLoggedIn === true ?
+                    <NewsCreate {...props} /> : <Redirect to={{ pathname: '/login', state: { from: props.location }}} />
+              )} />
+              <Route exact path="/news/edit/:id" render={(props) => (
+                 this.state.isLoggedIn === true ?
+                    <NewsEdit {...props} /> : <Redirect to={{ pathname: '/login', state: { from: props.location }}} />
               )} />
             </Switch>
           </main>
